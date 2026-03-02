@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="BookingHub Test Suite" verbose="1">
+    <!-- Web Customer - port 3000 -->
+    <test name="Web Customer - Trang chủ">
+        <classes>
+            <class name="tests.customer.HomePageTest"/>
+        </classes>
+    </test>
+    <test name="Web Customer - Auth &amp; Các trang">
+        <classes>
+            <class name="tests.customer.LoginPageTest"/>
+            <class name="tests.customer.RegisterPageTest"/>
+            <class name="tests.customer.SearchPageTest"/>
+            <class name="tests.customer.BookingPageTest"/>
+            <class name="tests.customer.PaymentPageTest"/>
+            <class name="tests.customer.MyBookingsPageTest"/>
+            <class name="tests.customer.ProfilePageTest"/>
+        </classes>
+    </test>
+    <!-- Web Admin - port 3001, cần admin.username/admin.password trong config -->
+    <test name="Web Admin - Login">
+        <classes>
+            <class name="tests.admin.AdminLoginPageTest"/>
+        </classes>
+    </test>
+    <test name="Web Admin - Dashboard &amp; CRUD">
+        <classes>
+            <class name="tests.admin.AdminDashboardPageTest"/>
+            <class name="tests.admin.AdminBookingsPageTest"/>
+            <class name="tests.admin.AdminTripsPageTest"/>
+            <class name="tests.admin.AdminVehiclesPageTest"/>
+            <class name="tests.admin.AdminLocationsPageTest"/>
+            <class name="tests.admin.AdminBusCompaniesPageTest"/>
+            <class name="tests.admin.AdminUsersPageTest"/>
+            <class name="tests.admin.AdminVASPageTest"/>
+            <class name="tests.admin.AdminNotificationsPageTest"/>
+            <class name="tests.admin.AdminPaymentsPageTest"/>
+            <class name="tests.admin.AdminReviewsPageTest"/>
+        </classes>
+    </test>
+</suite>
