@@ -16,7 +16,6 @@ public abstract class AdminAuthBaseTest extends AdminBaseTest {
         loginIfNeeded();
     }
 
-    /** Nếu đang ở trang login thì đăng nhập bằng tài khoản config. */
     protected void loginIfNeeded() {
         String currentUrl = getDriver().getCurrentUrl();
         if (currentUrl.contains("/login") || currentUrl.contains("login")) {
