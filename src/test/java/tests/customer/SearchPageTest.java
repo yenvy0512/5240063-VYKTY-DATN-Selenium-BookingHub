@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.SearchPage;
+import utils.ValidationTestHelper;
 
 /**
  * Test case trang Tìm chuyến web-customer.
@@ -19,13 +20,13 @@ public class SearchPageTest extends BaseTest {
         getDriver().get(Config.getBaseUrl() + "/search");
     }
 
-    @Test(description = "TC-C11: Trang tìm chuyến load và hiển thị form tìm kiếm")
+    @Test(description = "Trang tìm chuyến load và hiển thị form tìm kiếm")
     public void searchPageLoads() {
         SearchPage searchPage = new SearchPage(getDriver());
         Assert.assertTrue(searchPage.isSearchFormDisplayed(), "Form tìm kiếm phải hiển thị");
     }
 
-    @Test(description = "TC-C12: Title trang tìm chuyến đúng")
+    @Test(description = "Title trang tìm chuyến đúng")
     public void searchPageTitle() {
         SearchPage searchPage = new SearchPage(getDriver());
         String title = searchPage.getPageTitle();
@@ -34,7 +35,7 @@ public class SearchPageTest extends BaseTest {
                 "Title phải chứa 'Tìm chuyến' hoặc 'BookingHub'");
     }
 
-    @Test(description = "TC-C11b: Heading 'Tìm chuyến xe' hiển thị")
+    @Test(description = "Heading Tìm chuyến xe hiển thị")
     public void searchPageHeadingDisplayed() {
         SearchPage searchPage = new SearchPage(getDriver());
         Assert.assertTrue(searchPage.isHeadingTìmChuyếnDisplayed(), "Heading 'Tìm chuyến xe' phải hiển thị");
@@ -42,11 +43,19 @@ public class SearchPageTest extends BaseTest {
                 "Nội dung heading phải là 'Tìm chuyến xe'");
     }
 
-    @Test(description = "TC-C11c: Form có Điểm đi, Điểm đến, Ngày đi")
+    @Test(description = "Form có Điểm đi, Điểm đến, Ngày đi")
     public void searchFormHasDepartureArrivalDate() {
         SearchPage searchPage = new SearchPage(getDriver());
         Assert.assertTrue(searchPage.hasDepartureSelect(), "Phải có select Điểm đi");
         Assert.assertTrue(searchPage.hasArrivalSelect(), "Phải có select Điểm đến");
         Assert.assertTrue(searchPage.hasDepartureDateInput(), "Phải có ô Ngày đi");
+    }
+
+    @Test(description = "Bấm tìm kiếm khi chưa chọn đủ hiện toast validation")
+    public void validation_searchWithoutSelection_showsToast() {
+        SearchPage searchPage = new SearchPage(getDriver());
+        searchPage.clickSearchSubmit();
+        boolean toastShown = ValidationTestHelper.waitForToastContainingText(getDriver(), "Vui lòng điền đầy đủ thông tin tìm kiếm");
+        Assert.assertTrue(toastShown, "Phải hiển thị toast validation khi chưa chọn đủ điều kiện tìm kiếm");
     }
 }

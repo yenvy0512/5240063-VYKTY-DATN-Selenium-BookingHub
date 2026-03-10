@@ -19,13 +19,13 @@ public class LoginPageTest extends BaseTest {
         getDriver().get(Config.getBaseUrl() + "/login");
     }
 
-    @Test(description = "TC-C06: Trang login hiển thị form đăng nhập")
+    @Test(description = "Trang login hiển thị form đăng nhập")
     public void loginPageShowsForm() {
         LoginPage loginPage = new LoginPage(getDriver());
         Assert.assertTrue(loginPage.isLoginFormDisplayed(), "Form đăng nhập phải hiển thị");
     }
 
-    @Test(description = "TC-C07: Title trang login chứa Đăng nhập hoặc BookingHub")
+    @Test(description = "Title trang login chứa Đăng nhập hoặc BookingHub")
     public void loginPageTitle() {
         LoginPage loginPage = new LoginPage(getDriver());
         String title = loginPage.getPageTitle();
@@ -34,7 +34,7 @@ public class LoginPageTest extends BaseTest {
                 "Title phải chứa 'Đăng nhập' hoặc 'BookingHub'");
     }
 
-    @Test(description = "TC-C08: Đăng nhập sai thông tin vẫn ở trang login")
+    @Test(description = "Đăng nhập sai thông tin vẫn ở trang login")
     public void loginWithInvalidCredentialsStaysOnPage() {
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.login("invalid_user_xyz", "wrongpassword");
@@ -43,24 +43,33 @@ public class LoginPageTest extends BaseTest {
                 "Đăng nhập sai phải vẫn ở trang login");
     }
 
-    @Test(description = "TC-C06b: Form có ô Username/Email và Mật khẩu")
+    @Test(description = "Form có ô Username/Email và Mật khẩu")
     public void loginFormHasUsernameAndPasswordFields() {
         LoginPage loginPage = new LoginPage(getDriver());
         Assert.assertTrue(loginPage.isUsernameInputDisplayed(), "Ô username/email phải hiển thị");
         Assert.assertTrue(loginPage.isPasswordInputDisplayed(), "Ô mật khẩu phải hiển thị");
     }
 
-    @Test(description = "TC-C06c: Có link Đăng ký")
+    @Test(description = "Có link Đăng ký")
     public void loginPageHasLinkRegister() {
         LoginPage loginPage = new LoginPage(getDriver());
         Assert.assertTrue(loginPage.isLinkRegisterDisplayed(), "Link Đăng ký phải hiển thị");
     }
 
-    @Test(description = "TC-C06d: Click link Đăng ký chuyển sang /register")
+    @Test(description = "Click link Đăng ký chuyển sang trang register")
     public void clickRegisterLinkNavigatesToRegister() {
         LoginPage loginPage = new LoginPage(getDriver());
         loginPage.clickLinkRegister();
         String url = getDriver().getCurrentUrl();
         Assert.assertTrue(url.contains("/register"), "Click Đăng ký phải chuyển sang trang register");
+    }
+
+    @Test(description = "Submit form trống vẫn ở trang login, form vẫn hiển thị")
+    public void validation_submitEmptyForm_staysOnLogin() {
+        LoginPage loginPage = new LoginPage(getDriver());
+        loginPage.login("", "");
+        String url = getDriver().getCurrentUrl();
+        Assert.assertTrue(url.contains("/login") || url.contains("login"), "Submit form trống phải vẫn ở trang login");
+        Assert.assertTrue(loginPage.isLoginFormDisplayed(), "Form đăng nhập vẫn phải hiển thị");
     }
 }

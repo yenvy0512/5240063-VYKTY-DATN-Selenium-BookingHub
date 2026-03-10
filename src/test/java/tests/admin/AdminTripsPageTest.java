@@ -19,19 +19,19 @@ public class AdminTripsPageTest extends AdminAuthBaseTest {
         getDriver().get(Config.getBaseUrlAdmin() + "/trips");
     }
 
-    @Test(description = "TC-A09: Trang Quản lý Chuyến xe hiển thị")
+    @Test(description = "Trang Quản lý Chuyến xe hiển thị")
     public void tripsPageDisplayed() {
         AdminTripsPage page = new AdminTripsPage(getDriver());
         Assert.assertTrue(page.isPageDisplayed(), "Trang Quản lý Chuyến xe phải hiển thị");
     }
 
-    @Test(description = "TC-A10: Nút tạo chuyến hiển thị")
+    @Test(description = "Nút tạo chuyến hiển thị")
     public void tripsCreateButtonDisplayed() {
         AdminTripsPage page = new AdminTripsPage(getDriver());
         Assert.assertTrue(page.isCreateButtonDisplayed(), "Nút tạo chuyến phải hiển thị");
     }
 
-    @Test(description = "TC-A11: Title trang chuyến xe đúng")
+    @Test(description = "Title trang chuyến xe đúng")
     public void tripsPageTitle() {
         AdminTripsPage page = new AdminTripsPage(getDriver());
         String title = page.getPageTitle();
@@ -40,14 +40,14 @@ public class AdminTripsPageTest extends AdminAuthBaseTest {
                 "Title phải chứa Chuyến/BookingHub");
     }
 
-    @Test(description = "TC-A09b: Bảng chuyến xe có cột Điểm đi, Điểm đến")
+    @Test(description = "Bảng chuyến xe có cột Điểm đi, Điểm đến")
     public void tripsTableHasExpectedHeaders() {
         AdminTripsPage page = new AdminTripsPage(getDriver());
         Assert.assertTrue(page.hasTableHeaderDiemDi(), "Bảng phải có cột Điểm đi");
         Assert.assertTrue(page.hasTableHeaderDiemDen(), "Bảng phải có cột Điểm đến");
     }
 
-    @Test(description = "TC-A09c: Ô tìm kiếm hiển thị")
+    @Test(description = "Ô tìm kiếm hiển thị")
     public void tripsSearchInputDisplayed() {
         AdminTripsPage page = new AdminTripsPage(getDriver());
         Assert.assertTrue(page.isSearchInputDisplayed(), "Ô tìm kiếm chuyến xe phải hiển thị");

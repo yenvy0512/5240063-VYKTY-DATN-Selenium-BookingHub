@@ -39,6 +39,14 @@ public final class Config {
         return props.getProperty("admin.password", "admin123");
     }
 
+    public static String getCustomerUsername() {
+        return props.getProperty("customer.username", "customer");
+    }
+
+    public static String getCustomerPassword() {
+        return props.getProperty("customer.password", "customer123");
+    }
+
     public static String getBrowser() {
         return props.getProperty("browser", "chrome");
     }
@@ -49,6 +57,11 @@ public final class Config {
 
     public static int getPageLoadTimeoutSeconds() {
         return Integer.parseInt(props.getProperty("page.load.timeout.seconds", "30"));
+    }
+
+    /** Delay (giây) sau mỗi test method để dễ quan sát. 0 = không delay. */
+    public static int getDelayAfterTestSeconds() {
+        return Integer.parseInt(props.getProperty("delay.after.test.seconds", "0"));
     }
 
     private Config() {

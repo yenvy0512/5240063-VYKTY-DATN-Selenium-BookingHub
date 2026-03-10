@@ -1,6 +1,6 @@
 package tests.customer;
 
-import base.BaseTest;
+import base.CustomerAuthBaseTest;
 import config.Config;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -8,9 +8,9 @@ import org.testng.annotations.Test;
 import pages.BookingPage;
 
 /**
- * Test case trang Đặt vé web-customer.
+ * Test case trang Đặt vé web-customer (cần đăng nhập).
  */
-public class BookingPageTest extends BaseTest {
+public class BookingPageTest extends CustomerAuthBaseTest {
 
     @Override
     @BeforeMethod(alwaysRun = true)
@@ -19,7 +19,7 @@ public class BookingPageTest extends BaseTest {
         getDriver().get(Config.getBaseUrl() + "/booking");
     }
 
-    @Test(description = "TC-C13: Trang đặt vé load (có thể redirect nếu chưa chọn chuyến)")
+    @Test(description = "Trang đặt vé load")
     public void bookingPageLoads() {
         BookingPage bookingPage = new BookingPage(getDriver());
         String title = bookingPage.getPageTitle();
@@ -28,7 +28,7 @@ public class BookingPageTest extends BaseTest {
                 "Title phải liên quan BookingHub/Đặt vé/Tìm chuyến");
     }
 
-    @Test(description = "TC-C14: Nếu có form đặt vé thì form hiển thị")
+    @Test(description = "Nếu có form đặt vé thì form hiển thị")
     public void bookingFormDisplayedWhenOnBookingPage() {
         String url = getDriver().getCurrentUrl();
         if (url.contains("/booking")) {
@@ -38,7 +38,7 @@ public class BookingPageTest extends BaseTest {
         }
     }
 
-    @Test(description = "TC-C14b: Form đặt vé có Họ tên, SĐT, Email, Phương thức thanh toán")
+    @Test(description = "Form đặt vé có Họ tên, SĐT, Email, Phương thức thanh toán")
     public void bookingFormHasCustomerAndPaymentFields() {
         String url = getDriver().getCurrentUrl();
         if (url.contains("/booking")) {

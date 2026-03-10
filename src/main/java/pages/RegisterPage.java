@@ -62,6 +62,13 @@ public class RegisterPage extends BasePage {
         return submitButton != null && submitButton.isDisplayed();
     }
 
+    /** Click nút Đăng ký (dùng cho test validation). */
+    public void clickSubmit() {
+        if (submitButton != null) {
+            submitButton.click();
+        }
+    }
+
     public String getPageTitle() {
         return driver.getTitle();
     }

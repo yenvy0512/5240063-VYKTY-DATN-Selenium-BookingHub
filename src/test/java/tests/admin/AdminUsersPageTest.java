@@ -19,13 +19,13 @@ public class AdminUsersPageTest extends AdminAuthBaseTest {
         getDriver().get(Config.getBaseUrlAdmin() + "/users");
     }
 
-    @Test(description = "TC-A18: Trang Quản lý Người dùng hiển thị")
+    @Test(description = "Trang Quản lý Người dùng hiển thị")
     public void usersPageDisplayed() {
         AdminUsersPage page = new AdminUsersPage(getDriver());
         Assert.assertTrue(page.isPageDisplayed(), "Trang Quản lý Người dùng phải hiển thị");
     }
 
-    @Test(description = "TC-A19: Title trang người dùng đúng")
+    @Test(description = "Title trang người dùng đúng")
     public void usersPageTitle() {
         AdminUsersPage page = new AdminUsersPage(getDriver());
         String title = page.getPageTitle();

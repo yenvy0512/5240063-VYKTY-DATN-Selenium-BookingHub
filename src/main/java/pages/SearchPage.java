@@ -52,6 +52,12 @@ public class SearchPage extends BasePage {
         return departureDateInput != null && departureDateInput.isDisplayed();
     }
 
+    public void clickSearchSubmit() {
+        if (searchSubmitButton != null) {
+            searchSubmitButton.click();
+        }
+    }
+
     public String getPageTitle() {
         return driver.getTitle();
     }

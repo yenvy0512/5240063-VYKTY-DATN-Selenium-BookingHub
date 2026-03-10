@@ -2,7 +2,7 @@ package base;
 
 import config.Config;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import pages.admin.AdminLoginPage;
 
 import java.time.Duration;
@@ -10,9 +10,9 @@ import java.time.Duration;
 public abstract class AdminAuthBaseTest extends AdminBaseTest {
 
     @Override
-    @BeforeMethod(alwaysRun = true)
-    public void setUp() {
-        super.setUp();
+    @BeforeClass(alwaysRun = true)
+    public void initDriver() {
+        super.initDriver();
         loginIfNeeded();
     }
 

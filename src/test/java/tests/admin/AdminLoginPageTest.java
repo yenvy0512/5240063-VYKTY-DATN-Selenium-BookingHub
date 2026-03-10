@@ -19,13 +19,13 @@ public class AdminLoginPageTest extends AdminBaseTest {
         getDriver().get(Config.getBaseUrlAdmin() + "/login");
     }
 
-    @Test(description = "TC-A01: Trang admin login hiển thị form")
+    @Test(description = "Trang admin login hiển thị form")
     public void adminLoginPageShowsForm() {
         AdminLoginPage loginPage = new AdminLoginPage(getDriver());
         Assert.assertTrue(loginPage.isLoginFormDisplayed(), "Form đăng nhập admin phải hiển thị");
     }
 
-    @Test(description = "TC-A02: Title trang admin login đúng")
+    @Test(description = "Title trang admin login đúng")
     public void adminLoginPageTitle() {
         AdminLoginPage loginPage = new AdminLoginPage(getDriver());
         String title = loginPage.getPageTitle();
@@ -34,7 +34,7 @@ public class AdminLoginPageTest extends AdminBaseTest {
                 "Title phải chứa Đăng nhập/Admin/BookingHub");
     }
 
-    @Test(description = "TC-A03: Đăng nhập sai vẫn ở trang login")
+    @Test(description = "Đăng nhập sai vẫn ở trang login")
     public void adminLoginInvalidStaysOnPage() {
         AdminLoginPage loginPage = new AdminLoginPage(getDriver());
         loginPage.login("wrong_admin", "wrong_pass");

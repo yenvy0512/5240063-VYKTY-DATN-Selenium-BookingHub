@@ -1,6 +1,6 @@
 package tests.customer;
 
-import base.BaseTest;
+import base.CustomerAuthBaseTest;
 import config.Config;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -8,9 +8,9 @@ import org.testng.annotations.Test;
 import pages.PaymentPage;
 
 /**
- * Test case trang Thanh toán web-customer.
+ * Test case trang Thanh toán web-customer (cần đăng nhập).
  */
-public class PaymentPageTest extends BaseTest {
+public class PaymentPageTest extends CustomerAuthBaseTest {
 
     @Override
     @BeforeMethod(alwaysRun = true)
@@ -19,13 +19,13 @@ public class PaymentPageTest extends BaseTest {
         getDriver().get(Config.getBaseUrl() + "/payment");
     }
 
-    @Test(description = "TC-C15: Trang thanh toán load")
+    @Test(description = "Trang thanh toán load")
     public void paymentPageLoads() {
         PaymentPage paymentPage = new PaymentPage(getDriver());
         Assert.assertTrue(paymentPage.isPageLoaded(), "Trang thanh toán phải load");
     }
 
-    @Test(description = "TC-C16: Title trang thanh toán chứa Thanh toán hoặc BookingHub")
+    @Test(description = "Title trang thanh toán chứa Thanh toán hoặc BookingHub")
     public void paymentPageTitle() {
         PaymentPage paymentPage = new PaymentPage(getDriver());
         String title = paymentPage.getPageTitle();

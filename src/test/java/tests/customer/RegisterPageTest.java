@@ -19,13 +19,13 @@ public class RegisterPageTest extends BaseTest {
         getDriver().get(Config.getBaseUrl() + "/register");
     }
 
-    @Test(description = "TC-C09: Trang đăng ký hiển thị form")
+    @Test(description = "Trang đăng ký hiển thị form")
     public void registerPageShowsForm() {
         RegisterPage registerPage = new RegisterPage(getDriver());
         Assert.assertTrue(registerPage.isRegisterFormDisplayed(), "Form đăng ký phải hiển thị");
     }
 
-    @Test(description = "TC-C10: Title trang đăng ký chứa Đăng ký hoặc BookingHub")
+    @Test(description = "Title trang đăng ký chứa Đăng ký hoặc BookingHub")
     public void registerPageTitle() {
         RegisterPage registerPage = new RegisterPage(getDriver());
         String title = registerPage.getPageTitle();
@@ -34,7 +34,7 @@ public class RegisterPageTest extends BaseTest {
                 "Title phải chứa 'Đăng ký' hoặc 'BookingHub'");
     }
 
-    @Test(description = "TC-C09b: Form đăng ký có đủ: Username, Email, Mật khẩu, Họ tên, SĐT")
+    @Test(description = "Form đăng ký có đủ Username, Email, Mật khẩu, Họ tên, SĐT")
     public void registerFormHasAllFields() {
         RegisterPage registerPage = new RegisterPage(getDriver());
         Assert.assertTrue(registerPage.hasUsernameField(), "Form phải có ô Username");
@@ -44,9 +44,16 @@ public class RegisterPageTest extends BaseTest {
         Assert.assertTrue(registerPage.hasPhoneField(), "Form phải có ô Số điện thoại");
     }
 
-    @Test(description = "TC-C09c: Nút Đăng ký hiển thị")
+    @Test(description = "Nút Đăng ký hiển thị")
     public void registerSubmitButtonDisplayed() {
         RegisterPage registerPage = new RegisterPage(getDriver());
         Assert.assertTrue(registerPage.isSubmitButtonDisplayed(), "Nút Đăng ký phải hiển thị");
+    }
+
+    @Test(description = "Submit form trống form vẫn hiển thị")
+    public void validation_submitEmptyForm_formStillVisible() {
+        RegisterPage registerPage = new RegisterPage(getDriver());
+        registerPage.clickSubmit();
+        Assert.assertTrue(registerPage.isRegisterFormDisplayed(), "Submit form trống phải vẫn ở trang đăng ký, form vẫn hiển thị");
     }
 }

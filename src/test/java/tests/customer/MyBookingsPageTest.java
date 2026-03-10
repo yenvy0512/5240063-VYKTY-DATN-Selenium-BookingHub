@@ -1,6 +1,6 @@
 package tests.customer;
 
-import base.BaseTest;
+import base.CustomerAuthBaseTest;
 import config.Config;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -8,9 +8,9 @@ import org.testng.annotations.Test;
 import pages.MyBookingsPage;
 
 /**
- * Test case trang Vé của tôi web-customer.
+ * Test case trang Vé của tôi web-customer (cần đăng nhập).
  */
-public class MyBookingsPageTest extends BaseTest {
+public class MyBookingsPageTest extends CustomerAuthBaseTest {
 
     @Override
     @BeforeMethod(alwaysRun = true)
@@ -19,13 +19,13 @@ public class MyBookingsPageTest extends BaseTest {
         getDriver().get(Config.getBaseUrl() + "/my-bookings");
     }
 
-    @Test(description = "TC-C17: Trang Vé của tôi load")
+    @Test(description = "Trang Vé của tôi load")
     public void myBookingsPageLoads() {
         MyBookingsPage page = new MyBookingsPage(getDriver());
         Assert.assertTrue(page.isPageLoaded(), "Trang Vé của tôi phải load");
     }
 
-    @Test(description = "TC-C18: Title trang Vé của tôi đúng")
+    @Test(description = "Title trang Vé của tôi đúng")
     public void myBookingsPageTitle() {
         MyBookingsPage page = new MyBookingsPage(getDriver());
         String title = page.getPageTitle();

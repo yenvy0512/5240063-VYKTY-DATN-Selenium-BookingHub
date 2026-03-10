@@ -23,16 +23,16 @@
             <class name="tests.admin.AdminLoginPageTest"/>
         </classes>
     </test>
-    <test name="Web Admin - Dashboard &amp; CRUD">
+    <test name="Web Admin - Dashboard &amp; Các trang">
         <classes>
             <class name="tests.admin.AdminDashboardPageTest"/>
             <class name="tests.admin.AdminBookingsPageTest"/>
             <class name="tests.admin.AdminTripsPageTest"/>
             <class name="tests.admin.AdminVehiclesPageTest"/>
-            <class name="tests.admin.AdminLocationsPageTest"/>
-            <class name="tests.admin.AdminBusCompaniesPageTest"/>
+            <class name="tests.admin.AdminLocationsTest"/>
+            <class name="tests.admin.AdminBusCompaniesTest"/>
             <class name="tests.admin.AdminUsersPageTest"/>
-            <class name="tests.admin.AdminVASPageTest"/>
+            <class name="tests.admin.AdminVASTest"/>
             <class name="tests.admin.AdminNotificationsPageTest"/>
             <class name="tests.admin.AdminPaymentsPageTest"/>
             <class name="tests.admin.AdminReviewsPageTest"/>

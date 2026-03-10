@@ -19,13 +19,13 @@ public class AdminDashboardPageTest extends AdminAuthBaseTest {
         getDriver().get(Config.getBaseUrlAdmin() + "/");
     }
 
-    @Test(description = "TC-A04: Dashboard hiển thị sau khi đăng nhập")
+    @Test(description = "Dashboard hiển thị sau khi đăng nhập")
     public void dashboardDisplayed() {
         AdminDashboardPage page = new AdminDashboardPage(getDriver());
         Assert.assertTrue(page.isDashboardDisplayed(), "Dashboard phải hiển thị");
     }
 
-    @Test(description = "TC-A05: Title Dashboard đúng")
+    @Test(description = "Title Dashboard đúng")
     public void dashboardTitle() {
         AdminDashboardPage page = new AdminDashboardPage(getDriver());
         String title = page.getPageTitle();

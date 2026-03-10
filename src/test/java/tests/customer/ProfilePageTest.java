@@ -19,13 +19,13 @@ public class ProfilePageTest extends BaseTest {
         getDriver().get(Config.getBaseUrl() + "/profile");
     }
 
-    @Test(description = "TC-C19: Trang profile load")
+    @Test(description = "Trang profile load")
     public void profilePageLoads() {
         ProfilePage page = new ProfilePage(getDriver());
         Assert.assertTrue(page.isPageLoaded(), "Trang profile phải load");
     }
 
-    @Test(description = "TC-C20: Title trang profile chứa Thông tin hoặc BookingHub")
+    @Test(description = "Title trang profile chứa Thông tin hoặc BookingHub")
     public void profilePageTitle() {
         ProfilePage page = new ProfilePage(getDriver());
         String title = page.getPageTitle();

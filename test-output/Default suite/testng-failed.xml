@@ -3,14 +3,23 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="tests.admin.AdminDashboardPageTest">
+      <class name="tests.admin.AdminBusCompaniesTest">
         <methods>
-          <include name="tearDown"/>
+          <include name="tableHasHeaderTenNhaXe"/>
+          <include name="crud_update"/>
+          <include name="delayAfterTest"/>
           <include name="setUp"/>
-          <include name="dashboardDisplayed"/>
-          <include name="dashboardTitle"/>
+          <include name="tearDownClass"/>
+          <include name="addButtonDisplayed"/>
+          <include name="crud_create"/>
+          <include name="pageDisplayed"/>
+          <include name="resetToBaseUrl"/>
+          <include name="pageTitle"/>
+          <include name="initDriver"/>
+          <include name="validation_submitEmpty_modalStaysOpen"/>
+          <include name="crud_delete"/>
         </methods>
-      </class> <!-- tests.admin.AdminDashboardPageTest -->
+      </class> <!-- tests.admin.AdminBusCompaniesTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
