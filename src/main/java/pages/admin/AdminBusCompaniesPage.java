@@ -25,6 +25,9 @@ public class AdminBusCompaniesPage extends BasePage {
     @FindBy(css = "[data-testid='admin-bus-companies-search-input']")
     private WebElement searchInput;
 
+    @FindBy(css = "[data-testid='admin-bus-companies-search-submit']")
+    private WebElement searchSubmit;
+
     @FindBy(xpath = "//th[contains(.,'Tên nhà xe')]")
     private WebElement headerTenNhaXe;
 
@@ -72,6 +75,33 @@ public class AdminBusCompaniesPage extends BasePage {
 
     public String getPageTitle() {
         return driver.getTitle();
+    }
+
+    public boolean isSearchInputDisplayed() {
+        return searchInput != null && searchInput.isDisplayed();
+    }
+
+    public void typeSearchKeyword(String keyword) {
+        if (searchInput != null) {
+            searchInput.clear();
+            searchInput.sendKeys(keyword != null ? keyword : "");
+        }
+    }
+
+    public void clickSearchSubmit() {
+        if (searchSubmit != null) {
+            searchSubmit.click();
+        }
+    }
+
+    public boolean isPaginationInfoDisplayed() {
+        List<WebElement> els = driver.findElements(By.cssSelector("[data-testid='admin-bus-companies-pagination-info']"));
+        return !els.isEmpty() && els.get(0).isDisplayed();
+    }
+
+    public boolean headingContainsNhaXe() {
+        List<WebElement> h1 = driver.findElements(By.xpath("//h1[contains(.,'Nhà xe')]"));
+        return !h1.isEmpty() && h1.get(0).isDisplayed();
     }
 
     // --- CRUD ---

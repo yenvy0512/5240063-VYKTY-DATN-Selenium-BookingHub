@@ -19,18 +19,18 @@ public class AdminReviewsPageTest extends AdminAuthBaseTest {
         getDriver().get(Config.getBaseUrlAdmin() + "/reviews");
     }
 
-    @Test(description = "Trang Quản lý Đánh giá load")
+    @Test(description = "RV-01 Trang Quản lý Đánh giá load")
     public void reviewsPageLoads() {
         AdminReviewsPage page = new AdminReviewsPage(getDriver());
         Assert.assertTrue(page.isPageLoaded(), "Trang Quản lý Đánh giá phải load");
     }
 
-    @Test(description = "Title trang đánh giá đúng")
+    @Test(description = "RV-02 Tiêu đề trang đánh giá đúng")
     public void reviewsPageTitle() {
         AdminReviewsPage page = new AdminReviewsPage(getDriver());
         String title = page.getPageTitle();
         Assert.assertNotNull(title);
         Assert.assertTrue(title.contains("Đánh giá") || title.contains("BookingHub"),
-                "Title phải chứa Đánh giá/BookingHub");
+                "Tiêu đề phải chứa Đánh giá/BookingHub");
     }
 }

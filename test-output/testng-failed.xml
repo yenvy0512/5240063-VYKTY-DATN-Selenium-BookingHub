@@ -5,19 +5,24 @@
     <classes>
       <class name="tests.admin.AdminBusCompaniesTest">
         <methods>
-          <include name="tableHasHeaderTenNhaXe"/>
-          <include name="crud_update"/>
           <include name="delayAfterTest"/>
+          <include name="paginationWhenHasData"/>
+          <include name="crud_update"/>
           <include name="setUp"/>
-          <include name="tearDownClass"/>
           <include name="addButtonDisplayed"/>
-          <include name="crud_create"/>
-          <include name="pageDisplayed"/>
+          <include name="searchInputDisplayed"/>
           <include name="resetToBaseUrl"/>
-          <include name="pageTitle"/>
-          <include name="initDriver"/>
-          <include name="validation_submitEmpty_modalStaysOpen"/>
+          <include name="searchByKeyword"/>
+          <include name="headingDisplayed"/>
           <include name="crud_delete"/>
+          <include name="tableHasHeaderTenNhaXe"/>
+          <include name="tearDownClass"/>
+          <include name="crud_create"/>
+          <include name="searchEmptyKeyword"/>
+          <include name="pageDisplayed"/>
+          <include name="initDriver"/>
+          <include name="pageTitle"/>
+          <include name="validation_submitEmpty_modalStaysOpen"/>
         </methods>
       </class> <!-- tests.admin.AdminBusCompaniesTest -->
     </classes>

@@ -24,7 +24,7 @@ public class LoginPage extends BasePage {
     @FindBy(css = "[data-testid='link-register']")
     private WebElement linkRegister;
 
-    @FindBy(xpath = "//h1[contains(.,'Đăng nhập')]")
+    @FindBy(css = "[data-testid='customer-login-heading']")
     private WebElement headingLogin;
 
     public LoginPage(WebDriver driver) {
@@ -71,7 +71,21 @@ public class LoginPage extends BasePage {
         }
     }
 
+    public boolean isHeadingDisplayed() {
+        return headingLogin != null && headingLogin.isDisplayed();
+    }
+
     public String getPageTitle() {
         return driver.getTitle();
+    }
+
+    public void clickSubmit() {
+        if (submitButton != null) {
+            submitButton.click();
+        }
+    }
+
+    public String getPasswordInputType() {
+        return passwordInput != null ? passwordInput.getAttribute("type") : "";
     }
 }

@@ -15,6 +15,9 @@ public class RegisterPage extends BasePage {
     @FindBy(css = "[data-testid='register-submit']")
     private WebElement submitButton;
 
+    @FindBy(css = "[data-testid='customer-register-heading']")
+    private WebElement headingRegister;
+
     @FindBy(id = "username")
     private WebElement usernameInput;
 
@@ -36,6 +39,10 @@ public class RegisterPage extends BasePage {
 
     public boolean isRegisterFormDisplayed() {
         return registerForm != null && registerForm.isDisplayed();
+    }
+
+    public boolean isHeadingDisplayed() {
+        return headingRegister != null && headingRegister.isDisplayed();
     }
 
     public boolean hasUsernameField() {
@@ -71,5 +78,30 @@ public class RegisterPage extends BasePage {
 
     public String getPageTitle() {
         return driver.getTitle();
+    }
+
+    public String getPasswordFieldType() {
+        return passwordInput != null ? passwordInput.getAttribute("type") : "";
+    }
+
+    public void fillUsername(String value) {
+        if (usernameInput != null) {
+            usernameInput.clear();
+            usernameInput.sendKeys(value);
+        }
+    }
+
+    public void fillEmail(String value) {
+        if (emailInput != null) {
+            emailInput.clear();
+            emailInput.sendKeys(value);
+        }
+    }
+
+    public void fillPassword(String value) {
+        if (passwordInput != null) {
+            passwordInput.clear();
+            passwordInput.sendKeys(value);
+        }
     }
 }

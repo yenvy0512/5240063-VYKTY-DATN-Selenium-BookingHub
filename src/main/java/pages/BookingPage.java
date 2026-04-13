@@ -27,6 +27,9 @@ public class BookingPage extends BasePage {
     @FindBy(css = "[data-testid='booking-submit']")
     private WebElement submitButton;
 
+    @FindBy(css = "[data-testid='customer-booking-heading']")
+    private WebElement bookingHeading;
+
     public BookingPage(WebDriver driver) {
         super(driver);
     }
@@ -57,5 +60,36 @@ public class BookingPage extends BasePage {
 
     public String getPageTitle() {
         return driver.getTitle();
+    }
+
+    public void fillCustomerName(String name) {
+        if (customerNameInput != null) {
+            customerNameInput.clear();
+            customerNameInput.sendKeys(name);
+        }
+    }
+
+    public void fillCustomerPhone(String phone) {
+        if (customerPhoneInput != null) {
+            customerPhoneInput.clear();
+            customerPhoneInput.sendKeys(phone);
+        }
+    }
+
+    public void fillCustomerEmail(String email) {
+        if (customerEmailInput != null) {
+            customerEmailInput.clear();
+            customerEmailInput.sendKeys(email);
+        }
+    }
+
+    public void clickSubmit() {
+        if (submitButton != null) {
+            submitButton.click();
+        }
+    }
+
+    public boolean headingBookingDisplayed() {
+        return bookingHeading != null && bookingHeading.isDisplayed();
     }
 }

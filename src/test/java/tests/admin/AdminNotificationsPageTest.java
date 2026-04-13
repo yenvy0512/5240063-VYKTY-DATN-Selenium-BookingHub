@@ -19,18 +19,18 @@ public class AdminNotificationsPageTest extends AdminAuthBaseTest {
         getDriver().get(Config.getBaseUrlAdmin() + "/notifications");
     }
 
-    @Test(description = "Trang Thông báo hiển thị")
+    @Test(description = "NT-01 Trang Thông báo hiển thị")
     public void notificationsPageDisplayed() {
         AdminNotificationsPage page = new AdminNotificationsPage(getDriver());
         Assert.assertTrue(page.isPageDisplayed(), "Trang Thông báo phải hiển thị");
     }
 
-    @Test(description = "Title trang thông báo đúng")
+    @Test(description = "NT-02 Tiêu đề trang thông báo đúng")
     public void notificationsPageTitle() {
         AdminNotificationsPage page = new AdminNotificationsPage(getDriver());
         String title = page.getPageTitle();
         Assert.assertNotNull(title);
         Assert.assertTrue(title.contains("Thông báo") || title.contains("BookingHub"),
-                "Title phải chứa Thông báo/BookingHub");
+                "Tiêu đề phải chứa Thông báo/BookingHub");
     }
 }

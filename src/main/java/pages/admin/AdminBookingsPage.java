@@ -1,9 +1,12 @@
 package pages.admin;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.BasePage;
+
+import java.util.List;
 
 /**
  * Trang Quản lý Đặt vé web-admin (/bookings).
@@ -71,5 +74,27 @@ public class AdminBookingsPage extends BasePage {
 
     public String getPageTitle() {
         return driver.getTitle();
+    }
+
+    public void typeSearchKeyword(String keyword) {
+        if (searchInput != null) {
+            searchInput.clear();
+            searchInput.sendKeys(keyword != null ? keyword : "");
+        }
+    }
+
+    public void clickSearchSubmit() {
+        if (searchSubmit != null) {
+            searchSubmit.click();
+        }
+    }
+
+    public boolean headingDisplayed() {
+        List<WebElement> h1 = driver.findElements(By.xpath("//h1[contains(.,'Đặt vé')]"));
+        return !h1.isEmpty() && h1.get(0).isDisplayed();
+    }
+
+    public String getPaginationInfoText() {
+        return paginationInfo != null ? paginationInfo.getText() : "";
     }
 }

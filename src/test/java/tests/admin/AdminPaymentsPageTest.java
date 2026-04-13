@@ -19,18 +19,18 @@ public class AdminPaymentsPageTest extends AdminAuthBaseTest {
         getDriver().get(Config.getBaseUrlAdmin() + "/payments");
     }
 
-    @Test(description = "Trang Quản lý Thanh toán load")
+    @Test(description = "AP-01 Trang Quản lý Thanh toán load")
     public void paymentsPageLoads() {
         AdminPaymentsPage page = new AdminPaymentsPage(getDriver());
         Assert.assertTrue(page.isPageLoaded(), "Trang Quản lý Thanh toán phải load");
     }
 
-    @Test(description = "Title trang thanh toán đúng")
+    @Test(description = "AP-02 Tiêu đề trang thanh toán đúng")
     public void paymentsPageTitle() {
         AdminPaymentsPage page = new AdminPaymentsPage(getDriver());
         String title = page.getPageTitle();
         Assert.assertNotNull(title);
         Assert.assertTrue(title.contains("Thanh toán") || title.contains("BookingHub"),
-                "Title phải chứa Thanh toán/BookingHub");
+                "Tiêu đề phải chứa Thanh toán/BookingHub");
     }
 }

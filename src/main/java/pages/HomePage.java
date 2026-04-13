@@ -12,10 +12,10 @@ public class HomePage extends BasePage {
     @FindBy(tagName = "body")
     private WebElement body;
 
-    @FindBy(xpath = "//h1[contains(.,'Đặt vé xe khách trực tuyến')]")
+    @FindBy(css = "[data-testid='customer-home-heading']")
     private WebElement mainHeading;
 
-    @FindBy(xpath = "//p[contains(.,'Nhanh chóng - An toàn - Tiện lợi')]")
+    @FindBy(css = "[data-testid='customer-home-subtitle']")
     private WebElement subtitle;
 
     @FindBy(css = "[data-testid='home-search-submit']")
@@ -30,13 +30,13 @@ public class HomePage extends BasePage {
     @FindBy(id = "departureDate")
     private WebElement departureDateInput;
 
-    @FindBy(xpath = "//h3[contains(.,'Nhiều nhà xe uy tín')]")
+    @FindBy(css = "[data-testid='customer-home-feature-0']")
     private WebElement feature1;
 
-    @FindBy(xpath = "//h3[contains(.,'Đặt vé nhanh chóng')]")
+    @FindBy(css = "[data-testid='customer-home-feature-1']")
     private WebElement feature2;
 
-    @FindBy(xpath = "//h3[contains(.,'An toàn & bảo mật')]")
+    @FindBy(css = "[data-testid='customer-home-feature-2']")
     private WebElement feature3;
 
     public HomePage(WebDriver driver) {
@@ -61,6 +61,22 @@ public class HomePage extends BasePage {
 
     public boolean isSearchFormDisplayed() {
         return departureSelect != null && arrivalSelect != null && departureDateInput != null;
+    }
+
+    public boolean isDepartureSelectDisplayed() {
+        return departureSelect != null && departureSelect.isDisplayed();
+    }
+
+    public boolean isArrivalSelectDisplayed() {
+        return arrivalSelect != null && arrivalSelect.isDisplayed();
+    }
+
+    public boolean isDepartureDateDisplayed() {
+        return departureDateInput != null && departureDateInput.isDisplayed();
+    }
+
+    public boolean isSearchSubmitEnabled() {
+        return searchSubmitButton != null && searchSubmitButton.isEnabled();
     }
 
     public boolean isSearchButtonDisplayed() {

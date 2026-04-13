@@ -19,18 +19,18 @@ public class AdminDashboardPageTest extends AdminAuthBaseTest {
         getDriver().get(Config.getBaseUrlAdmin() + "/");
     }
 
-    @Test(description = "Dashboard hiển thị sau khi đăng nhập")
+    @Test(description = "AD-01 Dashboard hiển thị sau khi đăng nhập")
     public void dashboardDisplayed() {
         AdminDashboardPage page = new AdminDashboardPage(getDriver());
         Assert.assertTrue(page.isDashboardDisplayed(), "Dashboard phải hiển thị");
     }
 
-    @Test(description = "Title Dashboard đúng")
+    @Test(description = "AD-02 Tiêu đề Dashboard đúng")
     public void dashboardTitle() {
         AdminDashboardPage page = new AdminDashboardPage(getDriver());
         String title = page.getPageTitle();
         Assert.assertNotNull(title);
         Assert.assertTrue(title.contains("Dashboard") || title.contains("Admin") || title.contains("BookingHub"),
-                "Title phải chứa Dashboard/Admin/BookingHub");
+                "Tiêu đề phải chứa Dashboard/Admin/BookingHub");
     }
 }

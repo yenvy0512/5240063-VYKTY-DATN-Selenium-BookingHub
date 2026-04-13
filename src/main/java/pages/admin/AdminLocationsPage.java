@@ -25,6 +25,9 @@ public class AdminLocationsPage extends BasePage {
     @FindBy(css = "[data-testid='admin-locations-search-input']")
     private WebElement searchInput;
 
+    @FindBy(css = "[data-testid='admin-locations-search-submit']")
+    private WebElement searchSubmit;
+
     @FindBy(xpath = "//th[contains(.,'Thành phố')]")
     private WebElement headerThanhPho;
 
@@ -78,6 +81,33 @@ public class AdminLocationsPage extends BasePage {
 
     public String getPageTitle() {
         return driver.getTitle();
+    }
+
+    public boolean isSearchInputDisplayed() {
+        return searchInput != null && searchInput.isDisplayed();
+    }
+
+    public void typeSearchKeyword(String keyword) {
+        if (searchInput != null) {
+            searchInput.clear();
+            searchInput.sendKeys(keyword != null ? keyword : "");
+        }
+    }
+
+    public void clickSearchSubmit() {
+        if (searchSubmit != null) {
+            searchSubmit.click();
+        }
+    }
+
+    public boolean isPaginationInfoDisplayed() {
+        List<WebElement> els = driver.findElements(By.cssSelector("[data-testid='admin-locations-pagination-info']"));
+        return !els.isEmpty() && els.get(0).isDisplayed();
+    }
+
+    public boolean headingContainsQuanLyDiaDiem() {
+        List<WebElement> h1 = driver.findElements(By.xpath("//h1[contains(.,'Địa điểm')]"));
+        return !h1.isEmpty() && h1.get(0).isDisplayed();
     }
 
     // --- CRUD ---

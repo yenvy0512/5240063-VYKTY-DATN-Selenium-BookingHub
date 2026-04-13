@@ -5,12 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.time.Duration;
 
@@ -74,11 +77,23 @@ public abstract class BaseTest {
     }
 
     private WebDriver createDriver() {
-        io.github.bonigarcia.wdm.WebDriverManager.getInstance(Config.getBrowser()).setup();
-        return switch (Config.getBrowser().toLowerCase()) {
+        String browser = Config.getBrowser().toLowerCase().trim();
+        switch (browser) {
+            case "firefox" -> WebDriverManager.firefoxdriver().setup();
+            case "edge", "msedge" -> WebDriverManager.edgedriver().setup();
+            default -> WebDriverManager.chromedriver().setup();
+        }
+        return switch (browser) {
             case "firefox" -> new FirefoxDriver(new FirefoxOptions());
-            case "edge" -> new EdgeDriver();
+            case "edge", "msedge" -> new EdgeDriver(edgeOptions());
             default -> new ChromeDriver(new ChromeOptions());
         };
+    }
+
+    /** Edge: dùng edgedriver().setup() thay vì getInstance("edge") — tránh lệch phiên bản / không tải driver. */
+    private static EdgeOptions edgeOptions() {
+        EdgeOptions o = new EdgeOptions();
+        o.addArguments("--disable-search-engine-choice-screen");
+        return o;
     }
 }

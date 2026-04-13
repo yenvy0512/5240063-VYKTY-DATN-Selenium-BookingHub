@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * Trang Tìm chuyến xe web-customer (/search).
@@ -12,7 +13,7 @@ public class SearchPage extends BasePage {
     @FindBy(css = "[data-testid='search-submit']")
     private WebElement searchSubmitButton;
 
-    @FindBy(xpath = "//h1[contains(.,'Tìm chuyến xe')]")
+    @FindBy(css = "[data-testid='customer-search-heading']")
     private WebElement headingSearch;
 
     @FindBy(id = "search-departureLocationId")
@@ -60,5 +61,33 @@ public class SearchPage extends BasePage {
 
     public String getPageTitle() {
         return driver.getTitle();
+    }
+
+    public String getSearchButtonTextOrTag() {
+        return searchSubmitButton != null ? searchSubmitButton.getText() : "";
+    }
+
+    public boolean isSearchSubmitEnabled() {
+        return searchSubmitButton != null && searchSubmitButton.isEnabled();
+    }
+
+    /** Chọn điểm đi/đến theo index (0 = placeholder). */
+    public void selectDepartureByIndex(int index) {
+        if (departureSelect != null) {
+            new Select(departureSelect).selectByIndex(index);
+        }
+    }
+
+    public void selectArrivalByIndex(int index) {
+        if (arrivalSelect != null) {
+            new Select(arrivalSelect).selectByIndex(index);
+        }
+    }
+
+    public int getDepartureOptionCount() {
+        if (departureSelect == null) {
+            return 0;
+        }
+        return new Select(departureSelect).getOptions().size();
     }
 }

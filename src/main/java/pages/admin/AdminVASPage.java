@@ -12,7 +12,7 @@ import java.time.Duration;
 import java.util.List;
 
 /**
- * Trang Quản lý Dịch vụ (VAS) web-admin (/vas). Hỗ trợ Create, Delete.
+ * Trang Quản lý Dịch vụ (VAS) web-admin (/vas). Create, Update, Delete.
  */
 public class AdminVASPage extends BasePage {
 
@@ -43,6 +43,29 @@ public class AdminVASPage extends BasePage {
 
     public String getPageTitle() {
         return driver.getTitle();
+    }
+
+    public boolean isAddButtonDisplayed() {
+        return addButton != null && addButton.isDisplayed();
+    }
+
+    public boolean isTableDisplayed() {
+        return table != null && table.isDisplayed();
+    }
+
+    public void typeSearchKeyword(String keyword) {
+        WebElement input = driver.findElement(By.cssSelector("[data-testid='admin-vas-search-input']"));
+        input.clear();
+        input.sendKeys(keyword != null ? keyword : "");
+    }
+
+    public void clickSearchButton() {
+        driver.findElement(By.cssSelector("[data-testid='admin-vas-search-submit']")).click();
+    }
+
+    public boolean headingDisplayed() {
+        List<WebElement> h1 = driver.findElements(By.cssSelector("[data-testid='admin-vas-heading']"));
+        return !h1.isEmpty() && h1.get(0).isDisplayed();
     }
 
     // --- CRUD ---
@@ -83,6 +106,14 @@ public class AdminVASPage extends BasePage {
     public void clickSubmitOnly() {
         WebElement submit = driver.findElement(By.cssSelector("[data-testid='admin-vas-form'] button[type='submit']"));
         submit.click();
+    }
+
+    public void clickEditFirstRow() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(WAIT_SECONDS));
+        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector("[data-testid^='admin-vas-btn-edit-']")));
+        btn.click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-modal']")));
     }
 
     public void clickDeleteFirstRow() {
