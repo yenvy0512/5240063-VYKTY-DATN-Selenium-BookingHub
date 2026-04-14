@@ -1,15 +1,13 @@
 package tests.customer;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -23,7 +21,6 @@ public class RegisterPageTest {
 
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private final Map<String, String> vars = new HashMap<>();
 
 	@BeforeMethod
 	public void setUp() {
@@ -39,372 +36,263 @@ public class RegisterPageTest {
 		}
 	}
 
-	@Test(description = "RG-01 Trang đăng ký hiển thị form")
-	public void case_RG_001() {
+	private void logoutBefore() {
+		boolean isLoggedIn = !driver.findElements(By.cssSelector(".user-avatar")).isEmpty();
+
+		if (isLoggedIn) {
+			wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".user-avatar"))).click();
+
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Đăng xuất')]"))).click();
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='confirm-modal']")));
+
+			wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
+					.click();
+
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".btn-login")));
+		}
+	}
+
+	private void goToRegisterPage() {
 		driver.get(Config.getBaseUrl() + "/");
 		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
+		logoutBefore();
+
 		wait.until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		Assert.assertFalse(driver.findElements(By.cssSelector(".mb-8")).isEmpty(), "Missing element");
-		
+
+		wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector(".text-3xl"), "Đăng ký"));
+	}
+
+	private void waitForToast(String message) {
+		new WebDriverWait(driver, Duration.ofSeconds(10))
+				.until(d -> d.findElement(By.tagName("body")).getText().contains(message));
+	}
+
+	@Test(description = "RG-01 Trang đăng ký hiển thị form")
+	public void case_RG_001() {
+		goToRegisterPage();
+
+		WebElement form = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-8")));
+
+		Assert.assertTrue(form.isDisplayed());
+
 	}
 
 	@Test(description = "RG-02 Tiêu đề trang đăng ký đúng")
 	public void case_RG_002() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
+		goToRegisterPage();
+
+		wait.until(ExpectedConditions.titleIs("Đăng ký - BookingHub"));
 		Assert.assertEquals(driver.getTitle(), "Đăng ký - BookingHub");
-		
+
 	}
 
 	@Test(description = "RG-04 Trang đăng ký hiển thị đủ thông tin")
 	public void case_RG_004() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		Assert.assertFalse(driver.findElements(By.id("username")).isEmpty(), "Missing element");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("email"))).click();
-		Assert.assertFalse(driver.findElements(By.id("email")).isEmpty(), "Missing element");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
-		Assert.assertFalse(driver.findElements(By.id("password")).isEmpty(), "Missing element");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).click();
-		Assert.assertFalse(driver.findElements(By.id("name")).isEmpty(), "Missing element");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("phone"))).click();
-		Assert.assertFalse(driver.findElements(By.id("phone")).isEmpty(), "Missing element");
-		
+		goToRegisterPage();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone")));
+
+		Assert.assertTrue(true);
+
 	}
 
 	@Test(description = "RG-05 Ô mật khẩu có type password")
 	public void case_RG_005() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		Assert.assertFalse(driver.findElements(By.cssSelector("#password[type='password']")).isEmpty(),
-				"Missing element");
-		
+		goToRegisterPage();
+
+		WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+
+		Assert.assertEquals(password.getAttribute("type"), "password");
+
 	}
 
 	@Test(description = "RG-06 Nút Đăng ký hiển thị")
 	public void case_RG_006() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		Assert.assertTrue(wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='register-submit']")))
-				.getText().contains("Đăng ký"));
-		
+		goToRegisterPage();
+
+		WebElement btn = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='register-submit']")));
+
+		Assert.assertTrue(btn.getText().contains("Đăng ký"));
+
 	}
 
 	@Test(description = "RG-07 Gửi thông tin trống form vẫn hiển thị và thông báo nhập các trường bắt buộc")
 	public void case_RG_007() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
+		goToRegisterPage();
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='register-submit']"))).click();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("username"))).isEnabled());
-		
+
+		WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+
+		Boolean isValid = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();",
+				username);
+
+		Assert.assertFalse(isValid);
+
 	}
 
 	@Test(description = "RG-08 Nhập username rồi gửi thông tin vẫn ở form thông báo nhập các trường bắt buộc")
 	public void case_RG_008() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("username"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).sendKeys("test");
+		goToRegisterPage();
+
+		WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+		username.sendKeys("test");
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='register-submit']"))).click();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("email"))).isEnabled());
-		
+
+		WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+
+		Boolean isValid = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();",
+				email);
+
+		Assert.assertFalse(isValid);
+
 	}
 
 	@Test(description = "RG-09 Điền email không hợp lệ báo lỗi")
 	public void case_RG_009() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("username"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).sendKeys("teest");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).sendKeys("Nguyễn Văn B");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("phone"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).sendKeys("0333333333");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("email"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).sendKeys("a");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".container"))).click();
+		goToRegisterPage();
+
+		WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+		email.clear();
+		email.sendKeys("a");
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='register-submit']"))).click();
-		Assert.assertFalse(driver.findElements(By.cssSelector("#email:invalid")).isEmpty(), "Missing element");
-		
+
+		Boolean isValid = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();",
+				email);
+
+		Assert.assertFalse(isValid);
 	}
 
 	@Test(description = "RG-10 Kiểm tra trùng username nếu đã tồn tại")
 	public void case_RG_010() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("username"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).sendKeys("teest");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).sendKeys("Nguyễn Văn B");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("phone"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).sendKeys("0333333333");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("email"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).sendKeys("a@gmail.com");
+		goToRegisterPage();
+
+		WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+		username.clear();
+		username.sendKeys("teest");
+
+		WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+		password.clear();
+		password.sendKeys("123456");
+
+		WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
+		name.clear();
+		name.sendKeys("Nguyễn Văn B");
+
+		WebElement phone = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone")));
+		phone.clear();
+		phone.sendKeys("0333333333");
+
+		WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+		email.clear();
+		email.sendKeys("a@gmail.com");
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='register-submit']"))).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Username đã tồn tại\")]")).isEmpty());
-		
+
+		waitForToast("Username đã tồn tại");
 	}
 
 	@Test(description = "RG-11 Kiểm tra trùng Email nếu đã tồn tại")
 	public void case_RG_011() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("username"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).sendKeys("teest1");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).sendKeys("Nguyễn Văn B");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("phone"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).sendKeys("0333333333");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("email"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).sendKeys("a@gmail.com");
+		goToRegisterPage();
+
+		WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+		username.clear();
+		username.sendKeys("teest1");
+
+		WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+		password.clear();
+		password.sendKeys("123456");
+
+		WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
+		name.clear();
+		name.sendKeys("Nguyễn Văn B");
+
+		WebElement phone = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone")));
+		phone.clear();
+		phone.sendKeys("0333333333");
+
+		WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+		email.clear();
+		email.sendKeys("a@gmail.com");
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='register-submit']"))).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Email đã tồn tại\")]")).isEmpty());
-		
+
+		waitForToast("Email đã tồn tại");
+
 	}
 
 	@Test(description = "RG-12 Kiểm tra trùng SĐT nếu đã tồn tại")
 	public void case_RG_012() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("username"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).sendKeys("teest1111");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).sendKeys("Nguyễn Văn B");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("phone"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).sendKeys("0333333333");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("email"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).sendKeys("abdc@gmail.com");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='register-submit']"))).click();
-		Assert.assertFalse(driver
-				.findElements(By.xpath(
-						"//*[contains(normalize-space(.),\"Số điện thoại này đã được liên kết với tài khoản khác\")]"))
-				.isEmpty());
-		
+		goToRegisterPage();
+
+	    WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+	    username.clear();
+	    username.sendKeys("teest1111");
+
+	    WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+	    password.clear();
+	    password.sendKeys("123456");
+
+	    WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
+	    name.clear();
+	    name.sendKeys("Nguyễn Văn B");
+
+	    WebElement phone = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone")));
+	    phone.clear();
+	    phone.sendKeys("0333333333");
+
+	    WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+	    email.clear();
+	    email.sendKeys("abdc@gmail.com");
+
+	    wait.until(ExpectedConditions.elementToBeClickable(
+	        By.cssSelector("[data-testid='register-submit']")
+	    )).click();
+
+	    waitForToast("Số điện thoại này đã được liên kết với tài khoản khác");
+
 	}
 
 	@Test(description = "RG-13 Nhập đúng thông tin đăng ký thành công")
 	public void case_RG_013() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
-		
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-cancel']")))
-				.click();
-		new Actions(driver).moveToElement(wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='confirm-modal-cancel']"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".bg-red-600"))).click();
-		
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("username"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).sendKeys("teest11111");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("name"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name"))).sendKeys("Nguyễn Văn B");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("phone"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone"))).sendKeys("0333333334");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("email"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email"))).sendKeys("abdcd@gmail.com");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='register-submit']"))).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Đăng ký thành công!\")]")).isEmpty());
-		
+		goToRegisterPage();
+
+	    WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+	    username.clear();
+	    username.sendKeys("teest11111");
+
+	    WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+	    password.clear();
+	    password.sendKeys("123456");
+
+	    WebElement name = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
+	    name.clear();
+	    name.sendKeys("Nguyễn Văn B");
+
+	    WebElement phone = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone")));
+	    phone.clear();
+	    phone.sendKeys("0333333334");
+
+	    WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
+	    email.clear();
+	    email.sendKeys("abdcd@gmail.com");
+
+	    wait.until(ExpectedConditions.elementToBeClickable(
+	        By.cssSelector("[data-testid='register-submit']")
+	    )).click();
+
+	    waitForToast("Đăng ký thành công!");
+
 	}
 
 }
