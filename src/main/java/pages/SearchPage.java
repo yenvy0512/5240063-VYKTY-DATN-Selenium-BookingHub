@@ -5,9 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
-/**
- * Trang Tìm chuyến xe web-customer (/search).
- */
 public class SearchPage extends BasePage {
 
     @FindBy(css = "[data-testid='search-submit']")

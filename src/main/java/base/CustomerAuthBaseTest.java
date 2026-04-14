@@ -7,10 +7,6 @@ import pages.LoginPage;
 
 import java.time.Duration;
 
-/**
- * Base cho test web-customer cần đăng nhập (Đặt vé, Thanh toán, Vé của tôi).
- * Sau khi mở trang customer, thực hiện login bằng customer.username / customer.password.
- */
 public abstract class CustomerAuthBaseTest extends BaseTest {
 
     @Override
@@ -20,7 +16,6 @@ public abstract class CustomerAuthBaseTest extends BaseTest {
         loginIfNeeded();
     }
 
-    /** Đăng nhập customer (config) để test các trang cần auth. */
     protected void loginIfNeeded() {
         getDriver().get(Config.getBaseUrl() + "/login");
         LoginPage loginPage = new LoginPage(getDriver());

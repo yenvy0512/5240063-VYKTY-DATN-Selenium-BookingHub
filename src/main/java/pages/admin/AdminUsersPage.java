@@ -11,9 +11,6 @@ import pages.BasePage;
 import java.time.Duration;
 import java.util.List;
 
-/**
- * Trang Quản lý Người dùng web-admin (/users). CRUD qua modal.
- */
 public class AdminUsersPage extends BasePage {
 
     @FindBy(css = "[data-testid='admin-users-page']")

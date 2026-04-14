@@ -4,10 +4,6 @@ import config.Config;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-/**
- * Xóa phiên trình duyệt (cookie + storage) trên một origin để test trang login/register
- * luôn thấy form, không bị redirect do token còn từ test trước trong cùng class.
- */
 public final class BrowserStorageHelper {
 
     private BrowserStorageHelper() {

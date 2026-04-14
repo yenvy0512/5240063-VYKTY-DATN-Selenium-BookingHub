@@ -8,9 +8,6 @@ import org.testng.annotations.Test;
 import pages.admin.AdminLoginPage;
 import utils.BrowserStorageHelper;
 
-/**
- * Test case trang Đăng nhập web-admin.
- */
 public class AdminLoginPageTest extends AdminBaseTest {
 
     @Override

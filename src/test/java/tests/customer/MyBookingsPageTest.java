@@ -10,9 +10,6 @@ import pages.MyBookingsPage;
 
 import java.time.Duration;
 
-/**
- * Test trang Vé của tôi (cần đăng nhập).
- */
 public class MyBookingsPageTest extends CustomerAuthBaseTest {
 
     @Override

@@ -7,9 +7,6 @@ import pages.BasePage;
 
 import java.util.List;
 
-/**
- * Trang Thông tin cá nhân web-customer (/profile).
- */
 public class ProfilePage extends BasePage {
 
     public ProfilePage(WebDriver driver) {

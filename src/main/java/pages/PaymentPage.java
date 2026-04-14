@@ -7,9 +7,6 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-/**
- * Trang Thanh toán web-customer (/payment).
- */
 public class PaymentPage extends BasePage {
 
     public PaymentPage(WebDriver driver) {

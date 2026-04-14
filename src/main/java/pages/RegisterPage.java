@@ -4,9 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-/**
- * Trang Đăng ký web-customer (/register).
- */
 public class RegisterPage extends BasePage {
 
     @FindBy(css = "[data-testid='register-form']")

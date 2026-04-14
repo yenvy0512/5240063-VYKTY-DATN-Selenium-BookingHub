@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * Đọc cấu hình từ config.properties.
- */
 public final class Config {
 
     private static final String CONFIG_FILE = "config.properties";
@@ -59,7 +56,7 @@ public final class Config {
         return Integer.parseInt(props.getProperty("page.load.timeout.seconds", "30"));
     }
 
-    /** Delay (giây) sau mỗi test method để dễ quan sát. 0 = không delay. */
+    // Delay (giây) sau mỗi test method để dễ quan sát. 0 = không delay.
     public static int getDelayAfterTestSeconds() {
         return Integer.parseInt(props.getProperty("delay.after.test.seconds", "0"));
     }

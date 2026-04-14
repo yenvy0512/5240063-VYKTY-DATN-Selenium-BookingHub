@@ -8,9 +8,6 @@ import pages.BasePage;
 
 import java.util.List;
 
-/**
- * Trang Quản lý Đặt vé web-admin (/bookings).
- */
 public class AdminBookingsPage extends BasePage {
 
     @FindBy(css = "[data-testid='admin-bookings-page']")

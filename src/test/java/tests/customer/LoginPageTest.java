@@ -11,9 +11,6 @@ import utils.BrowserStorageHelper;
 
 import java.time.Duration;
 
-/**
- * Test trang Đăng nhập web-customer.
- */
 public class LoginPageTest extends BaseTest {
 
     @Override

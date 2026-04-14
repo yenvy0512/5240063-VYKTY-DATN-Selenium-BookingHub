@@ -11,9 +11,6 @@ import pages.BasePage;
 import java.time.Duration;
 import java.util.List;
 
-/**
- * Trang tạo chuyến xe web-admin (/trips/create).
- */
 public class AdminTripCreatePage extends BasePage {
 
     @FindBy(css = "[data-testid='admin-trip-create-page']")

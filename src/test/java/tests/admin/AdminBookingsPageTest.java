@@ -7,9 +7,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.admin.AdminBookingsPage;
 
-/**
- * Test case trang Quản lý Đặt vé web-admin.
- */
 public class AdminBookingsPageTest extends AdminAuthBaseTest {
 
     @Override

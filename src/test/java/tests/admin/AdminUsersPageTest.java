@@ -7,9 +7,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.admin.AdminUsersPage;
 
-/**
- * Quản lý Người dùng: bảng, CRUD qua modal.
- */
 public class AdminUsersPageTest extends AdminAuthBaseTest {
 
     private static String createdUsername;

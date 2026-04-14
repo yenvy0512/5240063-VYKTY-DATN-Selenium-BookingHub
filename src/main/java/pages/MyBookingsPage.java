@@ -6,9 +6,6 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-/**
- * Trang Vé của tôi web-customer (/my-bookings).
- */
 public class MyBookingsPage extends BasePage {
 
     public MyBookingsPage(WebDriver driver) {

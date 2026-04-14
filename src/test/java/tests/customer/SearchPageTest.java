@@ -8,9 +8,6 @@ import org.testng.annotations.Test;
 import pages.SearchPage;
 import utils.ValidationTestHelper;
 
-/**
- * Test trang Tìm chuyến — tìm kiếm, form, validation.
- */
 public class SearchPageTest extends BaseTest {
 
     @Override

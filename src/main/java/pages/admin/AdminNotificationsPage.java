@@ -5,9 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.BasePage;
 
-/**
- * Trang Thông báo web-admin (/notifications).
- */
 public class AdminNotificationsPage extends BasePage {
 
     @FindBy(css = "[data-testid='admin-notifications-page']")

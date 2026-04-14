@@ -4,9 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-/**
- * Trang chủ web-customer. Có form tìm chuyến và nút tìm kiếm.
- */
 public class HomePage extends BasePage {
 
     @FindBy(tagName = "body")

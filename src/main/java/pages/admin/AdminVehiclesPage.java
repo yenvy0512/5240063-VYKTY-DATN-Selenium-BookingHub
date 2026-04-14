@@ -11,9 +11,6 @@ import pages.BasePage;
 import java.time.Duration;
 import java.util.List;
 
-/**
- * Trang Quản lý Xe web-admin (/vehicles). Hỗ trợ CRUD.
- */
 public class AdminVehiclesPage extends BasePage {
 
     @FindBy(css = "[data-testid='admin-vehicles-page']")

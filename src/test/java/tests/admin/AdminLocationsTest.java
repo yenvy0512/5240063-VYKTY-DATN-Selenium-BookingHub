@@ -12,9 +12,6 @@ import pages.admin.AdminLocationsPage;
 
 import java.time.Duration;
 
-/**
- * Test Địa điểm: trang, CRUD (Create/Update/Delete), Validation - gộp 1 file.
- */
 public class AdminLocationsTest extends AdminAuthBaseTest {
 
     @Override

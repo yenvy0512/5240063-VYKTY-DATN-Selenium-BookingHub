@@ -7,9 +7,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.admin.AdminDashboardPage;
 
-/**
- * Test case Dashboard web-admin.
- */
 public class AdminDashboardPageTest extends AdminAuthBaseTest {
 
     @Override

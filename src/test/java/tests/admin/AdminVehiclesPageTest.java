@@ -12,9 +12,6 @@ import pages.admin.AdminVehiclesPage;
 
 import java.time.Duration;
 
-/**
- * Quản lý Xe: tìm kiếm, phân trang, CRUD, validation.
- */
 public class AdminVehiclesPageTest extends AdminAuthBaseTest {
 
     @Override

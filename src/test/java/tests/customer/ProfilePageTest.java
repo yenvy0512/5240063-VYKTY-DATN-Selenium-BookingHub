@@ -10,9 +10,6 @@ import pages.ProfilePage;
 
 import java.time.Duration;
 
-/**
- * Test trang Thông tin cá nhân (cần đăng nhập).
- */
 public class ProfilePageTest extends CustomerAuthBaseTest {
 
     @Override

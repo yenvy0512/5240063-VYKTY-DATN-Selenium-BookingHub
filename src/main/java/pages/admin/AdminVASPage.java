@@ -11,9 +11,6 @@ import pages.BasePage;
 import java.time.Duration;
 import java.util.List;
 
-/**
- * Trang Quản lý Dịch vụ (VAS) web-admin (/vas). Create, Update, Delete.
- */
 public class AdminVASPage extends BasePage {
 
     @FindBy(css = "[data-testid='admin-vas-page']")

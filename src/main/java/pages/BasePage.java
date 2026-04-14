@@ -3,9 +3,6 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-/**
- * Base cho các Page Object. Cung cấp driver và PageFactory init.
- */
 public abstract class BasePage {
 
     protected final WebDriver driver;

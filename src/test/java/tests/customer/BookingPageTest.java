@@ -8,9 +8,6 @@ import org.testng.annotations.Test;
 import pages.BookingPage;
 import utils.ValidationTestHelper;
 
-/**
- * Test trang Đặt vé (cần đăng nhập).
- */
 public class BookingPageTest extends CustomerAuthBaseTest {
 
     @Override

@@ -12,9 +12,6 @@ import pages.admin.AdminBusCompaniesPage;
 
 import java.time.Duration;
 
-/**
- * Test Nhà xe: trang, CRUD (Create/Update/Delete), Validation - gộp 1 file.
- */
 public class AdminBusCompaniesTest extends AdminAuthBaseTest {
 
     @Override

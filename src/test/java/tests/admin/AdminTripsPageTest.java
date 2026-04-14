@@ -9,9 +9,6 @@ import pages.admin.AdminTripCreatePage;
 import pages.admin.AdminTripsPage;
 import utils.ValidationTestHelper;
 
-/**
- * Quản lý Chuyến xe: tìm kiếm, danh sách, tạo tại /trips/create, chỉnh sửa/xóa trên danh sách.
- */
 public class AdminTripsPageTest extends AdminAuthBaseTest {
 
     @Override

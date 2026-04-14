@@ -4,9 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-/**
- * Trang Đặt vé web-customer (/booking).
- */
 public class BookingPage extends BasePage {
 
     @FindBy(css = "[data-testid='booking-form']")

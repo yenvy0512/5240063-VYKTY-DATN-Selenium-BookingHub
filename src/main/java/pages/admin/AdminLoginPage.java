@@ -5,9 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.BasePage;
 
-/**
- * Trang Đăng nhập web-admin (/login).
- */
 public class AdminLoginPage extends BasePage {
 
     @FindBy(css = "[data-testid='admin-login-form']")

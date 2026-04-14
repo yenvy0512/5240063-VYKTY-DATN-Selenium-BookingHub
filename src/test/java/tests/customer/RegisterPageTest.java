@@ -9,9 +9,6 @@ import pages.RegisterPage;
 import utils.BrowserStorageHelper;
 import utils.ValidationTestHelper;
 
-/**
- * Test trang Đăng ký web-customer.
- */
 public class RegisterPageTest extends BaseTest {
 
     @Override

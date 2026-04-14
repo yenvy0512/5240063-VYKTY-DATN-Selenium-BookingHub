@@ -7,9 +7,6 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import utils.ValidationTestHelper;
 
-/**
- * Test trang chủ web-customer — tìm kiếm chuyến, hiển thị form, validation.
- */
 public class HomePageTest extends BaseTest {
 
     @Test(description = "HM-01 Trang chủ hiển thị thành công")

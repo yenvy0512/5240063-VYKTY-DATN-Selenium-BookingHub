@@ -5,9 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.BasePage;
 
-/**
- * Trang Quản lý Đánh giá web-admin (/reviews).
- */
 public class AdminReviewsPage extends BasePage {
 
     @FindBy(tagName = "body")

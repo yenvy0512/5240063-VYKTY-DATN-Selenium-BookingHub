@@ -4,9 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-/**
- * Trang Đăng nhập web-customer (/login).
- */
 public class LoginPage extends BasePage {
 
     @FindBy(css = "[data-testid='login-form']")

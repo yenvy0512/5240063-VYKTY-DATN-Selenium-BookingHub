@@ -12,9 +12,6 @@ import pages.admin.AdminVASPage;
 
 import java.time.Duration;
 
-/**
- * Quản lý VAS: tìm kiếm, CRUD (Create/Update/Delete), validation.
- */
 public class AdminVASTest extends AdminAuthBaseTest {
 
     @Override

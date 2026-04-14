@@ -10,9 +10,6 @@ import pages.PaymentPage;
 
 import java.time.Duration;
 
-/**
- * Test trang Thanh toán (cần đăng nhập; không có bookingId thì trạng thái empty).
- */
 public class PaymentPageTest extends CustomerAuthBaseTest {
 
     @Override
@@ -30,7 +27,7 @@ public class PaymentPageTest extends CustomerAuthBaseTest {
         Assert.assertTrue(paymentPage.isPageLoaded(), "Trang thanh toán hiển thị");
     }
 
-    @Test(description = "PM-02 Tiêu đề chứa Thanh toán hoặc BookingHub")
+    @Test(description = "PM-02 Tiêu đề trang chứa Thanh toán")
     public void paymentPageTitle() {
         PaymentPage paymentPage = new PaymentPage(getDriver());
         String title = paymentPage.getPageTitle();

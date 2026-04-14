@@ -11,9 +11,6 @@ import pages.BasePage;
 import java.time.Duration;
 import java.util.List;
 
-/**
- * Trang Quản lý Địa điểm web-admin (/locations). Hỗ trợ CRUD.
- */
 public class AdminLocationsPage extends BasePage {
 
     @FindBy(css = "[data-testid='admin-locations-page']")

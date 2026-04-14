@@ -7,9 +7,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.admin.AdminNotificationsPage;
 
-/**
- * Test case trang Thông báo web-admin.
- */
 public class AdminNotificationsPageTest extends AdminAuthBaseTest {
 
     @Override

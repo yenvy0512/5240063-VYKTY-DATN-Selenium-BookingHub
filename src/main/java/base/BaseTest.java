@@ -17,11 +17,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.time.Duration;
 
-/**
- * Base class cho tất cả test.
- * Mở browser 1 lần cho cả class (@BeforeClass), các test method dùng chung driver.
- * Trước mỗi method chỉ reset về base URL (@BeforeMethod).
- */
 public abstract class BaseTest {
 
     protected WebDriver driver;

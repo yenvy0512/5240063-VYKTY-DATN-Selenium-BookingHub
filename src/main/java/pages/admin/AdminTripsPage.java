@@ -11,9 +11,6 @@ import pages.BasePage;
 import java.time.Duration;
 import java.util.List;
 
-/**
- * Trang Quản lý Chuyến xe web-admin (/trips). Tạo mới tại /trips/create; sửa/xóa trên danh sách.
- */
 public class AdminTripsPage extends BasePage {
 
     @FindBy(css = "[data-testid='admin-trips-page']")

@@ -7,9 +7,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.admin.AdminPaymentsPage;
 
-/**
- * Test case trang Quản lý Thanh toán web-admin.
- */
 public class AdminPaymentsPageTest extends AdminAuthBaseTest {
 
     @Override
