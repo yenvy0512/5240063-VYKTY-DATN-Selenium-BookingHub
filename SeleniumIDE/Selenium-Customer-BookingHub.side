@@ -32,6 +32,13 @@
         ["xpath=//h1[contains(.,'Đặt vé xe khách trực tuyến')]", "xpath:innerText"]
       ],
       "value": "Đặt vé xe khách trực tuyến"
+    }, {
+      "id": "058026f3-2e18-45b3-a005-8ed15e882bf4",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "ed0ac070-fee1-414e-a821-b6f1906a482f",
@@ -55,6 +62,13 @@
       "comment": "",
       "command": "assertTitle",
       "target": "BookingHub - Đặt vé xe khách trực tuyến",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3f89227b-589f-4ded-b717-7ffaf18073a8",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
@@ -87,6 +101,13 @@
         ["xpath=//h1[contains(.,'Đặt vé xe khách trực tuyến')]", "xpath:innerText"]
       ],
       "value": "Đặt vé xe khách trực tuyến"
+    }, {
+      "id": "ca949d0a-cead-474c-b06a-32968c734581",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "c3d53740-62f3-4719-86c8-17a1d6cf37b8",
@@ -118,6 +139,13 @@
         ["xpath=//button[contains(.,'Tìm chuyến')]", "xpath:innerText"]
       ],
       "value": "Tìm chuyến"
+    }, {
+      "id": "06404ee3-2da2-4d40-881c-85749bae65df",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "b3abf90a-b2b3-465d-9d48-c48e278f5fd5",
@@ -177,6 +205,13 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "93d4e13f-8b75-42b8-9768-51c985000472",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -322,6 +357,13 @@
       "target": "Tìm chuyến xe - BookingHub",
       "targets": [],
       "value": ""
+    }, {
+      "id": "d5be64e0-9e0d-48ab-bb13-531f9947e402",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "827da5dd-3ab2-4a44-ba51-39b7a20380f4",
@@ -352,6 +394,13 @@
         ["xpath=//p[contains(.,'Nhanh chóng - An toàn - Tiện lợi')]", "xpath:innerText"]
       ],
       "value": "Nhanh chóng - An toàn - Tiện lợi"
+    }, {
+      "id": "3af6d777-3423-4f08-850a-af1a6f14606f",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "440a3c08-8a18-4957-8445-a79e6f448584",
@@ -403,6 +452,13 @@
         ["xpath=//main/div/div[3]", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "9ed746c8-37c5-451d-9add-d8f373234fff",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "d7ce5669-7077-4b5f-8395-59fd0a142ddd",
@@ -445,6 +501,13 @@
         ["xpath=//body/div/div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Vui lòng điền đầy đủ thông tin"
+    }, {
+      "id": "b44d208f-7057-4688-a00c-a8e7fca2101c",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "a8102af8-a49e-49bf-a5da-37027b5eb79f",
@@ -511,6 +574,13 @@
         ["xpath=//body/div/div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Vui lòng điền đầy đủ thông tin"
+    }, {
+      "id": "e00622b0-4a32-4a84-8f6e-eb259eeb5212",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "d95ce1a9-d2d1-4eb8-8c53-40c99e540871",
@@ -737,6 +807,13 @@
         ["xpath=//h1[contains(.,'Đặt vé xe khách')]", "xpath:innerText"]
       ],
       "value": "Đặt vé xe khách"
+    }, {
+      "id": "7c804f7d-296d-48e7-a896-3785dfa26a81",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "9a2da7e5-30ba-40f7-b311-2aee5f31d45b",
@@ -970,6 +1047,13 @@
         ["xpath=//h3[contains(.,'Thông tin liên hệ')]", "xpath:innerText"]
       ],
       "value": "Thông tin liên hệ"
+    }, {
+      "id": "98e4221e-4dd7-47c7-ad6e-4583c7cd44b2",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "9c718762-05d2-4b5c-ad89-4cee03fe2323",
@@ -1268,6 +1352,13 @@
         ["xpath=//button[contains(.,'Vui lòng chọn ghế')]", "xpath:innerText"]
       ],
       "value": ""
+    }, {
+      "id": "c427e02f-e85e-4bb5-882d-078e8c5f7df8",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "69d19e2c-07e1-4343-9315-4638ad00e15d",
@@ -1561,6 +1652,13 @@
         ["xpath=//div[@id='__next']/div/main/div/div[2]/div[2]/div[2]/form/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "014cbdb3-4c92-411d-900e-15b745d42cd8",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -1856,6 +1954,13 @@
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "6df11d75-bf95-4baa-9f92-8f13e6a12b4b",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "4d005cb3-324b-4456-9fc9-96b5cc9857c9",
@@ -2005,6 +2110,13 @@
         ["xpath=//button[contains(.,'Vui lòng chọn ghế')]", "xpath:innerText"]
       ],
       "value": "Vui lòng chọn ghế"
+    }, {
+      "id": "fc117b57-c5df-4c5d-8651-a3f636f473e6",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "1ccc0f71-e272-4ce8-9fc3-85840720608c",
@@ -2190,6 +2302,13 @@
         ["xpath=//h2[contains(.,'✅ Đặt vé thành công!')]", "xpath:innerText"]
       ],
       "value": "✅ Đặt vé thành công!"
+    }, {
+      "id": "6d963eb7-a03a-4dec-b539-87e64ce36473",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "91864510-64c6-4b9f-9cbc-3d5443571441",
@@ -2314,6 +2433,13 @@
         ["xpath=//h1", "xpath:position"],
         ["xpath=//h1[contains(.,'Đăng nhập')]", "xpath:innerText"]
       ],
+      "value": ""
+    }, {
+      "id": "6d747974-32ee-49ea-9d53-022e970b5c26",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -2440,6 +2566,13 @@
         ["xpath=//h1[contains(.,'Đăng nhập')]", "xpath:innerText"]
       ],
       "value": "Đăng nhập"
+    }, {
+      "id": "45b60c88-fa09-4954-801d-05c3ede028a1",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "eb50eaed-db4e-491f-bdc4-9a1125d69143",
@@ -2566,6 +2699,13 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div[2]/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "19ec31f5-4be6-45bb-9287-63769d53c908",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -2756,6 +2896,13 @@
       "target": "css=.go3958317564",
       "targets": [],
       "value": "Sai tài khoản hoặc mật khẩu"
+    }, {
+      "id": "26acc84b-c79a-440a-bfca-2f6a5c579858",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "faf4e7b2-8a5b-48f8-8906-5d8562a7b9a5",
@@ -2909,6 +3056,13 @@
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "dcd6886d-6582-4b7f-adac-4a51992803f0",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "794ce003-c63a-4790-9ec0-3061cf5d0f4a",
@@ -3048,6 +3202,13 @@
         ["xpath=//p/a", "xpath:position"],
         ["xpath=//a[contains(.,'Đăng ký ngay')]", "xpath:innerText"]
       ],
+      "value": ""
+    }, {
+      "id": "a94fc6d3-01fb-4c3e-a60f-b821e4069351",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -3216,6 +3377,13 @@
         ["xpath=//h1[contains(.,'Đăng ký')]", "xpath:innerText"]
       ],
       "value": "Đăng ký"
+    }, {
+      "id": "02b85bdb-ed2b-47c1-926f-b49c6fab12de",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "49787064-1ac5-4c16-81d3-bda24a2fdc81",
@@ -3395,6 +3563,13 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "97b42e57-bed3-4a37-8d22-8b890cb61cbc",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -3805,6 +3980,13 @@
         ["xpath=//h1[contains(.,'Vé của tôi')]", "xpath:innerText"]
       ],
       "value": "Vé của tôi"
+    }, {
+      "id": "09daa8e5-c335-429d-8801-d667f16ac7b7",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "3e7d864f-7c37-4187-a866-f75516964c37",
@@ -3981,6 +4163,13 @@
       "comment": "",
       "command": "assertTitle",
       "target": "Vé của tôi - BookingHub",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e64ed91e-cbbd-4a7f-9bd1-499dca612830",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
@@ -4166,6 +4355,13 @@
         ["xpath=//h1[contains(.,'Vé của tôi')]", "xpath:innerText"]
       ],
       "value": "Vé của tôi"
+    }, {
+      "id": "b668e3e0-57bc-4eb2-84c4-2b5c41e55b26",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "9e502a7d-eea5-46dc-a827-2bf0975d9f7c",
@@ -4347,6 +4543,13 @@
         ["xpath=//div[@id='__next']/div/main/div/div[2]/div/div/div/div", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div/div", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "e3f50d77-06ee-4b63-a0b5-8d1efe490091",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -4531,6 +4734,13 @@
         ["xpath=//button[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
       ],
       "value": "Tìm chuyến xe"
+    }, {
+      "id": "42845ebf-0c1b-49ba-b292-c8bb621883c9",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "2d092ebe-7709-4584-a4d4-ab2084daac94",
@@ -4714,6 +4924,13 @@
       "comment": "",
       "command": "verifyElementPresent",
       "target": "xpath=(//div[.//span[contains(.,'Chờ thanh toán')]]//button[contains(.,'Hủy')])[1]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8eea07c2-eb8e-416d-88bf-11c6eb9ab25a",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
@@ -4919,6 +5136,13 @@
         ["xpath=//div[2]/div/div[2]", "xpath:position"]
       ],
       "value": "Hủy vé thành công!"
+    }, {
+      "id": "d4a1f1f1-581e-42c0-9e53-1cc71d6261ac",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "de738ad7-f87e-4af0-8e78-3d9695e6cb1b",
@@ -5114,6 +5338,13 @@
         ["xpath=//button[contains(.,'Xem chi tiết')]", "xpath:innerText"]
       ],
       "value": "Xem chi tiết"
+    }, {
+      "id": "56a87962-57d3-41a5-bb04-4351e6868591",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "920769d1-9bb9-4bd9-bc4a-ea9ca034feac",
@@ -5333,6 +5564,13 @@
         ["xpath=//h2[contains(.,'Chi tiết vé')]", "xpath:innerText"]
       ],
       "value": "Chi tiết vé"
+    }, {
+      "id": "281800d9-7aab-4ca7-8b38-e649b2b8d98c",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "d5235292-183c-44a4-a6d3-c18553c753e7",
@@ -5528,6 +5766,13 @@
         ["xpath=//button[contains(.,'Xem QR code')]", "xpath:innerText"]
       ],
       "value": "Xem QR code"
+    }, {
+      "id": "382bf366-83ef-4c0e-ac14-712e3f960d57",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "ea018d71-cff2-4d8a-a20d-2500c128e93c",
@@ -5747,6 +5992,13 @@
         ["xpath=//h2[contains(.,'Mã QR check-in')]", "xpath:innerText"]
       ],
       "value": "Mã QR check-in"
+    }, {
+      "id": "a6941cea-5b11-42e0-926f-13499681fa51",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "d4f3dbba-e10b-4611-91f4-98ad77c81743",
@@ -5930,6 +6182,13 @@
       "comment": "",
       "command": "verifyElementPresent",
       "target": "xpath=(//div[.//span[contains(.,'Chờ thanh toán')]]//button[contains(.,'Thanh toán')])[1]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bfb9cc18-2962-42f5-894e-743e0e88c06c",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
@@ -6122,6 +6381,13 @@
       "comment": "",
       "command": "click",
       "target": "xpath=(//div[.//span[contains(.,'Chờ thanh toán')]]//button[contains(.,'Thanh toán')])[1]",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e3ec11e5-1062-43b3-a583-51579340dbb6",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
@@ -6328,6 +6594,13 @@
         ["xpath=//h1[contains(.,'Thanh toán')]", "xpath:innerText"]
       ],
       "value": "Thanh toán"
+    }, {
+      "id": "1e7e742e-c272-4368-838c-ca38f792d374",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "a07cdbc8-1acc-419f-a4eb-d278a1c2bcb0",
@@ -6525,6 +6798,13 @@
       "comment": "",
       "command": "assertTitle",
       "target": "Thanh toán - BookingHub",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "33c1b672-c87c-4e41-b9f2-b60774d7fbd4",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
@@ -6731,6 +7011,13 @@
         ["xpath=//h1[contains(.,'Thanh toán')]", "xpath:innerText"]
       ],
       "value": "Thanh toán"
+    }, {
+      "id": "a5e0c0d5-16e7-46a0-86bb-f9760153da4d",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "5c30985e-34cd-4c73-9e24-3cbdd484e377",
@@ -6935,6 +7222,13 @@
         ["xpath=//h2[contains(.,'Phương thức thanh toán')]", "xpath:innerText"]
       ],
       "value": "Phương thức thanh toán"
+    }, {
+      "id": "34b54d43-b212-4b45-a169-4c7a79bef6bf",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "aae1fe62-48d2-42b6-bcf0-6d2e3e4ca72a",
@@ -7139,6 +7433,13 @@
         ["xpath=//h2[contains(.,'Thông tin vé')]", "xpath:innerText"]
       ],
       "value": "Thông tin vé"
+    }, {
+      "id": "acbf2f0a-fc27-424d-9cc9-aafe8080c1db",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "5a0a0048-358c-4f7e-a2ab-9d8fa2cd0298",
@@ -7343,6 +7644,13 @@
         ["xpath=//button[contains(.,'Xác nhận thanh toán')]", "xpath:innerText"]
       ],
       "value": "Xác nhận thanh toán"
+    }, {
+      "id": "8140e779-3ff2-4ce8-8340-7d24d00b6402",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "b4134506-174d-40cf-87a1-f5f2b436461a",
@@ -7565,6 +7873,13 @@
         ["xpath=//body/div/div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Đặt vé thành công! Vui lòng thanh toán khi lên xe"
+    }, {
+      "id": "465e9530-f417-414c-bc9c-14644db25a1d",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "4e0afb69-7415-4b93-b3d5-341835ca4329",
@@ -7811,6 +8126,13 @@
       "target": "Cổng thanh toán MoMo",
       "targets": [],
       "value": ""
+    }, {
+      "id": "d01b2e14-a883-4f4d-917e-6f1a80dcaac3",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "7e33fe65-8d7a-4c3c-8a80-7e3de92ceb8d",
@@ -8037,6 +8359,13 @@
         ["xpath=//span[contains(.,'hotrovnpay@vnpay.vn')]", "xpath:innerText"]
       ],
       "value": "hotrovnpay@vnpay.vn"
+    }, {
+      "id": "fb5e82f5-be01-49dc-9126-70ed38fa3ecf",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "0f25f3b7-ff2a-41ec-867b-c55b6f3a1645",
@@ -8205,6 +8534,13 @@
       "target": "Thông tin cá nhân - BookingHub",
       "targets": [],
       "value": ""
+    }, {
+      "id": "fe04c818-2be6-498a-81da-f836be51c975",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "8b36cead-513a-488e-8218-8392083405ae",
@@ -8371,6 +8707,13 @@
       "comment": "",
       "command": "assertTitle",
       "target": "Thông tin cá nhân - BookingHub",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "44fe9bcc-9b71-41a5-a42f-94dd351b8eae",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
@@ -8546,6 +8889,13 @@
         ["xpath=//h1[contains(.,'Thông tin cá nhân')]", "xpath:innerText"]
       ],
       "value": "Thông tin cá nhân"
+    }, {
+      "id": "b76f9bbf-dac8-45c3-b2ae-4483af7e57c5",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "dd5eca12-9ee3-478f-8636-7fda7cc7f990",
@@ -8758,6 +9108,13 @@
         ["xpath=//div[4]/input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "6435097f-ce67-4536-bbf5-b8b2a46bac15",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "5edda40b-261d-44ce-823b-8648b3ea14c0",
@@ -8932,6 +9289,13 @@
         ["xpath=//button[contains(.,'Lưu thay đổi')]", "xpath:innerText"]
       ],
       "value": "Lưu thay đổi"
+    }, {
+      "id": "8b97b52c-281b-4add-ab19-6fa6bfb6ec3f",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "a5ed4111-abbd-48aa-a86a-a03a282d9f12",
@@ -9169,6 +9533,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Cập nhật profile thành công!"
+    }, {
+      "id": "dfb3b49b-5926-4ee3-a12d-0c072ce47398",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "bbd51df1-c29c-4c9a-92d9-a34edf13e822",
@@ -9406,6 +9777,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Cập nhật profile thành công!"
+    }, {
+      "id": "28848ff6-00b1-4069-b4b0-d035012c7ab1",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "10c21692-35da-49d9-837f-bf16080e6edf",
@@ -9643,6 +10021,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Cập nhật profile thành công!"
+    }, {
+      "id": "e1f183f3-ce58-47c1-bea8-34f5acfb9eeb",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "600e0929-6453-4993-b497-77714ae12524",
@@ -9864,6 +10249,13 @@
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "92d1f853-504b-4b7e-ba03-d1e5bfe86936",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "62596b69-412a-467e-a40d-36300d9c55ed",
@@ -10073,6 +10465,13 @@
         ["xpath=//div[@id='__next']/div/main/div/div/form/div[3]/input", "xpath:idRelative"],
         ["xpath=//div[3]/input", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "23c7ba10-6822-4904-a8de-69f6f2ec8127",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -10313,6 +10712,13 @@
         ["xpath=//div[4]/input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "31726da3-247d-4e1e-adfc-7846679ce2e4",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "7683b17c-3223-45e1-9f83-3ec10a220afc",
@@ -10437,6 +10843,13 @@
         ["xpath=//div/div/div/div", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "44161f7c-c5ea-4710-a2b0-137394a283f6",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "355ceab5-0b33-4526-bbd5-12dbc7cdc6bd",
@@ -10555,6 +10968,13 @@
       "comment": "",
       "command": "assertTitle",
       "target": "Đăng ký - BookingHub",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a6509829-b84e-4050-8915-41af75ea3c4c",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
@@ -10810,6 +11230,13 @@
         ["xpath=//div[5]/input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "8f33df2b-8d95-4dc4-bd74-0e625c309815",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "199cb56d-13bf-4af7-8f4a-35c4f95ee074",
@@ -10937,6 +11364,13 @@
         ["xpath=//div[2]/input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "84abeec7-8029-4e3c-b1c7-25aa6aaebd8d",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "17546fc6-0007-41a6-8231-1d3d1fd0bad7",
@@ -11063,6 +11497,13 @@
         ["xpath=//button[contains(.,'Đăng ký')]", "xpath:innerText"]
       ],
       "value": "Đăng ký"
+    }, {
+      "id": "ba732685-ea6a-4369-ba22-95beef7c5fd5",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "4259486d-7292-480c-bc63-a7f120c7e847",
@@ -11202,6 +11643,13 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "3069d972-aa34-423f-91d7-0314455912eb",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -11370,6 +11818,13 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
+      "value": ""
+    }, {
+      "id": "88772124-ed98-4979-87c1-9d478fe83468",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }, {
@@ -11655,6 +12110,13 @@
       "target": "css=#email:invalid",
       "targets": [],
       "value": ""
+    }, {
+      "id": "885e3020-14a2-470a-bda5-d9eb20ce3d3d",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "bc97d854-b337-44ad-914f-735f2af93806",
@@ -11932,6 +12394,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Username đã tồn tại"
+    }, {
+      "id": "48693bf0-cb2f-4fa5-b3a3-f35aa436a402",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "e8e88123-ae4f-4276-9c17-d51b225a3f13",
@@ -12209,6 +12678,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Email đã tồn tại"
+    }, {
+      "id": "6dc0f529-05fe-4ffe-9a1b-c3dc4daf7c5c",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "ab425f72-f227-42c1-9c7c-71842af04a57",
@@ -12486,6 +12962,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Số điện thoại này đã được liên kết với tài khoản khác"
+    }, {
+      "id": "5e17789a-2e79-4fdd-ac2b-01b11e855937",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "22e9753a-1c4e-44a2-b056-1cd8573283c2",
@@ -12763,6 +13246,13 @@
         ["xpath=//body/div/div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Đăng ký thành công!"
+    }, {
+      "id": "ab5046b0-5e20-4dfa-8408-c863c93b9209",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "93ff10eb-acec-4621-b9dc-3c7f13855bd1",
@@ -12829,6 +13319,13 @@
         ["xpath=//h1[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
       ],
       "value": "Tìm chuyến xe"
+    }, {
+      "id": "390604b9-4f1d-4ec9-974c-e9f278e462b0",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "b16b3c74-a5fd-444e-b6ee-bcb97a402bd5",
@@ -12864,6 +13361,13 @@
       "comment": "",
       "command": "assertTitle",
       "target": "Tìm chuyến xe - BookingHub",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ca512883-3169-46fb-aa6d-bc8261e40b79",
+      "comment": "",
+      "command": "close",
+      "target": "",
       "targets": [],
       "value": ""
     }]
@@ -12932,6 +13436,13 @@
         ["xpath=//h1[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
       ],
       "value": "Tìm chuyến xe"
+    }, {
+      "id": "b9815470-9698-4a7f-b1c0-6813d569692b",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "ae50de8c-bc1d-4e05-a543-b112758d9bb6",
@@ -13042,6 +13553,13 @@
         ["xpath=//input", "xpath:position"]
       ],
       "value": ""
+    }, {
+      "id": "ed160341-28d2-41fa-a298-b750337da4e3",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "87cfd8d5-fff2-4c86-8196-51c06bee9e10",
@@ -13109,6 +13627,13 @@
         ["xpath=//button[contains(.,'Tìm kiếm')]", "xpath:innerText"]
       ],
       "value": "Tìm kiếm"
+    }, {
+      "id": "78dc68f7-9ee4-4194-840e-631ce9ee081a",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "2e269b6a-3f09-40f3-ae04-04ba808762fb",
@@ -13225,6 +13750,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Vui lòng điền đầy đủ thông tin tìm kiếm"
+    }, {
+      "id": "1d448a61-bc8b-443b-8b8e-9da12733859a",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "93413b0f-7849-4d80-95de-1a28210cfe60",
@@ -13350,6 +13882,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Vui lòng điền đầy đủ thông tin tìm kiếm"
+    }, {
+      "id": "850c33fc-226c-41af-be71-9692327522eb",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "2deec7fe-d8e5-4286-baeb-8109e044140c",
@@ -13475,6 +14014,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Vui lòng điền đầy đủ thông tin tìm kiếm"
+    }, {
+      "id": "c7ba970f-d2e0-4fca-884b-440ba2f94db2",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "72541f9d-47c9-4f7b-a958-b466bdf57719",
@@ -13604,6 +14150,13 @@
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
       "value": "Vui lòng điền đầy đủ thông tin tìm kiếm"
+    }, {
+      "id": "1f870637-9fc2-48ba-aaf0-20e5beaa1b5d",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
     }]
   }, {
     "id": "8f0c3f4d-468c-48f9-a3b9-412e69504130",
@@ -13774,6 +14327,13 @@
         ["xpath=//div[4]/button", "xpath:position"],
         ["xpath=//button[contains(.,'Tìm kiếm')]", "xpath:innerText"]
       ],
+      "value": ""
+    }, {
+      "id": "21c5a191-51ed-4a89-a642-3f6075023367",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
       "value": ""
     }]
   }],

@@ -21,7 +21,6 @@ public class AdminLocationsTest extends AdminAuthBaseTest {
         getDriver().get(Config.getBaseUrlAdmin() + "/locations");
     }
 
-    // --- Trang ---
     @Test(description = "LC-01 Trang Quản lý Địa điểm hiển thị")
     public void pageDisplayed() {
         AdminLocationsPage page = new AdminLocationsPage(getDriver());

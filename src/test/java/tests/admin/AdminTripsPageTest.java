@@ -111,7 +111,7 @@ public class AdminTripsPageTest extends AdminAuthBaseTest {
         Assert.assertTrue(t.contains("Chuyến") || t.contains("BookingHub"), "Tiêu đề hợp lệ");
     }
 
-    @Test(description = "Gửi thông tin tạo chuyến khi chưa chọn phương tiện hiện thông báo lỗi")
+    @Test(description = "TR-13 Gửi thông tin tạo chuyến khi chưa chọn phương tiện hiện thông báo lỗi")
     public void tripCreateValidationNoVehicle() {
         getDriver().get(Config.getBaseUrlAdmin() + "/trips/create");
         AdminTripCreatePage createPage = new AdminTripCreatePage(getDriver());

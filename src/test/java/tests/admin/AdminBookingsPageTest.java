@@ -28,7 +28,7 @@ public class AdminBookingsPageTest extends AdminAuthBaseTest {
         Assert.assertTrue(page.isSearchDisplayed(), "Ô tìm kiếm phải hiển thị");
     }
 
-    @Test(description = "AB-03 Title trang đặt vé đúng")
+    @Test(description = "AB-03 Tiêu đề trang đặt vé đúng")
     public void bookingsPageTitle() {
         AdminBookingsPage page = new AdminBookingsPage(getDriver());
         String title = page.getPageTitle();

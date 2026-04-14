@@ -36,7 +36,7 @@ public class AdminVASTest extends AdminAuthBaseTest {
                 "Tiêu đề phải chứa Dịch vụ/VAS/BookingHub");
     }
 
-    @Test(description = "Heading Quản lý dịch vụ hiển thị")
+    @Test(description = "VS-03 Heading Quản lý dịch vụ hiển thị")
     public void headingDisplayed() {
         AdminVASPage page = new AdminVASPage(getDriver());
         Assert.assertTrue(page.headingDisplayed(), "Heading trang dịch vụ hiển thị");
@@ -57,7 +57,7 @@ public class AdminVASTest extends AdminAuthBaseTest {
         Assert.assertTrue(page.isPageDisplayed(), "Trang vẫn ổn định");
     }
 
-    @Test(description = "Tìm kiếm chuỗi rỗng")
+    @Test(description = "VS-06 Tìm kiếm chuỗi rỗng")
     public void searchEmpty() {
         AdminVASPage page = new AdminVASPage(getDriver());
         page.typeSearchKeyword("");
@@ -76,7 +76,7 @@ public class AdminVASTest extends AdminAuthBaseTest {
         Assert.assertTrue(page.isModalDisplayed(), "Gửi thông tin trống không đóng modal");
     }
 
-    @Test(description = "Create - Thêm dịch vụ mới")
+    @Test(description = "VS-08 Create - Thêm dịch vụ mới")
     public void crud_create() {
         AdminVASPage page = new AdminVASPage(getDriver());
         String name = "Dịch vụ Test " + System.currentTimeMillis();

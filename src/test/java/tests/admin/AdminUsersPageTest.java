@@ -75,7 +75,7 @@ public class AdminUsersPageTest extends AdminAuthBaseTest {
         Assert.assertTrue(page.tableContainsUsername(createdUsername), "Bảng có người dùng vừa tạo");
     }
 
-    @Test(description = "Update - Sửa tên người dùng", dependsOnMethods = "crud_create")
+    @Test(description = "US-08 Update - Sửa tên người dùng", dependsOnMethods = "crud_create")
     public void crud_update() {
         AdminUsersPage page = new AdminUsersPage(getDriver());
         if (createdUsername == null || !page.tableContainsUsername(createdUsername)) {
