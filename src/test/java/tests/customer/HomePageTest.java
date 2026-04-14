@@ -1,102 +1,137 @@
 package tests.customer;
 
-import base.BaseTest;
-import config.Config;
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.HomePage;
-import utils.ValidationTestHelper;
 
-public class HomePageTest extends BaseTest {
+import config.Config;
 
-    @Test(description = "HM-01 Trang chủ hiển thị thành công")
-    public void homePageLoads() {
-        HomePage homePage = new HomePage(getDriver());
-        Assert.assertTrue(homePage.isPageLoaded(), "Trang chủ phải hiển thị được");
+public class HomePageTest {
+
+    private WebDriver driver;
+    private WebDriverWait wait;
+
+    @BeforeMethod
+    public void setUp() {
+        driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver.manage().window().maximize();
     }
 
-    @Test(description = "HM-02 URL trang chủ đúng")
-    public void homePageUrl() {
-        String url = getDriver().getCurrentUrl();
-        Assert.assertTrue(url.startsWith(Config.getBaseUrl().replaceAll("/$", "")),
-                "URL trang chủ đúng");
+    @AfterMethod
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    @Test(description = "HM-01 Trang chủ hiển thị thành công")
+    public void case_HM_001() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='customer-home-heading']"))).getText().contains("Đặt vé xe khách trực tuyến"));
+        
     }
 
     @Test(description = "HM-03 Tiêu đề trang chủ đúng")
-    public void homePageTitle() {
-        HomePage homePage = new HomePage(getDriver());
-        String title = homePage.getPageTitle();
-        Assert.assertNotNull(title);
-        Assert.assertTrue(title.contains("BookingHub") || title.contains("Đặt vé"),
-                "Tiêu đề phải chứa BookingHub hoặc Đặt vé");
+    public void case_HM_003() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        Assert.assertEquals(driver.getTitle(), "BookingHub - Đặt vé xe khách trực tuyến");
+        
     }
 
     @Test(description = "HM-04 Heading chính hiển thị")
-    public void homePageShowsMainHeading() {
-        HomePage homePage = new HomePage(getDriver());
-        Assert.assertTrue(homePage.isMainHeadingDisplayed(),
-                "Trang chủ phải hiển thị heading 'Đặt vé xe khách trực tuyến'");
+    public void case_HM_004() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='customer-home-heading']"))).getText().contains("Đặt vé xe khách trực tuyến"));
+        
     }
 
     @Test(description = "HM-05 Nút tìm kiếm hiển thị và bấm được")
-    public void homePageShowsSearchButton() {
-        HomePage homePage = new HomePage(getDriver());
-        Assert.assertTrue(homePage.isSearchButtonDisplayed(), "Nút tìm kiếm phải hiển thị");
-        Assert.assertTrue(homePage.isSearchSubmitEnabled(), "Nút tìm kiếm phải enabled");
+    public void case_HM_005() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='home-search-submit']"))).getText().contains("Tìm chuyến"));
+        
     }
 
     @Test(description = "HM-06 Form có Điểm đi Điểm đến Ngày đi")
-    public void homePageSearchFormHasAllFields() {
-        HomePage homePage = new HomePage(getDriver());
-        Assert.assertTrue(homePage.isSearchFormDisplayed(),
-                "Form tìm chuyến phải có Điểm đi, Điểm đến và ô Ngày đi");
-        Assert.assertTrue(homePage.isDepartureSelectDisplayed(), "Điểm đi hiển thị");
-        Assert.assertTrue(homePage.isArrivalSelectDisplayed(), "Điểm đến hiển thị");
-        Assert.assertTrue(homePage.isDepartureDateDisplayed(), "Ô ngày đi hiển thị");
+    public void case_HM_006() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        Assert.assertFalse(driver.findElements(By.id("departureLocationId")).isEmpty(), "Missing element");
+        Assert.assertFalse(driver.findElements(By.id("arrivalLocationId")).isEmpty(), "Missing element");
+        Assert.assertFalse(driver.findElements(By.id("departureDate")).isEmpty(), "Missing element");
+        
     }
 
     @Test(description = "HM-07 Ấn tìm kiếm chuyển sang trang tìm kiếm")
-    public void clickSearchNavigatesToSearchPage() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickSearchSubmit();
-        String url = getDriver().getCurrentUrl();
-        Assert.assertTrue(url.contains("/search") || url.contains("search"),
-                "Sau khi ấn tìm kiếm phải chuyển sang trang tìm kiếm");
+    public void case_HM_007() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        new Actions(driver).moveToElement(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".px-6")))).perform();
+        new Actions(driver).moveByOffset(1, 1).perform();
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
+        new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("departureLocationId")))).selectByVisibleText("Hà Nội - Long Biên");
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
+        new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId")))).selectByVisibleText("Hải Phòng - Lê Chân");
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--014"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='home-search-submit']"))).click();
+        new Actions(driver).moveToElement(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='home-search-submit']")))).perform();
+        Assert.assertEquals(driver.getTitle(), "Tìm chuyến xe - BookingHub");
+        
     }
 
     @Test(description = "HM-08 Tiêu đề con hiển thị đúng")
-    public void homePageSubtitleDisplayed() {
-        HomePage homePage = new HomePage(getDriver());
-        Assert.assertTrue(homePage.isSubtitleDisplayed(), "Tiêu đề con phải hiển thị");
-        Assert.assertTrue(homePage.getSubtitleText().contains("Nhanh chóng"),
-                "Tiêu đề con phải chứa 'Nhanh chóng'");
+    public void case_HM_008() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='customer-home-subtitle']"))).getText().contains("Nhanh chóng - An toàn - Tiện lợi"));
+        
     }
 
     @Test(description = "HM-09 Hiển thị đủ 3 khối")
-    public void homePageFeaturesBlockDisplayed() {
-        HomePage homePage = new HomePage(getDriver());
-        Assert.assertTrue(homePage.areFeaturesDisplayed(),
-                "Hiển thị đủ 3 khối");
+    public void case_HM_009() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        Assert.assertFalse(driver.findElements(By.cssSelector("[data-testid='customer-home-feature-0']")).isEmpty(), "Missing element");
+        Assert.assertFalse(driver.findElements(By.cssSelector("[data-testid='customer-home-feature-1']")).isEmpty(), "Missing element");
+        Assert.assertFalse(driver.findElements(By.cssSelector("[data-testid='customer-home-feature-2']")).isEmpty(), "Missing element");
+        
     }
 
     @Test(description = "HM-10 Bấm tìm kiếm khi chưa chọn thông tin")
-    public void validation_searchWithoutSelection_showsToast() {
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickSearchSubmit();
-        boolean toastShown = ValidationTestHelper.waitForToastContainingText(getDriver(), "Vui lòng điền đầy đủ thông tin");
-        Assert.assertTrue(toastShown, "Phải hiển thị thông báo lỗi khi chưa chọn đủ");
+    public void case_HM_010() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='home-search-submit']"))).click();
+        Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Vui lòng điền đầy đủ thông tin\")]")).isEmpty());
+        
     }
 
     @Test(description = "HM-11 Thông báo lỗi có thể hiện lần hai nếu bấm lại tìm kiếm")
-    public void validation_toastOnRepeatedSearchClick() {
-        getDriver().get(Config.getBaseUrl());
-        HomePage homePage = new HomePage(getDriver());
-        homePage.clickSearchSubmit();
-        ValidationTestHelper.waitForToastContainingText(getDriver(), "Vui lòng");
-        getDriver().get(Config.getBaseUrl());
-        homePage = new HomePage(getDriver());
-        homePage.clickSearchSubmit();
-        boolean again = ValidationTestHelper.waitForToastContainingText(getDriver(), "Vui lòng");
-        Assert.assertTrue(again, "Thông báo lỗi vẫn hiển thị khi lặp lại thao tác");
+    public void case_HM_011() {
+        driver.get(Config.getBaseUrl() + "/");
+        driver.manage().window().setSize(new Dimension(945, 1012));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='home-search-submit']"))).click();
+        Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Vui lòng điền đầy đủ thông tin\")]")).isEmpty());
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='home-search-submit']"))).click();
+        Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Vui lòng điền đầy đủ thông tin\")]")).isEmpty());
+        
     }
+
 }

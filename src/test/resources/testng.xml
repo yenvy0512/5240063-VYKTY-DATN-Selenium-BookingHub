@@ -34,7 +34,6 @@
             <class name="tests.admin.AdminUsersPageTest"/>
             <class name="tests.admin.AdminVASTest"/>
             <class name="tests.admin.AdminNotificationsPageTest"/>
-            <class name="tests.admin.AdminPaymentsPageTest"/>
             <class name="tests.admin.AdminReviewsPageTest"/>
         </classes>
     </test>

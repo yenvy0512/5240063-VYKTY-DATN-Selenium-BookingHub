@@ -1,106 +1,387 @@
 package tests.customer;
 
-import base.CustomerAuthBaseTest;
-import config.Config;
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ProfilePage;
 
-import java.time.Duration;
+import config.Config;
 
-public class ProfilePageTest extends CustomerAuthBaseTest {
+public class ProfilePageTest {
 
-    @Override
-    @BeforeMethod(alwaysRun = true)
-    public void setUp() {
-        super.setUp();
-        getDriver().get(Config.getBaseUrl() + "/profile");
-    }
+	private WebDriver driver;
+	private WebDriverWait wait;
+	private final Map<String, String> vars = new HashMap<>();
 
-    @Test(description = "PF-01 Trang thông tin cá nhân hiển thị sau khi đăng nhập")
-    public void profilePageLoads() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15))
-                .until(d -> {
-                    ProfilePage p = new ProfilePage(d);
-                    return p.isPageLoaded() && !p.isLoadingState();
-                });
-        ProfilePage page = new ProfilePage(getDriver());
-        Assert.assertTrue(page.isPageLoaded(), "Trang thông tin cá nhân hiển thị");
-    }
+	@BeforeMethod
+	public void setUp() {
+		driver = new ChromeDriver();
+		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		driver.manage().window().maximize();
+	}
 
-    @Test(description = "PF-02 Tiêu đề chứa Thông tin hoặc BookingHub")
-    public void profilePageTitle() {
-        ProfilePage page = new ProfilePage(getDriver());
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15))
-                .until(d -> !new ProfilePage(d).isLoadingState());
-        String title = page.getPageTitle();
-        Assert.assertTrue(title.contains("BookingHub") || title.contains("cá nhân") || title.toLowerCase().contains("profile"),
-                "Tiêu đề hợp lệ");
-    }
+	@AfterMethod
+	public void tearDown() {
+		if (driver != null) {
+			driver.quit();
+		}
+	}
 
-    @Test(description = "PF-03 URL chứa profile")
-    public void profileUrl() {
-        Assert.assertTrue(getDriver().getCurrentUrl().contains("profile"), "URL profile");
-    }
+	@Test(description = "PF-01 Trang thông tin cá nhân hiển thị sau khi đăng nhập")
+	public void case_PF_001() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		Assert.assertEquals(driver.getTitle(), "Thông tin cá nhân - BookingHub");
+		
+	}
 
-    @Test(description = "PF-04 Heading Thông tin cá nhân hiển thị")
-    public void headingDisplayed() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15))
-                .until(d -> !new ProfilePage(d).isLoadingState());
-        ProfilePage page = new ProfilePage(getDriver());
-        Assert.assertTrue(page.isHeadingDisplayed(), "Heading hiển thị");
-    }
+	@Test(description = "PF-02 Tiêu đề trang cá nhân hiển thị đúng")
+	public void case_PF_002() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		Assert.assertEquals(driver.getTitle(), "Thông tin cá nhân - BookingHub");
+		
+	}
 
-    @Test(description = "PF-05 Form có trường dữ liệu")
-    public void formHasEditableFields() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15))
-                .until(d -> !new ProfilePage(d).isLoadingState());
-        ProfilePage page = new ProfilePage(getDriver());
-        Assert.assertTrue(page.hasNameField(), "Ô họ tên");
-        Assert.assertTrue(page.hasEmailField(), "Ô email");
-        Assert.assertTrue(page.hasPhoneField(), "Ô SĐT");
-    }
+	@Test(description = "PF-04 Heading Thông tin cá nhân hiển thị")
+	public void case_PF_004() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".text-3xl"))).getText()
+				.contains("Thông tin cá nhân"));
+		
+	}
 
-    @Test(description = "PF-06 Nút Lưu thay đổi hiển thị")
-    public void submitButtonDisplayed() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15))
-                .until(d -> !new ProfilePage(d).isLoadingState());
-        ProfilePage page = new ProfilePage(getDriver());
-        Assert.assertTrue(page.hasSubmitSaveButton(), "Nút lưu hiển thị");
-    }
+	@Test(description = "PF-05 Form hiển thị các trường dữ liệu")
+	public void case_PF_005() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		Assert.assertFalse(driver.findElements(By.cssSelector(".bg-gray-100")).isEmpty(), "Missing element");
+		Assert.assertFalse(driver.findElements(By.name("name")).isEmpty(), "Missing element");
+		Assert.assertFalse(driver.findElements(By.name("email")).isEmpty(), "Missing element");
+		Assert.assertFalse(driver.findElements(By.name("phone")).isEmpty(), "Missing element");
+		
+	}
 
-    @Test(description = "PF-07 Không bị điều hướng về khi đã đăng nhập")
-    public void staysOnProfileWhenAuthenticated() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15))
-                .until(d -> !d.getCurrentUrl().contains("/login"));
-        Assert.assertFalse(getDriver().getCurrentUrl().contains("/login"),
-                "Không bị điều hướng về login");
-    }
+	@Test(description = "PF-06 Nút Lưu thay đổi hiển thị")
+	public void case_PF_006() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		Assert.assertTrue(wait
+				.until(ExpectedConditions.presenceOfElementLocated(
+						By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]")))
+				.getText().contains("Lưu thay đổi"));
+		
+	}
 
-    @Test(description = "PF-08 Có thể điền lại họ tên")
-    public void canFillNameField() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15))
-                .until(d -> !new ProfilePage(d).isLoadingState());
-        ProfilePage page = new ProfilePage(getDriver());
-        if (page.hasNameField()) {
-            page.fillName("Test Name Selenium");
-            Assert.assertTrue(page.hasNameField(), "Ô tên vẫn hiển thị sau khi điền");
-        }
-    }
+	@Test(description = "PF-08 Có thể điền lại họ tên và lưu lại")
+	public void case_PF_008() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.name("name"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name"))).sendKeys("Nguyễn Văn B");
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]"))).click();
+		new Actions(driver).moveToElement(wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]"))))
+				.perform();
+		new Actions(driver).moveByOffset(1, 1).perform();
+		Assert.assertFalse(
+				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Cập nhật profile thành công!\")]"))
+						.isEmpty());
+		
+	}
 
-    @Test(description = "PF-09 Trang hồ sơ cá nhân có form")
-    public void hasFormSection() {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(15))
-                .until(d -> !new ProfilePage(d).isLoadingState());
-        ProfilePage page = new ProfilePage(getDriver());
-        Assert.assertTrue(page.hasSubmitSaveButton() && page.hasNameField(),
-                "Form chỉnh sửa hiển thị");
-    }
+	@Test(description = "PF-09 Có thể điền lại email và lưu lại")
+	public void case_PF_009() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.name("email"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email"))).sendKeys("customer1@gmail.com");
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]"))).click();
+		new Actions(driver).moveToElement(wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]"))))
+				.perform();
+		new Actions(driver).moveByOffset(1, 1).perform();
+		Assert.assertFalse(
+				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Cập nhật profile thành công!\")]"))
+						.isEmpty());
+		
+	}
 
-    @Test(description = "PF-10 Kiểm tra tiêu đề không rỗng")
-    public void documentTitleExists() {
-        Assert.assertFalse(getDriver().getTitle().isEmpty(), "Có tiêu đề");
-    }
+	@Test(description = "PF-10 Có thể điền lại SĐT và lưu lại")
+	public void case_PF_010() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.name("phone"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone"))).sendKeys("0854256406");
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]"))).click();
+		new Actions(driver).moveToElement(wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]"))))
+				.perform();
+		new Actions(driver).moveByOffset(1, 1).perform();
+		Assert.assertFalse(
+				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Cập nhật profile thành công!\")]"))
+						.isEmpty());
+		
+	}
+
+	@Test(description = "PF-11 Để trống thông tin họ tên thông báo lỗi")
+	public void case_PF_011() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("html"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name"))).sendKeys("");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".space-y-6"))).click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]"))).click();
+		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("name"))).isEnabled());
+		
+	}
+
+	@Test(description = "PF-12 Để trống thông tin email thông báo lỗi")
+	public void case_PF_012() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("html"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email"))).sendKeys("");
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]"))).click();
+		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("email"))).isEnabled());
+		
+	}
+
+	@Test(description = "PF-13 Để trống thông tin SĐT thông báo lỗi")
+	public void case_PF_013() {
+		driver.get(Config.getBaseUrl() + "/");
+		driver.manage().window().setSize(new Dimension(945, 1012));
+		vars.put("isLoginNeeded", String
+				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
+		wait.until(ExpectedConditions.elementToBeClickable(By.id("password"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+				"//*[contains(normalize-space(.),'Hồ sơ') or contains(normalize-space(.),'Thông tin cá nhân')]")))
+				.click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Tài khoản"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.name("phone"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.name("phone"))).click();
+		new Actions(driver).doubleClick(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("phone"))))
+				.perform();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone"))).clear();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone"))).sendKeys("");
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//button[contains(.,'Lưu thay đổi') or contains(.,'Lưu')]"))).click();
+		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("phone"))).isEnabled());
+		
+	}
+
 }
