@@ -1,60 +1,15 @@
 package tests.admin;
 
-import java.time.Duration;
 import java.util.Date;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import config.Config;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class AdminUsersPageTest {
-
-	private WebDriver driver;
-	private WebDriverWait wait;
-
-	@BeforeMethod
-	public void setUp() {
-		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-	}
-
-	@AfterMethod
-	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
-
-	private void loginAdmin() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-
-		WebElement username = wait.until(ExpectedConditions.elementToBeClickable(By.id("admin-usernameOrEmail")));
-		username.clear();
-		username.sendKeys(Config.getAdminUsername());
-
-		WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
-		password.clear();
-		password.sendKeys(Config.getAdminPassword());
-
-		WebElement btn = wait
-				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-login-submit']")));
-		btn.click();
-
-		wait.until(ExpectedConditions.titleContains("Admin"));
-	}
+public class AdminUsersPageTest extends AdminBaseTest {
 
 	private void openUsersPage() {
 		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý người dùng"))).click();
@@ -81,8 +36,10 @@ public class AdminUsersPageTest {
 	public void case_US_003() {
 		loginAdmin();
 		openUsersPage();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".text-2xl"))).getText()
-				.contains("Quản lý Người dùng"));
+		WebElement heading = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-heading']")));
+
+		Assert.assertTrue(heading.getText().contains("Quản lý Người dùng"));
 
 	}
 
@@ -103,10 +60,10 @@ public class AdminUsersPageTest {
 	public void case_US_005() {
 		loginAdmin();
 		openUsersPage();
-		Assert.assertFalse(driver.findElements(By.cssSelector(".text-left > .p-3:nth-child(1)")).isEmpty(),
-				"Missing element");
-		Assert.assertFalse(driver.findElements(By.cssSelector(".text-left > .p-3:nth-child(2)")).isEmpty(),
-				"Missing element");
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-table']")))
+				.isDisplayed());
 
 	}
 
@@ -116,9 +73,10 @@ public class AdminUsersPageTest {
 		openUsersPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-users-btn-add']")))
 				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".bg-white > .text-xl")))
-						.getText().contains("Thêm người dùng"));
+		WebElement title = wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-modal-title']")));
+
+		Assert.assertTrue(title.getText().contains("Thêm người dùng"));
 
 	}
 
@@ -129,35 +87,32 @@ public class AdminUsersPageTest {
 		Date now = new Date();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-users-btn-add']")))
 				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".bg-white > .text-xl")))
-						.getText().contains("Thêm người dùng"));
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(1) > .px-3"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3")))
-				.sendKeys("test" + now.getTime());
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(2) > .border"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(2) > .border"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(2) > .border")))
-				.sendKeys("test" + now.getTime() + "@gmail.com");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(3) > .px-3"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3")))
-				.sendKeys("test");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(4) > .border"))).click();
-		new Select(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div:nth-child(4) > .border"))))
-				.selectByVisibleText("company_admin");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(6) > .w-full"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(6) > .w-full"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(6) > .w-full")))
-				.sendKeys("123456aA@");
-//		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-4:nth-child(2)"))).click();
-		By submitBtn = By.cssSelector("[data-testid='admin-users-btn-save']");
 
-		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
-		Assert.assertFalse(driver
-				.findElements(By.xpath("//*[contains(normalize-space(.),\"Tạo người dùng thành công!\")]")).isEmpty());
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-username']")))
+				.sendKeys("test" + now.getTime());
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-email']")))
+				.sendKeys("test" + now.getTime() + "@gmail.com");
+
+		wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-name']")))
+				.sendKeys("test");
+
+		new Select(wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-select-role']"))))
+				.selectByVisibleText("company_admin");
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-password']")))
+				.sendKeys("123456aA@");
+
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-users-btn-save']")))
+				.click();
+
+		wait.until(ExpectedConditions.textToBePresentInElementLocated(
+				By.xpath("//*[contains(text(),'Tạo người dùng thành công')]"), "Tạo người dùng thành công"));
 
 	}
 
@@ -165,19 +120,17 @@ public class AdminUsersPageTest {
 	public void case_US_008() {
 		loginAdmin();
 		openUsersPage();
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.cssSelector(".border-t:nth-child(1) .hover\\3A bg-blue-50 > .lucide")))
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-users-btn-edit-']")))
 				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(3) > .px-3"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3")))
-				.sendKeys("Admin11");
-//		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-4:nth-child(2)"))).click();
+		wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-name']")))
+				.sendKeys("test1");
 		By submitBtn = By.cssSelector("[data-testid='admin-users-btn-save']");
 		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Cập nhật người dùng thành công!\")]"))
-						.isEmpty());
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Cập nhật người dùng thành công')]")))
+				.isDisplayed());
 
 	}
 
@@ -189,8 +142,10 @@ public class AdminUsersPageTest {
 				.click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
 				.click();
-		Assert.assertFalse(driver
-				.findElements(By.xpath("//*[contains(normalize-space(.),\"Xóa người dùng thành công!\")]")).isEmpty());
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Xóa người dùng thành công')]")))
+				.isDisplayed());
 
 	}
 
@@ -198,11 +153,25 @@ public class AdminUsersPageTest {
 	public void case_US_010() {
 		loginAdmin();
 		openUsersPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-users-btn-add']")))
-				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".bg-white > .text-xl")))
-						.getText().contains("Thêm người dùng"));
+
+		Date now = new Date();
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-username']")))
+				.sendKeys("test" + now.getTime());
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-email']")))
+				.sendKeys("test" + now.getTime() + "@gmail.com");
+
+		wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-name']")))
+				.sendKeys("test");
+
+		new Select(wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-select-role']"))))
+				.selectByVisibleText("company_admin");
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-4:nth-child(2)"))).click();
 		Assert.assertFalse(
 				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Mật khẩu phải có ít nhất 6 ký tự\")]"))
@@ -214,73 +183,91 @@ public class AdminUsersPageTest {
 	public void case_US_011() {
 		loginAdmin();
 		openUsersPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-users-btn-add']")))
-				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".bg-white > .text-xl")))
-						.getText().contains("Thêm người dùng"));
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(6) > .w-full"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(6) > .w-full"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(6) > .w-full")))
-				.sendKeys("123456");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(4) > .border"))).click();
-		new Select(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div:nth-child(4) > .border"))))
-				.selectByVisibleText("company_admin");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-4:nth-child(2)"))).click();
-		Assert.assertFalse(driver
-				.findElements(By.xpath("//*[contains(normalize-space(.),\"Vui lòng nhập tên đăng nhập\")]")).isEmpty());
 
+		Date now = new Date();
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-email']")))
+				.sendKeys("test" + now.getTime() + "@gmail.com");
+
+		wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-name']")))
+				.sendKeys("test");
+
+		new Select(wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-select-role']"))))
+				.selectByVisibleText("company_admin");
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-password']")))
+				.sendKeys("123456aA@");
+
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Vui lòng nhập tên đăng nhập')]")))
+				.isDisplayed());
 	}
 
 	@Test(description = "US-12 Thêm mới người dùng không chọn Role báo lỗi")
 	public void case_US_012() {
 		loginAdmin();
 		openUsersPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-users-btn-add']")))
-				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".bg-white > .text-xl")))
-						.getText().contains("Thêm người dùng"));
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(1) > .px-3"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3")))
-				.sendKeys("abc");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(6) > .w-full"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(6) > .w-full"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(6) > .w-full")))
-				.sendKeys("132456");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-4:nth-child(2)"))).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Vui lòng chọn role\")]")).isEmpty());
+		Date now = new Date();
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-username']")))
+				.sendKeys("test" + now.getTime());
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-email']")))
+				.sendKeys("test" + now.getTime() + "@gmail.com");
+
+		wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-name']")))
+				.sendKeys("test");
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-password']")))
+				.sendKeys("123456aA@");
+
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Vui lòng chọn role')]")))
+				.isDisplayed());
 
 	}
 
-	@Test(description = "US-13 Thêm mới người dùng nhập trung username báo lỗi")
+	@Test(description = "US-13 Thêm mới người dùng nhập trùng username báo lỗi")
 	public void case_US_013() {
 		loginAdmin();
 		openUsersPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-users-btn-add']")))
-				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".bg-white > .text-xl")))
-						.getText().contains("Thêm người dùng"));
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(1) > .px-3"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3")))
+
+		Date now = new Date();
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-username']")))
 				.sendKeys("test");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(2) > .border"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(4) > .border"))).click();
-		new Select(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div:nth-child(4) > .border"))))
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-email']")))
+				.sendKeys("test" + now.getTime() + "@gmail.com");
+
+		wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-name']")))
+				.sendKeys("test");
+
+		new Select(wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-select-role']"))))
 				.selectByVisibleText("company_admin");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(6) > .w-full"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(6) > .w-full"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(6) > .w-full")))
-				.sendKeys("123456");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-4:nth-child(2)"))).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Tài khoản đã tồn tại\")]")).isEmpty());
+
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-password']")))
+				.sendKeys("123456aA@");
+
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Tài khoản đã tồn tại')]")))
+				.isDisplayed());
 
 	}
 

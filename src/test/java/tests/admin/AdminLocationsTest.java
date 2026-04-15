@@ -1,62 +1,15 @@
 package tests.admin;
 
-import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import config.Config;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class AdminLocationsTest {
-
-	private WebDriver driver;
-	private WebDriverWait wait;
-
-	@BeforeMethod
-	public void setUp() {
-		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-	}
-
-	@AfterMethod
-	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
-
-	private void loginSuperAdmin() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-
-		WebElement username = wait.until(ExpectedConditions.elementToBeClickable(By.id("admin-usernameOrEmail")));
-
-		username.clear();
-		username.sendKeys(Config.getSuperAdminUsername());
-
-		WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
-
-		password.clear();
-		password.sendKeys(Config.getSuperAdminPassword());
-
-		WebElement btn = wait
-				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-login-submit']")));
-
-		btn.click();
-
-		wait.until(ExpectedConditions.titleContains("Admin"));
-	}
+public class AdminLocationsTest extends AdminBaseTest {
 
 	private void openLocationPage() {
 		By menuLocation = By.xpath("//button[.//span[contains(.,'Địa điểm')]]");
@@ -94,10 +47,14 @@ public class AdminLocationsTest {
 		loginSuperAdmin();
 		openLocationPage();
 
-		WebElement cityColumn = wait.until(ExpectedConditions.presenceOfElementLocated(
-				By.xpath("//*[self::th or self::div][contains(normalize-space(.),'THÀNH PHỐ')]")));
+		WebElement table = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-locations-table']")));
 
-		Assert.assertTrue(cityColumn.isDisplayed());
+		List<WebElement> ths = table.findElements(By.tagName("th"));
+
+		List<String> headers = ths.stream().map(e -> e.getText().trim().toLowerCase()).toList();
+
+		Assert.assertTrue(headers.contains("thành phố"));
 
 	}
 
@@ -121,16 +78,16 @@ public class AdminLocationsTest {
 				ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-locations-btn-add']")));
 		addBtn.click();
 
-		wait.until(
-				ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-locations-form-submit']")))
-				.click();
-
 		WebElement city = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("city")));
 
+		wait.until(driver -> {
+			Boolean isValid = (Boolean) ((JavascriptExecutor) driver)
+					.executeScript("return arguments[0].checkValidity();", city);
+			return !isValid;
+		});
+
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-
 		Boolean valid = (Boolean) js.executeScript("return arguments[0].checkValidity();", city);
-
 		Assert.assertFalse(valid);
 	}
 
@@ -180,7 +137,7 @@ public class AdminLocationsTest {
 		wait.until(ExpectedConditions.elementToBeClickable(saveBtn)).click();
 
 		WebElement toast = wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Tạo địa điểm thành công')]")));
+				.visibilityOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Tạo địa điểm thành công!')]")));
 
 		Assert.assertTrue(toast.isDisplayed());
 

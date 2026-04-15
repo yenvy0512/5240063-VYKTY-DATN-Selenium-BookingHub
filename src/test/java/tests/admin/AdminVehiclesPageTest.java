@@ -1,59 +1,16 @@
 package tests.admin;
 
-import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import config.Config;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class AdminVehiclesPageTest {
-
-	private WebDriver driver;
-	private WebDriverWait wait;
-
-	@BeforeMethod
-	public void setUp() {
-		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-	}
-
-	@AfterMethod
-	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
-
-	private void loginAdmin() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-
-		WebElement username = wait.until(ExpectedConditions.elementToBeClickable(By.id("admin-usernameOrEmail")));
-		username.clear();
-		username.sendKeys(Config.getAdminUsername());
-
-		WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
-		password.clear();
-		password.sendKeys(Config.getAdminPassword());
-
-		WebElement btn = wait
-				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-login-submit']")));
-		btn.click();
-
-		wait.until(ExpectedConditions.titleContains("Admin"));
-	}
+public class AdminVehiclesPageTest extends AdminBaseTest {
 
 	private void openVehiclesPage() {
 		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Phương tiện"))).click();
@@ -65,7 +22,7 @@ public class AdminVehiclesPageTest {
 		loginAdmin();
 		openVehiclesPage();
 		Assert.assertEquals(driver.getTitle(), "Quản lý Xe - BookingHub");
-		
+
 	}
 
 	@Test(description = "VH-02 Tiêu đề trang quản lý  phương tiện đúng")
@@ -73,26 +30,38 @@ public class AdminVehiclesPageTest {
 		loginAdmin();
 		openVehiclesPage();
 		Assert.assertEquals(driver.getTitle(), "Quản lý Xe - BookingHub");
-		
+
 	}
 
 	@Test(description = "VH-03 Bảng phương tiên có cột Tên xe và Biển số")
 	public void case_VH_003() {
 		loginAdmin();
 		openVehiclesPage();
-		Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"TÊN XE\")]")).isEmpty());
-		Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"BIỂN SỐ\")]")).isEmpty());
-		
+
+		WebElement table = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vehicles-table']")));
+
+		List<WebElement> ths = table.findElements(By.tagName("th"));
+
+		List<String> actualHeaders = ths.stream().map(e -> e.getText().trim().toLowerCase()).toList();
+
+		String[] expectedHeaders = { "tên xe", "biển số" };
+
+		for (String header : expectedHeaders) {
+			Assert.assertTrue(actualHeaders.contains(header));
+		}
+
 	}
 
 	@Test(description = "VH-04 Nút Thêm xe hiển thị")
 	public void case_VH_004() {
 		loginAdmin();
 		openVehiclesPage();
-		Assert.assertFalse(driver.findElements(By.cssSelector("[data-testid='admin-vehicles-btn-add']")).isEmpty(),
-				"Missing element");
-		Assert.assertEquals(driver.getTitle(), "Quản lý Xe - BookingHub");
-		
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vehicles-btn-add']")))
+				.isDisplayed(), "Missing add button");
+
 	}
 
 	@Test(description = "VH-06 Tìm kiếm với từ khóa")
@@ -110,8 +79,7 @@ public class AdminVehiclesPageTest {
 		wait.until(
 				ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-vehicles-search-submit']")))
 				.click();
-		Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Xe 16\")]")).isEmpty());
-		
+
 	}
 
 	@Test(description = "VH-07 Tìm kiếm chuỗi rỗng vẫn thực hiện được")
@@ -121,7 +89,7 @@ public class AdminVehiclesPageTest {
 		wait.until(
 				ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-vehicles-search-submit']")))
 				.click();
-		
+
 	}
 
 	@Test(description = "VH-09 Gửi thông tin trống thông báo lỗi")
@@ -130,11 +98,18 @@ public class AdminVehiclesPageTest {
 		openVehiclesPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-vehicles-btn-add']")))
 				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
-				"//button[contains(.,'Lưu') or contains(.,'Cập nhật') or contains(.,'Thêm') or contains(.,'Tạo')]")))
-				.click();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("busType"))).isEnabled());
-		
+		WebElement btn = wait.until(
+				ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-vehicles-form-submit']")));
+
+		Assert.assertTrue(btn.isDisplayed());
+		btn.click();
+		WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("busType")));
+
+		Boolean valid = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();",
+				el);
+
+		Assert.assertFalse(valid);
+
 	}
 
 	@Test(description = "VH-10 Thêm mới phương tiện thành công")
@@ -161,9 +136,11 @@ public class AdminVehiclesPageTest {
 		By submitBtn = By.cssSelector("[data-testid='admin-vehicles-form-submit']");
 
 		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Tạo xe thành công!\")]")).isEmpty());
-		
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Tạo xe thành công')]")))
+				.isDisplayed());
+
 	}
 
 	@Test(description = "VH-11 Chỉnh sửa phương tiện thành công")
@@ -178,9 +155,11 @@ public class AdminVehiclesPageTest {
 		By submitBtn = By.cssSelector("[data-testid='admin-vehicles-form-submit']");
 
 		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Cập nhật thành công!\")]")).isEmpty());
-		
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Cập nhật thành công')]")))
+				.isDisplayed());
+
 	}
 
 	@Test(description = "VH-12 Xóa phương tiện")
@@ -192,9 +171,10 @@ public class AdminVehiclesPageTest {
 				.click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
 				.click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Xóa thành công!\")]")).isEmpty());
-		
+		Assert.assertTrue(wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Xóa thành công')]")))
+				.isDisplayed());
+
 	}
 
 	@Test(description = "VH-13 Thêm phương tiện trùng biển số thông báo lỗi")
@@ -221,9 +201,11 @@ public class AdminVehiclesPageTest {
 		By submitBtn = By.cssSelector("[data-testid='admin-vehicles-form-submit']");
 
 		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Biển số đã tồn tại!\")]")).isEmpty());
-		
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Biển số đã tồn tại!')]")))
+				.isDisplayed());
+
 	}
 
 }

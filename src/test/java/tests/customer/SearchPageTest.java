@@ -3,45 +3,18 @@ package tests.customer;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import config.Config;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class SearchPageTest {
-
-	private WebDriver driver;
-	private WebDriverWait wait;
-
-	@BeforeMethod
-	public void setUp() {
-		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-	}
-
-	@AfterMethod
-	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
+public class SearchPageTest extends CustomerBaseTest {
 
 	private void goToSearchPage() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
+		openCustomerHome();
 
 		WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href='/search']")));
 
@@ -75,7 +48,8 @@ public class SearchPageTest {
 	public void case_SR_004() {
 		goToSearchPage();
 
-		WebElement heading = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-6")));
+		WebElement heading = wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='customer-search-heading']")));
 
 		Assert.assertTrue(heading.isDisplayed());
 	}
@@ -95,7 +69,8 @@ public class SearchPageTest {
 	public void case_SR_006() {
 		goToSearchPage();
 
-		WebElement btn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".px-6")));
+		WebElement btn = wait
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='search-submit']")));
 
 		Assert.assertTrue(btn.getText().contains("Tìm kiếm"));
 
@@ -105,8 +80,11 @@ public class SearchPageTest {
 	public void case_SR_008() {
 		goToSearchPage();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
+		WebElement btn = wait
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='search-submit']")));
 
+		btn.click();;
+		
 		waitForError("Vui lòng điền đầy đủ thông tin tìm kiếm");
 
 	}
@@ -118,7 +96,10 @@ public class SearchPageTest {
 		new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("search-departureLocationId"))))
 				.selectByVisibleText("Hà Nội - Hoàng Mai");
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
+		WebElement btn = wait
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='search-submit']")));
+
+		btn.click();
 
 		waitForError("Vui lòng điền đầy đủ thông tin tìm kiếm");
 	}
@@ -143,7 +124,10 @@ public class SearchPageTest {
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--015"))).click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
+		WebElement btn = wait
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='search-submit']")));
+
+		btn.click();
 
 		waitForError("Vui lòng điền đầy đủ thông tin tìm kiếm");
 	}
@@ -162,7 +146,10 @@ public class SearchPageTest {
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--015"))).click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
+		WebElement btn = wait
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='search-submit']")));
+
+		btn.click();
 
 		wait.until(ExpectedConditions.titleContains("Tìm chuyến xe"));
 

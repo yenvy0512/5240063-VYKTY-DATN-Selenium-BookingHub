@@ -1,71 +1,17 @@
 package tests.customer;
 
 import java.time.Duration;
-import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import config.Config;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class ProfilePageTest {
-
-	private WebDriver driver;
-	private WebDriverWait wait;
-
-	@BeforeMethod
-	public void setUp() {
-		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-	}
-
-	@AfterMethod
-	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
-
-	private void loginCustomer() {
-		driver.get(Config.getBaseUrl() + "/");
-
-		List<WebElement> loginBtn = driver.findElements(By.cssSelector(".btn-login"));
-
-		if (!loginBtn.isEmpty()) {
-
-			loginBtn.get(0).click();
-
-			wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
-
-			WebElement username = wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail")));
-			username.clear();
-			username.sendKeys(Config.getCustomerUsername());
-
-			WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.id("password")));
-			password.clear();
-			password.sendKeys(Config.getCustomerPassword());
-
-			WebElement submitBtn = wait
-					.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(.,'Đăng nhập')]")));
-			submitBtn.click();
-
-			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".btn-login")));
-
-		}
-	}
+public class ProfilePageTest extends CustomerBaseTest {
 
 	private void openProfilePage() {
 
@@ -168,7 +114,8 @@ public class ProfilePageTest {
 		wait.until(ExpectedConditions.elementToBeClickable(By.name("phone"))).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone"))).clear();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone"))).sendKeys("0854256406");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='customer-profile-submit']")));
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='customer-profile-submit']")))
+				.click();
 		waitForToast("Cập nhật profile thành công!");
 	}
 

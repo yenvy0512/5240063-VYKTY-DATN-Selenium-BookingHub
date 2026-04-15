@@ -1,64 +1,23 @@
 package tests.customer;
 
 import java.time.Duration;
+import java.util.Date;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import config.Config;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class RegisterPageTest {
-
-	private WebDriver driver;
-	private WebDriverWait wait;
-
-	@BeforeMethod
-	public void setUp() {
-		WebDriverManager.chromedriver().setup();	
-		driver = new ChromeDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-	}
-
-	@AfterMethod
-	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
-
-	private void logoutBefore() {
-		boolean isLoggedIn = !driver.findElements(By.cssSelector(".user-avatar")).isEmpty();
-
-		if (isLoggedIn) {
-			wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".user-avatar"))).click();
-
-			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(.,'Đăng xuất')]"))).click();
-
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='confirm-modal']")));
-
-			wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
-					.click();
-
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".btn-login")));
-		}
-	}
+public class RegisterPageTest extends CustomerBaseTest {
 
 	private void goToRegisterPage() {
 		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		logoutBefore();
+		
+		logoutCustomerIfNeeded();
 
 		wait.until(ExpectedConditions
 				.elementToBeClickable(By.xpath("//a[contains(@href,'/register') or contains(.,'Đăng ký')]"))).click();
@@ -269,9 +228,11 @@ public class RegisterPageTest {
 	public void case_RG_013() {
 		goToRegisterPage();
 
+		Date now = new Date();
+		
 	    WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
 	    username.clear();
-	    username.sendKeys("teest11111");
+	    username.sendKeys("test" + now.getTime());
 
 	    WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
 	    password.clear();
@@ -287,7 +248,7 @@ public class RegisterPageTest {
 
 	    WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
 	    email.clear();
-	    email.sendKeys("abdcd@gmail.com");
+	    email.sendKeys("test" + now.getTime() + "@gmail.com");
 
 	    wait.until(ExpectedConditions.elementToBeClickable(
 	        By.cssSelector("[data-testid='register-submit']")

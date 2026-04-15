@@ -1,64 +1,25 @@
 package tests.admin;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import config.Config;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class AdminVASTest {
-
-	private WebDriver driver;
-	private WebDriverWait wait;
-
-	@BeforeMethod
-	public void setUp() {
-		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-	}
-
-	@AfterMethod
-	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
-
-	private void loginAdmin() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-
-		WebElement username = wait.until(ExpectedConditions.elementToBeClickable(By.id("admin-usernameOrEmail")));
-		username.clear();
-		username.sendKeys(Config.getAdminUsername());
-
-		WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
-		password.clear();
-		password.sendKeys(Config.getAdminPassword());
-
-		WebElement btn = wait
-				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-login-submit']")));
-		btn.click();
-
-		wait.until(ExpectedConditions.titleContains("Admin"));
-	}
+public class AdminVASTest extends AdminBaseTest {
 
 	private void openVasPage() {
-		wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//*[contains(normalize-space(.),'VAS') or contains(normalize-space(.),'Dịch vụ')]"))).click();
+
+		By menuLocation = By.xpath("//button[.//span[contains(.,'Dịch vụ')]]");
+
+		WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(menuLocation));
+		menu.click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(.,'Dịch vụ')]")));
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Dịch vụ bổ sung"))).click();
+
 		wait.until(ExpectedConditions.titleContains("Dịch vụ"));
 	}
 
@@ -66,6 +27,7 @@ public class AdminVASTest {
 	public void case_VS_001() {
 		loginAdmin();
 		openVasPage();
+		wait.until(ExpectedConditions.titleIs("Quản lý Dịch vụ - BookingHub"));
 		Assert.assertEquals(driver.getTitle(), "Quản lý Dịch vụ - BookingHub");
 
 	}
@@ -74,6 +36,7 @@ public class AdminVASTest {
 	public void case_VS_002() {
 		loginAdmin();
 		openVasPage();
+		wait.until(ExpectedConditions.titleIs("Quản lý Dịch vụ - BookingHub"));
 		Assert.assertEquals(driver.getTitle(), "Quản lý Dịch vụ - BookingHub");
 
 	}
@@ -82,20 +45,20 @@ public class AdminVASTest {
 	public void case_VS_003() {
 		loginAdmin();
 		openVasPage();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".text-2xl"))).getText()
-				.contains("Quản lý dịch vụ bổ sung"));
+		WebElement heading = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-heading']")));
 
+		Assert.assertTrue(heading.getText().contains("Quản lý dịch vụ bổ sung"));
 	}
 
 	@Test(description = "VS-04 Nút thêm dịch vụ hiển thị")
 	public void case_VS_004() {
 		loginAdmin();
 		openVasPage();
-		Assert.assertFalse(driver.findElements(By.cssSelector("[data-testid='admin-vas-btn-add']")).isEmpty(),
-				"Missing element");
-		Assert.assertTrue(wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-vas-btn-add']")))
-				.getText().contains("+ Thêm dịch vụ mới"));
+		WebElement btn = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-btn-add']")));
+
+		Assert.assertTrue(btn.getText().contains("+ Thêm dịch vụ mới"));
 
 	}
 
@@ -125,11 +88,11 @@ public class AdminVASTest {
 		openVasPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-vas-btn-add']")))
 				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50:nth-child(2)")))
-				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3")))
-						.isEnabled());
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.cssSelector("[data-testid='admin-vas-form'] button[type='submit']"))).click();
+		WebElement input = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-input-name']")));
+		Assert.assertFalse(input.getAttribute("validationMessage").isEmpty());
 
 	}
 
@@ -139,21 +102,24 @@ public class AdminVASTest {
 		openVasPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-vas-btn-add']")))
 				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(1) > .px-3"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3")))
-				.sendKeys("Aqua");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(2) > .px-3"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div:nth-child(2) > .px-3"))))
-				.selectByVisibleText("Nước uống");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(3) > .px-3"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3")))
-				.sendKeys("1000");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50:nth-child(2)")))
-				.click();
-		Assert.assertFalse(driver
-				.findElements(By.xpath("//*[contains(normalize-space(.),\"Tạo dịch vụ thành công!\")]")).isEmpty());
+		WebElement inputName = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-input-name']")));
+		inputName.clear();
+		inputName.sendKeys("Aqua");
+		Select select = new Select(wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-input-type']"))));
+
+		select.selectByVisibleText("Nước uống");
+		WebElement inputPrice = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-input-price']")));
+
+		inputPrice.clear();
+		inputPrice.sendKeys("1000");
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.cssSelector("[data-testid='admin-vas-form'] button[type='submit']"))).click();
+		Assert.assertTrue(wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Tạo dịch vụ thành công!')]")))
+				.isDisplayed());
 
 	}
 
@@ -165,15 +131,16 @@ public class AdminVASTest {
 //				.click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-vas-btn-edit-']")))
 				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(3) > .px-3"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3")))
-				.sendKeys("10000");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50:nth-child(2)")))
-				.click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Cập nhật dịch vụ thành công!\")]"))
-						.isEmpty());
+		WebElement inputPrice = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-input-price']")));
+
+		inputPrice.clear();
+		inputPrice.sendKeys("10000");
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.cssSelector("[data-testid='admin-vas-form'] button[type='submit']"))).click();
+		Assert.assertTrue(wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Cập nhật dịch vụ thành công!')]")))
+				.isDisplayed());
 
 	}
 
@@ -187,8 +154,9 @@ public class AdminVASTest {
 				.click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
 				.click();
-		Assert.assertFalse(driver
-				.findElements(By.xpath("//*[contains(normalize-space(.),\"Xóa dịch vụ thành công!\")]")).isEmpty());
+		Assert.assertTrue(wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Xóa dịch vụ thành công!')]")))
+				.isDisplayed());
 
 	}
 
@@ -196,17 +164,18 @@ public class AdminVASTest {
 	public void case_VS_011() {
 		loginAdmin();
 		openVasPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".border-t:nth-child(1) .text-blue-600")))
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-vas-btn-edit-']")))
 				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".fixed"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3")))
-				.sendKeys("");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50:nth-child(2)")))
-				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3")))
-						.isEnabled());
+		WebElement inputPrice = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-input-price']")));
+
+		inputPrice.clear();
+		inputPrice.sendKeys("");
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.cssSelector("[data-testid='admin-vas-form'] button[type='submit']"))).click();
+		WebElement input = wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-vas-input-price']")));
+		Assert.assertFalse(input.getAttribute("validationMessage").isEmpty());
 
 	}
 

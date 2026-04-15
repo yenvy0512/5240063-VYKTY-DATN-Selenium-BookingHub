@@ -1,58 +1,14 @@
 package tests.admin;
 
-import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import config.Config;
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-public class AdminBusCompaniesTest {
-
-	private WebDriver driver;
-	private WebDriverWait wait;
-
-	@BeforeMethod
-	public void setUp() {
-		WebDriverManager.chromedriver().setup();
-		driver = new ChromeDriver();
-		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-	}
-
-	@AfterMethod
-	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
-
-	private void loginSuperAdmin() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-
-		WebElement username = wait.until(ExpectedConditions.elementToBeClickable(By.id("admin-usernameOrEmail")));
-		username.clear();
-		username.sendKeys(Config.getSuperAdminUsername());
-
-		WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
-		password.clear();
-		password.sendKeys(Config.getSuperAdminPassword());
-
-		WebElement btn = wait
-				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-login-submit']")));
-		btn.click();
-
-		wait.until(ExpectedConditions.titleContains("Admin"));
-	}
+public class AdminBusCompaniesTest extends AdminBaseTest {
 
 	private void openBusCompaniesPage() {
 		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
@@ -63,7 +19,9 @@ public class AdminBusCompaniesTest {
 	public void case_BC_001() {
 		loginSuperAdmin();
 		openBusCompaniesPage();
-		Assert.assertEquals(driver.getTitle(), "Quản lý Nhà xe - BookingHub");
+		wait.until(ExpectedConditions.titleContains("Quản lý Nhà xe"));
+
+		Assert.assertTrue(driver.getTitle().contains("Quản lý Nhà xe"));
 
 	}
 
@@ -71,7 +29,9 @@ public class AdminBusCompaniesTest {
 	public void case_BC_002() {
 		loginSuperAdmin();
 		openBusCompaniesPage();
-		Assert.assertEquals(driver.getTitle(), "Quản lý Nhà xe - BookingHub");
+		wait.until(ExpectedConditions.titleContains("Quản lý Nhà xe"));
+
+		Assert.assertTrue(driver.getTitle().contains("Quản lý Nhà xe"));
 
 	}
 
@@ -79,11 +39,18 @@ public class AdminBusCompaniesTest {
 	public void case_BC_003() {
 		loginSuperAdmin();
 		openBusCompaniesPage();
-		Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"TÊN NHÀ XE\")]")).isEmpty());
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"SỐ ĐIỆN THOẠI\")]")).isEmpty());
-		Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"ĐỊA CHỈ\")]")).isEmpty());
+		WebElement table = wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-bus-companies-table']")));
 
+		List<WebElement> ths = table.findElements(By.tagName("th"));
+
+		List<String> actualHeaders = ths.stream().map(e -> e.getText().trim().toLowerCase()).toList();
+
+		String[] expectedHeaders = { "tên nhà xe", "số điện thoại", "địa chỉ" };
+
+		for (String header : expectedHeaders) {
+			Assert.assertTrue(actualHeaders.contains(header));
+		}
 	}
 
 	@Test(description = "BC-04 Nút Thêm nhà xe hiển thị với super admin")
@@ -109,7 +76,9 @@ public class AdminBusCompaniesTest {
 				.elementToBeClickable(By.cssSelector("[data-testid=\"admin-bus-companies-btn-add\"]"))).click();
 		wait.until(ExpectedConditions
 				.elementToBeClickable(By.cssSelector("[data-testid=\"admin-bus-companies-form-submit\"]"))).click();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("name"))).isEnabled());
+		WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name")));
+
+		Assert.assertNotNull(input.getAttribute("required"));
 
 	}
 
@@ -132,9 +101,10 @@ public class AdminBusCompaniesTest {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("address"))).sendKeys("Test");
 		wait.until(ExpectedConditions
 				.elementToBeClickable(By.cssSelector("[data-testid=\"admin-bus-companies-form-submit\"]"))).click();
-		Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Tạo nhà xe thành công!\")]"))
-				.isEmpty());
-
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Tạo nhà xe thành công')]")))
+				.isDisplayed());
 	}
 
 	@Test(description = "BC-07 Cập nhật nhà xe")
@@ -146,11 +116,12 @@ public class AdminBusCompaniesTest {
 		wait.until(ExpectedConditions.elementToBeClickable(By.name("name"))).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name"))).clear();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name"))).sendKeys("Test1");
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
-				"//button[contains(.,'Lưu') or contains(.,'Cập nhật') or contains(.,'Thêm') or contains(.,'Tạo')]")))
-				.click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Cập nhật thành công!\")]")).isEmpty());
+		wait.until(ExpectedConditions
+				.elementToBeClickable(By.cssSelector("[data-testid=\"admin-bus-companies-form-submit\"]"))).click();
+		Assert.assertTrue(wait
+				.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Cập nhật thành công')]")))
+				.isDisplayed());
 
 	}
 
@@ -162,8 +133,9 @@ public class AdminBusCompaniesTest {
 				.elementToBeClickable(By.cssSelector("[data-testid^='admin-bus-companies-btn-delete-']"))).click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
 				.click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Xóa thành công!\")]")).isEmpty());
+		Assert.assertTrue(wait.until(
+				ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Xóa thành công')]")))
+				.isDisplayed());
 
 	}
 
@@ -171,8 +143,10 @@ public class AdminBusCompaniesTest {
 	public void case_BC_009() {
 		loginSuperAdmin();
 		openBusCompaniesPage();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".text-2xl"))).getText()
-				.contains("Quản lý Nhà xe"));
+		WebElement heading = wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-bus-companies-heading']")));
+
+		Assert.assertTrue(heading.getText().contains("Quản lý Nhà xe"));
 
 	}
 
