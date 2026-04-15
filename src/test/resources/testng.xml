@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="BookingHub Test Suite" verbose="1">
-    <!-- Web Customer - port 3000 -->
     <test name="Web Customer - Trang chủ">
         <classes>
             <class name="tests.customer.HomePageTest"/>
@@ -17,7 +16,6 @@
             <class name="tests.customer.ProfilePageTest"/>
         </classes>
     </test>
-    <!-- Web Admin - port 3001, cần admin.username/admin.password trong config -->
     <test name="Web Admin - Login">
         <classes>
             <class name="tests.admin.AdminLoginPageTest"/>

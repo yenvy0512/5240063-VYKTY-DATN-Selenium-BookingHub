@@ -1,6 +1,7 @@
 package tests.admin;
 
 import java.time.Duration;
+import java.util.Date;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -125,6 +126,7 @@ public class AdminUsersPageTest {
 	public void case_US_007() {
 		loginAdmin();
 		openUsersPage();
+		Date now = new Date();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-users-btn-add']")))
 				.click();
 		Assert.assertTrue(
@@ -133,11 +135,11 @@ public class AdminUsersPageTest {
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(1) > .px-3"))).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3"))).clear();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(1) > .px-3")))
-				.sendKeys("test");
+				.sendKeys("test" + now.getTime());
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(2) > .border"))).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(2) > .border"))).clear();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(2) > .border")))
-				.sendKeys("test@gmail.com");
+				.sendKeys("test" + now.getTime() + "@gmail.com");
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div:nth-child(3) > .px-3"))).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3"))).clear();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div:nth-child(3) > .px-3")))
