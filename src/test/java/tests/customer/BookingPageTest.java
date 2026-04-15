@@ -1,15 +1,12 @@
 package tests.customer;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,15 +16,16 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import config.Config;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BookingPageTest {
 
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private final Map<String, String> vars = new HashMap<>();
 
 	@BeforeMethod
 	public void setUp() {
+		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		driver.manage().window().maximize();
@@ -40,272 +38,152 @@ public class BookingPageTest {
 		}
 	}
 
-	@Test(description = "BK-01 Trang đặt vé hiển thị và có tiêu đề")
-	public void case_BK_001() {
+	private void loginCustomer() {
 		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		new Actions(driver)
-				.moveToElement(wait
-						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".disabled\\3Aopacity-50"))))
-				.perform();
+		List<WebElement> loginBtn = driver.findElements(By.cssSelector(".btn-login"));
 
+		if (!loginBtn.isEmpty()) {
+
+			loginBtn.get(0).click();
+
+			wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
+
+			WebElement username = wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail")));
+			username.clear();
+			username.sendKeys(Config.getCustomerUsername());
+
+			WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.id("password")));
+			password.clear();
+			password.sendKeys(Config.getCustomerPassword());
+
+			WebElement submitBtn = wait
+					.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(.,'Đăng nhập')]")));
+			submitBtn.click();
+
+			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".btn-login")));
+
+		}
+	}
+
+	private void searchTrip() {
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
 		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("departureLocationId"))))
 				.selectByVisibleText("Hà Nội - Long Biên");
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
 		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
 				.selectByVisibleText("Hải Phòng - Lê Chân");
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--014"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--016"))).click();
+
+		By searchBtn = By.cssSelector("[data-testid='home-search-submit']");
+
+		wait.until(ExpectedConditions.elementToBeClickable(searchBtn)).click();
+	}
+
+	private void openBooking() {
 		wait.until(ExpectedConditions.elementToBeClickable(
 				By.xpath("//button[contains(.,'Đặt vé') or contains(.,'Chọn ghế') or contains(.,'Tiếp tục')]")))
 				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h1[contains(.,'Đặt vé xe khách')]")))
-						.getText().contains("Đặt vé xe khách"));
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[contains(.,'Đặt vé xe khách')]")));
+	}
+
+	@Test(description = "BK-01 Trang đặt vé hiển thị và có tiêu đề")
+	public void case_BK_001() {
+		loginCustomer();
+		searchTrip();
+		openBooking();
+
+		Assert.assertTrue(driver.findElement(By.xpath("//h1[contains(.,'Đặt vé xe khách')]")).getText()
+				.contains("Đặt vé xe khách"));
 
 	}
 
 	@Test(description = "BK-03 Khi ở trang booking có form đặt vé")
 	public void case_BK_003() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		loginCustomer();
+		searchTrip();
+		openBooking();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		new Actions(driver)
-				.moveToElement(wait
-						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".disabled\\3Aopacity-50"))))
-				.perform();
-
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("departureLocationId"))))
-				.selectByVisibleText("Hà Nội - Long Biên");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
-				.selectByVisibleText("Hải Phòng - Lê Chân");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--014"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//button[contains(.,'Đặt vé') or contains(.,'Chọn ghế') or contains(.,'Tiếp tục')]")))
-				.click();
 		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h1[contains(.,'Đặt vé xe khách')]")))
-						.getText().contains("Đặt vé xe khách"));
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".mb-4 > .font-bold")))
-				.getText().contains("Thông tin liên hệ"));
+				driver.findElement(By.cssSelector(".mb-4 > .font-bold")).getText().contains("Thông tin liên hệ"));
 
 	}
 
 	@Test(description = "BK-04 Form có hiển thị các trường thông tin")
 	public void case_BK_004() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		loginCustomer();
+		searchTrip();
+		openBooking();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		new Actions(driver)
-				.moveToElement(wait
-						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".disabled\\3Aopacity-50"))))
-				.perform();
-
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("departureLocationId"))))
-				.selectByVisibleText("Hà Nội - Long Biên");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
-				.selectByVisibleText("Hải Phòng - Lê Chân");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--014"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//button[contains(.,'Đặt vé') or contains(.,'Chọn ghế') or contains(.,'Tiếp tục')]")))
-				.click();
 		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h1[contains(.,'Đặt vé xe khách')]")))
-						.getText().contains("Đặt vé xe khách"));
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".mb-4 > .font-bold")))
-				.getText().contains("Thông tin liên hệ"));
-		Assert.assertFalse(driver.findElements(By.name("customerName")).isEmpty(), "Missing element");
-		Assert.assertFalse(driver.findElements(By.name("customerPhone")).isEmpty(), "Missing element");
-		Assert.assertFalse(driver.findElements(By.name("customerEmail")).isEmpty(), "Missing element");
-		Assert.assertFalse(driver.findElements(By.name("paymentMethod")).isEmpty(), "Missing element");
-		Assert.assertFalse(driver.findElements(By.cssSelector(".px-6")).isEmpty(), "Missing element");
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("customerName"))).isDisplayed());
+
+		Assert.assertTrue(
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("customerPhone"))).isDisplayed());
+
+		Assert.assertTrue(
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("customerEmail"))).isDisplayed());
+
+		Assert.assertTrue(
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("paymentMethod"))).isDisplayed());
 
 	}
 
 	@Test(description = "BK-06 Gửi thông tin trống có thể hiện thông báo lỗi")
 	public void case_BK_006() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		loginCustomer();
+		searchTrip();
+		openBooking();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		new Actions(driver)
-				.moveToElement(wait
-						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".disabled\\3Aopacity-50"))))
-				.perform();
-
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("departureLocationId"))))
-				.selectByVisibleText("Hà Nội - Long Biên");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
-				.selectByVisibleText("Hải Phòng - Lê Chân");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--014"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//button[contains(.,'Đặt vé') or contains(.,'Chọn ghế') or contains(.,'Tiếp tục')]")))
-				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h1[contains(.,'Đặt vé xe khách')]")))
-						.getText().contains("Đặt vé xe khách"));
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".mb-4 > .font-bold")))
-				.getText().contains("Thông tin liên hệ"));
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".py-6"))).click();
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.cssSelector(".grid:nth-child(3) > .p-2:nth-child(3) > .text-lg"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("customerName"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("customerName"))).sendKeys("");
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("customerName"))).isEnabled());
+
+		Assert.assertTrue(driver.findElement(By.name("customerName")).getAttribute("validationMessage").length() > 0);
 
 	}
 
 	@Test(description = "BK-07 Điền họ tên và gửi thông tin vẫn báo bắt buộc nhập trường khác")
 	public void case_BK_007() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		vars.put("isLoginNeeded", String
-				.valueOf(((JavascriptExecutor) driver).executeScript("return !!document.querySelector('.btn-login')")));
+		loginCustomer();
+		searchTrip();
+		openBooking();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng nhập"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("usernameOrEmail"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail"))).sendKeys("customer");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		new Actions(driver)
-				.moveToElement(wait
-						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".disabled\\3Aopacity-50"))))
-				.perform();
+		driver.findElement(By.name("customerName")).sendKeys("Nguyen Van A");
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("departureLocationId"))))
-				.selectByVisibleText("Hà Nội - Long Biên");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
-				.selectByVisibleText("Hải Phòng - Lê Chân");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--014"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//button[contains(.,'Đặt vé') or contains(.,'Chọn ghế') or contains(.,'Tiếp tục')]")))
-				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h1[contains(.,'Đặt vé xe khách')]")))
-						.getText().contains("Đặt vé xe khách"));
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".mb-4 > .font-bold")))
-				.getText().contains("Thông tin liên hệ"));
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".grid:nth-child(2) > .p-2:nth-child(3)")))
-				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("html"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("customerPhone"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("customerPhone"))).sendKeys("");
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.presenceOfElementLocated(By.name("customerPhone"))).isEnabled());
+
+		Assert.assertTrue(driver.findElement(By.name("customerPhone")).getAttribute("validationMessage").length() > 0);
 
 	}
 
 	@Test(description = "BK-08 Nút đặt vé hiển thị")
 	public void case_BK_008() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("departureLocationId"))))
-				.selectByVisibleText("Hà Nội - Long Biên");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
-				.selectByVisibleText("Hải Phòng - Lê Chân");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--014"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		new Actions(driver)
-				.moveToElement(wait
-						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".disabled\\3Aopacity-50"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//button[contains(.,'Đặt vé') or contains(.,'Chọn ghế') or contains(.,'Tiếp tục')]")))
-				.click();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".px-6"))).getText()
-				.contains("Vui lòng chọn ghế"));
+		loginCustomer();
+		searchTrip();
+		openBooking();
+
+		By btn = By.cssSelector("[data-testid='booking-submit']");
+
+		Assert.assertTrue(
+				wait.until(ExpectedConditions.visibilityOfElementLocated(btn)).getText().contains("Vui lòng chọn ghế"));
 
 	}
 
 	@Test(description = "BK-09 Đặt vé thành công")
 	public void case_BK_009() {
-		driver.get(Config.getBaseUrl() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("departureLocationId"))))
-				.selectByVisibleText("Hà Nội - Long Biên");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
-				.selectByVisibleText("Hải Phòng - Lê Chân");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--014"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		new Actions(driver)
-				.moveToElement(wait
-						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".disabled\\3Aopacity-50"))))
-				.perform();
-		new Actions(driver).moveByOffset(1, 1).perform();
-		wait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//button[contains(.,'Đặt vé') or contains(.,'Chọn ghế') or contains(.,'Tiếp tục')]")))
-				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".grid:nth-child(3) > .p-2:nth-child(3)")))
-				.click();
+		loginCustomer();
+		searchTrip();
+		openBooking();
+
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".grid:nth-child(3) .p-2"))).click();
+
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".mb-4 > .text-2xl"))).click();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".mb-4 > .text-2xl")))
-				.getText().contains("✅ Đặt vé thành công!"));
+
+		Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-4 > .text-2xl")))
+				.getText().contains("Đặt vé thành công"));
 
 	}
 

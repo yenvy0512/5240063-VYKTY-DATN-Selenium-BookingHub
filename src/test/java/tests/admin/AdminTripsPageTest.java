@@ -3,9 +3,9 @@ package tests.admin;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import config.Config;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class AdminTripsPageTest {
 
@@ -24,6 +25,7 @@ public class AdminTripsPageTest {
 
 	@BeforeMethod
 	public void setUp() {
+		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		driver.manage().window().maximize();
@@ -36,30 +38,41 @@ public class AdminTripsPageTest {
 		}
 	}
 
+	private void loginAdmin() {
+		driver.get(Config.getBaseUrlAdmin() + "/");
+
+		WebElement username = wait.until(ExpectedConditions.elementToBeClickable(By.id("admin-usernameOrEmail")));
+		username.clear();
+		username.sendKeys(Config.getAdminUsername());
+
+		WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
+		password.clear();
+		password.sendKeys(Config.getAdminPassword());
+
+		WebElement btn = wait
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-login-submit']")));
+		btn.click();
+
+		wait.until(ExpectedConditions.titleContains("Admin"));
+	}
+
+	private void openTripsPage() {
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		wait.until(ExpectedConditions.titleContains("Chuyến"));
+	}
+
 	@Test(description = "TR-01 Trang Quản lý Chuyến xe hiển thị")
 	public void case_TR_001() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		Assert.assertEquals(driver.getTitle(), "Quản lý Chuyến xe - BookingHub");
 
 	}
 
 	@Test(description = "TR-02 Heading trang Quản lý Chuyến xe hiển thị")
 	public void case_TR_002() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".text-2xl"))).getText()
 				.contains("Quản lý Chuyến xe"));
 
@@ -67,14 +80,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-03 Nút tạo chuyến hiển thị")
 	public void case_TR_003() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
 		Assert.assertFalse(driver.findElements(By.cssSelector("[data-testid='admin-trips-btn-create']")).isEmpty(),
@@ -88,14 +95,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-04 Ấn Tạo chuyến mới chuyển sang trang tạo chuyến")
 	public void case_TR_004() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
@@ -108,14 +109,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-06 Bảng chuyến xe có thông tin điểm đến điểm đi")
 	public void case_TR_006() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
@@ -137,14 +132,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-07 Ô tìm kiếm chuyến hiển thị")
 	public void case_TR_007() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		Assert.assertFalse(driver.findElements(By.cssSelector("[data-testid='admin-trips-search-input']")).isEmpty(),
 				"Missing element");
 
@@ -152,14 +141,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-08 Tìm kiếm chuyến với từ khóa")
 	public void case_TR_008() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-search-input']")))
 				.click();
 		wait.until(ExpectedConditions
@@ -174,14 +157,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-11 Trang tạo chuyến hiển thị form cơ bản")
 	public void case_TR_011() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
@@ -216,14 +193,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-12 Tiêu đề trang tạo chuyến xe đúng")
 	public void case_TR_012() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
@@ -239,14 +210,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-13 Gửi thông tin tạo chuyến khi chưa chọn phương tiện nút tạo chuyến disable")
 	public void case_TR_013() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
@@ -266,14 +231,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-14 Mở modal sửa chuyến xe")
 	public void case_TR_014() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-trips-btn-delete-']")))
 				.click();
 		Assert.assertTrue(
@@ -284,14 +243,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-15 Xóa chuyến xe")
 	public void case_TR_015() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-trips-btn-delete-']")))
 				.click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
@@ -303,14 +256,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-16 Sửa chuyến xe thành công")
 	public void case_TR_016() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(@data-testid,'btn-edit-')])[1]")))
 				.click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.name("departureTime"))).click();
@@ -319,9 +266,9 @@ public class AdminTripsPageTest {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("departureTime"))).clear();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("departureTime")))
 				.sendKeys("2026-04-29T09:00");
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
-				"//button[contains(.,'Lưu') or contains(.,'Cập nhật') or contains(.,'Thêm') or contains(.,'Tạo')]")))
-				.click();
+		By submitBtn = By.cssSelector("[data-testid='admin-trips-form-submit']");
+
+		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
 		Assert.assertFalse(
 				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Cập nhật thành công!\")]")).isEmpty());
 
@@ -329,14 +276,8 @@ public class AdminTripsPageTest {
 
 	@Test(description = "TR-17 Tạo chuyến mới thành công")
 	public void case_TR_017() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
+		loginAdmin();
+		openTripsPage();
 		wait.until(
 				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
@@ -362,8 +303,10 @@ public class AdminTripsPageTest {
 				.click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--019"))).click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".w-full:nth-child(3)"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,0)");
+//		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".disabled\\3Aopacity-50"))).click();
+		By submitBtn = By.cssSelector("[data-testid='admin-trip-create-submit']");
+
+		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
 		Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Tạo chuyến thành công!\")]"))
 				.isEmpty());
 

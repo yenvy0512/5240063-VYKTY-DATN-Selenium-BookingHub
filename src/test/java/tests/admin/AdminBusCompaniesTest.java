@@ -3,8 +3,8 @@ package tests.admin;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import config.Config;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class AdminBusCompaniesTest {
 
@@ -22,6 +23,7 @@ public class AdminBusCompaniesTest {
 
 	@BeforeMethod
 	public void setUp() {
+		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		driver.manage().window().maximize();
@@ -34,44 +36,49 @@ public class AdminBusCompaniesTest {
 		}
 	}
 
+	private void loginSuperAdmin() {
+		driver.get(Config.getBaseUrlAdmin() + "/");
+
+		WebElement username = wait.until(ExpectedConditions.elementToBeClickable(By.id("admin-usernameOrEmail")));
+		username.clear();
+		username.sendKeys(Config.getSuperAdminUsername());
+
+		WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
+		password.clear();
+		password.sendKeys(Config.getSuperAdminPassword());
+
+		WebElement btn = wait
+				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-login-submit']")));
+		btn.click();
+
+		wait.until(ExpectedConditions.titleContains("Admin"));
+	}
+
+	private void openBusCompaniesPage() {
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		wait.until(ExpectedConditions.titleContains("Nhà xe"));
+	}
+
 	@Test(description = "BC-01 Trang Quản lý Nhà xe hiển thị")
 	public void case_BC_001() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		Assert.assertEquals(driver.getTitle(), "Quản lý Nhà xe - BookingHub");
 
 	}
 
 	@Test(description = "BC-02 Tiêu đề trang nhà xe đúng")
 	public void case_BC_002() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		Assert.assertEquals(driver.getTitle(), "Quản lý Nhà xe - BookingHub");
 
 	}
 
 	@Test(description = "BC-03 Bảng có các cột thông tin nhà xe")
 	public void case_BC_003() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrlAdmin() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("admin-usernameOrEmail")))
-				.sendKeys(Config.getAdminUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getAdminPassword());
-		driver.findElement(By.cssSelector("[data-testid='admin-login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),\"TÊN NHÀ XE\")]")).isEmpty());
 		Assert.assertFalse(
 				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"SỐ ĐIỆN THOẠI\")]")).isEmpty());
@@ -81,14 +88,8 @@ public class AdminBusCompaniesTest {
 
 	@Test(description = "BC-04 Nút Thêm nhà xe hiển thị với super admin")
 	public void case_BC_004() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrl() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail")))
-				.sendKeys(Config.getCustomerUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getCustomerPassword());
-		driver.findElement(By.cssSelector("[data-testid='login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		Assert.assertFalse(driver.findElements(By.cssSelector("[data-testid='admin-bus-companies-btn-add']")).isEmpty(),
 				"Missing element");
 		Assert.assertTrue(wait
@@ -100,14 +101,8 @@ public class AdminBusCompaniesTest {
 
 	@Test(description = "BC-05 Thêm nhà xe không nhập thông tin và lưu lại")
 	public void case_BC_005() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrl() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail")))
-				.sendKeys(Config.getCustomerUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getCustomerPassword());
-		driver.findElement(By.cssSelector("[data-testid='login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.cssSelector("[data-testid=\"admin-bus-companies-btn-add\"]")));
 		wait.until(ExpectedConditions
@@ -120,14 +115,8 @@ public class AdminBusCompaniesTest {
 
 	@Test(description = "BC-06 Thêm nhà xe nhập đầy đủ thông tin và lưu lại")
 	public void case_BC_006() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrl() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail")))
-				.sendKeys(Config.getCustomerUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getCustomerPassword());
-		driver.findElement(By.cssSelector("[data-testid='login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.cssSelector("[data-testid=\"admin-bus-companies-btn-add\"]")));
 		wait.until(ExpectedConditions
@@ -150,14 +139,8 @@ public class AdminBusCompaniesTest {
 
 	@Test(description = "BC-07 Cập nhật nhà xe")
 	public void case_BC_007() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrl() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail")))
-				.sendKeys(Config.getCustomerUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getCustomerPassword());
-		driver.findElement(By.cssSelector("[data-testid='login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		wait.until(ExpectedConditions
 				.elementToBeClickable(By.cssSelector("[data-testid^='admin-bus-companies-btn-edit-']"))).click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.name("name"))).click();
@@ -173,14 +156,8 @@ public class AdminBusCompaniesTest {
 
 	@Test(description = "BC-08 Xóa nhà xe")
 	public void case_BC_008() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrl() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail")))
-				.sendKeys(Config.getCustomerUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getCustomerPassword());
-		driver.findElement(By.cssSelector("[data-testid='login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		wait.until(ExpectedConditions
 				.elementToBeClickable(By.cssSelector("[data-testid^='admin-bus-companies-btn-delete-']"))).click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
@@ -192,14 +169,8 @@ public class AdminBusCompaniesTest {
 
 	@Test(description = "BC-09 Kiểm tra heading trang nhà xe")
 	public void case_BC_009() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrl() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail")))
-				.sendKeys(Config.getCustomerUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getCustomerPassword());
-		driver.findElement(By.cssSelector("[data-testid='login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".text-2xl"))).getText()
 				.contains("Quản lý Nhà xe"));
 
@@ -207,14 +178,8 @@ public class AdminBusCompaniesTest {
 
 	@Test(description = "BC-10 Kiểm tra hiển thị ô tìm kiếm nhà xe")
 	public void case_BC_010() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrl() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail")))
-				.sendKeys(Config.getCustomerUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getCustomerPassword());
-		driver.findElement(By.cssSelector("[data-testid='login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		wait.until(ExpectedConditions
 				.elementToBeClickable(By.cssSelector("[data-testid='admin-bus-companies-search-input']"))).click();
 		Assert.assertFalse(
@@ -225,14 +190,8 @@ public class AdminBusCompaniesTest {
 
 	@Test(description = "BC-11 Tìm kiếm nhà xe theo từ khóa")
 	public void case_BC_011() {
-		driver.get(Config.getBaseUrlAdmin() + "/");
-		driver.manage().window().setSize(new Dimension(945, 1012));
-		driver.get(Config.getBaseUrl() + "/login");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameOrEmail")))
-				.sendKeys(Config.getCustomerUsername());
-		driver.findElement(By.name("password")).sendKeys(Config.getCustomerPassword());
-		driver.findElement(By.cssSelector("[data-testid='login-submit']")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
+		loginSuperAdmin();
+		openBusCompaniesPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".p-6"))).click();
 		wait.until(ExpectedConditions
 				.elementToBeClickable(By.cssSelector("[data-testid='admin-bus-companies-search-input']"))).click();

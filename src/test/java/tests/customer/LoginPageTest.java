@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import config.Config;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class LoginPageTest {
 
@@ -24,6 +25,7 @@ public class LoginPageTest {
 
 	@BeforeMethod
 	public void setUp() {
+		WebDriverManager.chromedriver().setup();	
 		driver = new ChromeDriver();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		driver.manage().window().maximize();
