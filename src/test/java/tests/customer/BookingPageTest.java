@@ -1,6 +1,8 @@
 package tests.customer;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -50,8 +52,8 @@ public class BookingPageTest extends CustomerBaseTest {
 		searchTrip();
 		openBooking();
 
-		Assert.assertTrue(
-				driver.findElement(By.cssSelector(".mb-4 > .font-bold")).getText().contains("Thông tin liên hệ"));
+		Assert.assertTrue(wait.until(ExpectedConditions.textToBePresentInElementLocated(
+				By.cssSelector("[data-testid='booking-customer-info-heading']"), "Thông tin liên hệ")));
 
 	}
 
@@ -81,9 +83,24 @@ public class BookingPageTest extends CustomerBaseTest {
 		searchTrip();
 		openBooking();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
+		By seatA1 = By.cssSelector("[data-testid='seat-A1']");
+		By nameInputBy = By.name("customerName");
+		By submitBtn = By.cssSelector("[data-testid='booking-submit']");
 
-		Assert.assertTrue(driver.findElement(By.name("customerName")).getAttribute("validationMessage").length() > 0);
+		wait.until(ExpectedConditions.elementToBeClickable(seatA1)).click();
+
+		WebElement nameInput = wait.until(ExpectedConditions.presenceOfElementLocated(nameInputBy));
+
+		nameInput.clear();
+		nameInput.sendKeys("");
+
+		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+
+		Boolean isValid = (Boolean) js.executeScript("return arguments[0].checkValidity();", nameInput);
+
+		Assert.assertFalse(isValid);
 
 	}
 
@@ -93,11 +110,24 @@ public class BookingPageTest extends CustomerBaseTest {
 		searchTrip();
 		openBooking();
 
-		driver.findElement(By.name("customerName")).sendKeys("Nguyen Van A");
+		By seatA1 = By.cssSelector("[data-testid='seat-A1']");
+		By phoneInputBy = By.name("customerPhone");
+		By submitBtn = By.cssSelector("[data-testid='booking-submit']");
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(seatA1)).click();
 
-		Assert.assertTrue(driver.findElement(By.name("customerPhone")).getAttribute("validationMessage").length() > 0);
+		WebElement phoneInput = wait.until(ExpectedConditions.presenceOfElementLocated(phoneInputBy));
+
+		phoneInput.clear();
+		phoneInput.sendKeys("");
+
+		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+
+		Boolean isValid = (Boolean) js.executeScript("return arguments[0].checkValidity();", phoneInput);
+
+		Assert.assertFalse(isValid);
 
 	}
 
@@ -120,12 +150,17 @@ public class BookingPageTest extends CustomerBaseTest {
 		searchTrip();
 		openBooking();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".grid:nth-child(3) .p-2"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='seat-A1']"))).click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-6"))).click();
+		By submitBtn = By.cssSelector("[data-testid='booking-submit']");
 
-		Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".mb-4 > .text-2xl")))
-				.getText().contains("Đặt vé thành công"));
+		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
+
+		By toast = By.xpath("//*[contains(text(),'Đặt vé thành công')]");
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(toast));
+
+		Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(toast)).isDisplayed());
 
 	}
 

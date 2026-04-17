@@ -12,14 +12,15 @@ import org.testng.annotations.Test;
 public class AdminLocationsTest extends AdminBaseTest {
 
 	private void openLocationPage() {
-		By menuLocation = By.xpath("//button[.//span[contains(.,'Địa điểm')]]");
+		By menuLocation = By.xpath("//button[.//span[contains(normalize-space(.),'Địa điểm')]]");
 
 		WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(menuLocation));
 		menu.click();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(.,'Quản lý địa điểm')]")));
+		By subMenu = By.xpath("//a[contains(normalize-space(.),'Quản lý địa điểm')]");
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý địa điểm"))).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(subMenu));
+		wait.until(ExpectedConditions.elementToBeClickable(subMenu)).click();
 
 		wait.until(ExpectedConditions.titleContains("Địa điểm"));
 	}
@@ -29,6 +30,7 @@ public class AdminLocationsTest extends AdminBaseTest {
 		loginSuperAdmin();
 		openLocationPage();
 
+		wait.until(ExpectedConditions.titleIs("Quản lý Địa điểm - BookingHub"));
 		Assert.assertEquals(driver.getTitle(), "Quản lý Địa điểm - BookingHub");
 
 	}
@@ -38,6 +40,7 @@ public class AdminLocationsTest extends AdminBaseTest {
 		loginSuperAdmin();
 		openLocationPage();
 
+		wait.until(ExpectedConditions.titleIs("Quản lý Địa điểm - BookingHub"));
 		Assert.assertEquals(driver.getTitle(), "Quản lý Địa điểm - BookingHub");
 
 	}
@@ -47,14 +50,17 @@ public class AdminLocationsTest extends AdminBaseTest {
 		loginSuperAdmin();
 		openLocationPage();
 
-		WebElement table = wait.until(
-				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-locations-table']")));
+		By tableBy = By.cssSelector("[data-testid='admin-locations-table']");
+
+		WebElement table = wait.until(ExpectedConditions.visibilityOfElementLocated(tableBy));
+
+		wait.until(d -> table.findElements(By.tagName("th")).size() > 0);
 
 		List<WebElement> ths = table.findElements(By.tagName("th"));
 
-		List<String> headers = ths.stream().map(e -> e.getText().trim().toLowerCase()).toList();
+		List<String> headers = ths.stream().map(e -> e.getText().replace("\n", " ").trim().toLowerCase()).toList();
 
-		Assert.assertTrue(headers.contains("thành phố"));
+		Assert.assertTrue(headers.stream().anyMatch(h -> h.contains("thành phố")), "Không tìm thấy cột 'Thành phố'");
 
 	}
 
@@ -63,8 +69,11 @@ public class AdminLocationsTest extends AdminBaseTest {
 		loginSuperAdmin();
 		openLocationPage();
 
-		WebElement btn = wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-locations-btn-add']")));
+		By addBtn = By.cssSelector("[data-testid='admin-locations-btn-add']");
+
+		WebElement btn = wait.until(ExpectedConditions.visibilityOfElementLocated(addBtn));
+
+		wait.until(ExpectedConditions.textToBePresentInElement(btn, "Thêm mới"));
 
 		Assert.assertTrue(btn.getText().contains("Thêm mới"));
 	}

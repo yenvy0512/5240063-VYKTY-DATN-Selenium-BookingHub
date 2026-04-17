@@ -1,6 +1,7 @@
 package tests.admin;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -28,6 +29,8 @@ public class AdminTripsPageTest extends AdminBaseTest {
 		openTripsPage();
 		WebElement heading = wait.until(
 				ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-trips-heading']")));
+
+		wait.until(driver -> heading.getText().contains("Quản lý Chuyến xe"));
 
 		Assert.assertTrue(heading.getText().contains("Quản lý Chuyến xe"));
 
@@ -66,11 +69,12 @@ public class AdminTripsPageTest extends AdminBaseTest {
 		openTripsPage();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
 				.click();
-		Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("departureLocationId")))
-				.isDisplayed());
 
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("arrivalLocationId"))).isDisplayed());
+		WebElement departure = wait
+				.until(ExpectedConditions.visibilityOfElementLocated(By.name("departureLocationId")));
+
+		Assert.assertTrue(departure.isDisplayed());
+		Assert.assertTrue(driver.findElement(By.name("arrivalLocationId")).isDisplayed());
 
 	}
 
@@ -89,15 +93,15 @@ public class AdminTripsPageTest extends AdminBaseTest {
 	public void case_TR_008() {
 		loginAdmin();
 		openTripsPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-search-input']")))
-				.click();
-		wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-trips-search-input']"))).clear();
-		wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-trips-search-input']")))
-				.sendKeys("Hải phòng");
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-search-submit']")))
-				.click();
+		By searchInput = By.cssSelector("[data-testid='admin-trips-search-input']");
+		By searchBtn = By.cssSelector("[data-testid='admin-trips-search-submit']");
+
+		WebElement input = wait.until(ExpectedConditions.elementToBeClickable(searchInput));
+
+		input.clear();
+		input.sendKeys("Hải Phòng");
+
+		wait.until(ExpectedConditions.elementToBeClickable(searchBtn)).click();
 
 	}
 
@@ -105,27 +109,18 @@ public class AdminTripsPageTest extends AdminBaseTest {
 	public void case_TR_011() {
 		loginAdmin();
 		openTripsPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
-				.click();
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("vehicleId"))).isDisplayed());
+		By createBtn = By.cssSelector("[data-testid='admin-trips-btn-create']");
 
-		Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("departureLocationId")))
-				.isDisplayed());
+		wait.until(ExpectedConditions.elementToBeClickable(createBtn)).click();
 
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("arrivalLocationId"))).isDisplayed());
-
-		Assert.assertTrue(wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-trip-create-input-departure-date']")))
-				.isDisplayed());
-
-		Assert.assertTrue(wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-trip-create-input-departure-time']")))
-				.isDisplayed());
-
-		Assert.assertTrue(
-				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("basePrice"))).isDisplayed());
+		wait.until(driver -> {
+			return driver.findElement(By.name("vehicleId")).isDisplayed()
+					&& driver.findElement(By.name("departureLocationId")).isDisplayed()
+					&& driver.findElement(By.name("arrivalLocationId")).isDisplayed()
+					&& driver.findElement(By.name("departureDate")).isDisplayed()
+					&& driver.findElement(By.name("departureTime")).isDisplayed()
+					&& driver.findElement(By.name("basePrice")).isDisplayed();
+		});
 
 	}
 
@@ -133,15 +128,11 @@ public class AdminTripsPageTest extends AdminBaseTest {
 	public void case_TR_012() {
 		loginAdmin();
 		openTripsPage();
-		wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
 				.click();
-		try {
-			Thread.sleep(300);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
+
+		wait.until(ExpectedConditions.titleIs("Tạo Chuyến Xe Mới - BookingHub"));
+
 		Assert.assertEquals(driver.getTitle(), "Tạo Chuyến Xe Mới - BookingHub");
 
 	}
@@ -150,20 +141,27 @@ public class AdminTripsPageTest extends AdminBaseTest {
 	public void case_TR_013() {
 		loginAdmin();
 		openTripsPage();
-		wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
-				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("departureLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("departureLocationId"))))
-				.selectByVisibleText("Hải Phòng - Lê Chân");
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("arrivalLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("arrivalLocationId"))))
-				.selectByVisibleText("Buôn Ma Thuột - Tân Lợi");
-		Assert.assertFalse(wait
-				.until(ExpectedConditions
-						.presenceOfElementLocated(By.cssSelector("[data-testid=\"admin-trip-create-submit\"]")))
-				.isEnabled());
+		By createBtn = By.cssSelector("[data-testid='admin-trips-btn-create']");
+		By departureSelect = By.name("departureLocationId");
+		By arrivalSelect = By.name("arrivalLocationId");
+		By submitBtn = By.cssSelector("[data-testid='admin-trip-create-submit']");
+
+		wait.until(ExpectedConditions.elementToBeClickable(createBtn)).click();
+
+		WebElement departure = wait.until(ExpectedConditions.elementToBeClickable(departureSelect));
+		WebElement arrival = wait.until(ExpectedConditions.elementToBeClickable(arrivalSelect));
+
+		wait.until(driver -> new Select(departure).getOptions().size() > 1);
+		wait.until(driver -> new Select(arrival).getOptions().size() > 1);
+
+		new Select(departure).selectByVisibleText("Hải Phòng - Lê Chân");
+		new Select(arrival).selectByVisibleText("Buôn Ma Thuột - Tân Lợi");
+
+		WebElement submit = wait.until(ExpectedConditions.visibilityOfElementLocated(submitBtn));
+
+		wait.until(driver -> !submit.isEnabled());
+
+		Assert.assertFalse(submit.isEnabled());
 
 	}
 
@@ -184,13 +182,20 @@ public class AdminTripsPageTest extends AdminBaseTest {
 	public void case_TR_015() {
 		loginAdmin();
 		openTripsPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-trips-btn-delete-']")))
-				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
-				.click();
-		Assert.assertTrue(wait.until(
-				ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Xóa thành công')]")))
-				.isDisplayed());
+		By deleteBtn = By.cssSelector("[data-testid^='admin-trips-btn-delete-']");
+		By confirmBtn = By.cssSelector("[data-testid='confirm-modal-confirm']");
+		By toast = By.xpath("//*[contains(text(),'Xóa thành công')]");
+
+		wait.until(ExpectedConditions.elementToBeClickable(deleteBtn)).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(confirmBtn));
+		wait.until(ExpectedConditions.elementToBeClickable(confirmBtn)).click();
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(toast));
+
+		WebElement success = wait.until(ExpectedConditions.visibilityOfElementLocated(toast));
+
+		Assert.assertTrue(success.isDisplayed());
 
 	}
 
@@ -198,21 +203,38 @@ public class AdminTripsPageTest extends AdminBaseTest {
 	public void case_TR_016() {
 		loginAdmin();
 		openTripsPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(@data-testid,'btn-edit-')])[1]")))
-				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("departureTime"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("departureTime"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("departureTime"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("departureTime"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("departureTime")))
-				.sendKeys("2026-04-29T09:00");
+		By editBtn = By.xpath("(//*[contains(@data-testid,'btn-edit-')])[1]");
+		By priceInputBy = By.name("basePrice");
+		By timeInputBy = By.name("departureTime");
 		By submitBtn = By.cssSelector("[data-testid='admin-trips-form-submit']");
+		By toast = By.xpath("//*[contains(text(),'Cập nhật thành công')]");
+
+		wait.until(ExpectedConditions.elementToBeClickable(editBtn)).click();
+
+		WebElement priceInput = wait.until(ExpectedConditions.elementToBeClickable(priceInputBy));
+		priceInput.click();
+		priceInput.clear();
+		priceInput.sendKeys("300000");
+
+		WebElement timeInput = wait.until(ExpectedConditions.elementToBeClickable(timeInputBy));
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript(
+				"arguments[0].value = arguments[1];"
+						+ "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));"
+						+ "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+				timeInput, "2026-04-29T09:00");
+
+		wait.until(driver -> {
+			WebElement btn = driver.findElement(submitBtn);
+			return btn.isEnabled();
+		});
 
 		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
-		Assert.assertTrue(wait
-				.until(ExpectedConditions
-						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Cập nhật thành công')]")))
-				.isDisplayed());
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(toast));
+
+		Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(toast)).isDisplayed());
 
 	}
 
@@ -220,45 +242,49 @@ public class AdminTripsPageTest extends AdminBaseTest {
 	public void case_TR_017() {
 		loginAdmin();
 		openTripsPage();
-		wait.until(
-				ExpectedConditions.presenceOfElementLocated(By.cssSelector("[data-testid='admin-trips-btn-create']")));
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-trips-btn-create']")))
-				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("vehicleId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("vehicleId"))))
-				.selectByVisibleText("Xe 16 (Ghế ngồi)");
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("departureLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("departureLocationId"))))
-				.selectByVisibleText("Hồ Chí Minh - Bình Tân");
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("arrivalLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.name("arrivalLocationId"))))
-				.selectByVisibleText("Đà Nẵng - Thanh Khê");
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("bulkCreate"))).click();
 
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.cssSelector("[data-testid='admin-trip-create-input-range-from']"))).click();
-
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//div[contains(@class,'react-datepicker__day') and text()='16']")))
-				.click();
-
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.cssSelector("[data-testid='admin-trip-create-input-range-to']"))).click();
-
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//div[contains(@class,'react-datepicker__day') and text()='19']")))
-				.click();
-
-		wait.until(ExpectedConditions
-				.elementToBeClickable(By.cssSelector("[data-testid='admin-trip-create-button-create-range']"))).click();
-
+		By createBtn = By.cssSelector("[data-testid='admin-trips-btn-create']");
+		By vehicleBy = By.name("vehicleId");
+		By departureBy = By.name("departureLocationId");
+		By arrivalBy = By.name("arrivalLocationId");
+		By bulkCreateBy = By.id("bulkCreate");
+		By createRangeBtn = By.cssSelector("[data-testid='admin-trip-create-button-create-range']");
 		By submitBtn = By.cssSelector("[data-testid='admin-trip-create-submit']");
+		By toast = By.xpath("//*[contains(text(),'Tạo chuyến thành công')]");
+
+		wait.until(ExpectedConditions.elementToBeClickable(createBtn)).click();
+
+		WebElement vehicle = wait.until(ExpectedConditions.elementToBeClickable(vehicleBy));
+		wait.until(driver -> new Select(vehicle).getOptions().size() > 1);
+		new Select(vehicle).selectByVisibleText("Xe 16 (Ghế ngồi)");
+
+		WebElement departure = wait.until(ExpectedConditions.elementToBeClickable(departureBy));
+		wait.until(driver -> new Select(departure).getOptions().size() > 1);
+		new Select(departure).selectByVisibleText("Hồ Chí Minh - Bình Tân");
+
+		WebElement arrival = wait.until(ExpectedConditions.elementToBeClickable(arrivalBy));
+		wait.until(driver -> new Select(arrival).getOptions().size() > 1);
+		new Select(arrival).selectByVisibleText("Đà Nẵng - Thanh Khê");
+
+		wait.until(ExpectedConditions.elementToBeClickable(bulkCreateBy)).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("rangeFrom")));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("rangeTo")));
+
+		selectDate(By.name("rangeFrom"), 20, 4, 2026);
+		selectDate(By.name("rangeTo"), 30, 4, 2026);
+
+		wait.until(ExpectedConditions.elementToBeClickable(createRangeBtn)).click();
+
+		wait.until(driver -> driver.findElements(By.cssSelector("[data-testid='trip-date-item']")).size() > 0);
+
+		wait.until(driver -> driver.findElement(submitBtn).isEnabled());
 
 		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
-		Assert.assertTrue(wait
-				.until(ExpectedConditions
-						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Tạo chuyến thành công')]")))
-				.isDisplayed());
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(toast));
+
+		Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(toast)).isDisplayed());
 
 	}
 

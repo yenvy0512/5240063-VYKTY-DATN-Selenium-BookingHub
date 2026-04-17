@@ -15,7 +15,12 @@ public class LoginPageTest extends CustomerBaseTest {
 		logoutCustomerIfNeeded();
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn-login"))).click();
-		Assert.assertFalse(driver.findElements(By.cssSelector(".text-3xl")).isEmpty(), "Missing element");
+
+		By heading = By.cssSelector("[data-testid='customer-login-heading']");
+
+		WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(heading));
+
+		Assert.assertTrue(title.getText().contains("Đăng nhập"));
 
 	}
 
@@ -24,9 +29,10 @@ public class LoginPageTest extends CustomerBaseTest {
 		openCustomerHome();
 		logoutCustomerIfNeeded();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn-login"))).click();
-		WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".text-3xl")));
 
-		wait.until(ExpectedConditions.textToBePresentInElement(title, "Đăng nhập"));
+		By heading = By.cssSelector("[data-testid='customer-login-heading']");
+
+		WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(heading));
 
 		Assert.assertTrue(title.getText().contains("Đăng nhập"));
 
@@ -93,21 +99,17 @@ public class LoginPageTest extends CustomerBaseTest {
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn-login"))).click();
 
-		WebElement registerBtn = wait.until(ExpectedConditions.elementToBeClickable(
-		    By.linkText("Đăng ký ngay")
-		));
+		WebElement registerBtn = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đăng ký ngay")));
 
 		Assert.assertTrue(registerBtn.isDisplayed(), "Missing element");
 
 		registerBtn.click();
 
-		wait.until(ExpectedConditions.textToBePresentInElementLocated(
-		    By.cssSelector(".text-3xl"),
-		    "Đăng ký"
-		));
+		By heading = By.cssSelector("[data-testid='customer-register-heading']");
 
-		String title = driver.findElement(By.cssSelector(".text-3xl")).getText();
-		Assert.assertTrue(title.contains("Đăng ký"), "Không vào trang đăng ký");
+		WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(heading));
+
+		Assert.assertTrue(title.getText().contains("Đăng ký"), "Không vào trang đăng ký");
 
 	}
 
@@ -124,8 +126,8 @@ public class LoginPageTest extends CustomerBaseTest {
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='login-submit']"))).click();
 		WebElement username = driver.findElement(By.id("usernameOrEmail"));
 
-		Boolean isValid = (Boolean) ((JavascriptExecutor) driver)
-		    .executeScript("return arguments[0].checkValidity();", username);
+		Boolean isValid = (Boolean) ((JavascriptExecutor) driver).executeScript("return arguments[0].checkValidity();",
+				username);
 
 		Assert.assertFalse(isValid);
 
@@ -142,9 +144,8 @@ public class LoginPageTest extends CustomerBaseTest {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).clear();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password"))).sendKeys("123456aA@");
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='login-submit']"))).click();
-		WebElement toast = wait.until(ExpectedConditions.presenceOfElementLocated(
-			    By.xpath("//*[contains(normalize-space(.),'Đăng nhập thành công!')]")
-			));
+		WebElement toast = wait.until(ExpectedConditions
+				.presenceOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Đăng nhập thành công!')]")));
 
 		Assert.assertTrue(toast.getText().contains("Đăng nhập thành công!"));
 	}

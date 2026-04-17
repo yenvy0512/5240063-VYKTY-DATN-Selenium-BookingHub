@@ -1,5 +1,7 @@
 package tests.customer;
 
+import java.util.Random;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -9,11 +11,11 @@ import tests.BaseWebTest;
 
 public class CustomerBaseTest extends BaseWebTest {
 
-	protected void openCustomerHome() {
+	public void openCustomerHome() {
 		driver.get(Config.getBaseUrl() + "/");
 	}
 
-	protected void logoutCustomerIfNeeded() {
+	public void logoutCustomerIfNeeded() {
 		boolean isLoggedIn = !driver.findElements(By.cssSelector(".user-avatar")).isEmpty();
 
 		if (isLoggedIn) {
@@ -26,7 +28,7 @@ public class CustomerBaseTest extends BaseWebTest {
 		}
 	}
 
-	protected void loginCustomer() {
+	public void loginCustomer() {
 		openCustomerHome();
 
 		WebElement loginBtn = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn-login")));
@@ -44,5 +46,13 @@ public class CustomerBaseTest extends BaseWebTest {
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(.,'Đăng nhập')]"))).click();
 		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".btn-login")));
+	}
+	
+	public String randomPhone() {
+	    Random random = new Random();
+	    String[] prefixes = {"03", "05", "07", "08", "09"};
+	    String prefix = prefixes[random.nextInt(prefixes.length)];
+	    String number = String.format("%08d", random.nextInt(100_000_000));
+	    return prefix + number;
 	}
 }

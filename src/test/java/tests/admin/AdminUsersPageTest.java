@@ -12,7 +12,9 @@ import org.testng.annotations.Test;
 public class AdminUsersPageTest extends AdminBaseTest {
 
 	private void openUsersPage() {
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý người dùng"))).click();
+		By usersMenu = By.xpath("//a[contains(normalize-space(.),'Quản lý người dùng')]");
+
+		wait.until(ExpectedConditions.elementToBeClickable(usersMenu)).click();
 		wait.until(ExpectedConditions.titleContains("Người dùng"));
 	}
 
@@ -138,15 +140,29 @@ public class AdminUsersPageTest extends AdminBaseTest {
 	public void case_US_009() {
 		loginAdmin();
 		openUsersPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-users-btn-delete-']")))
-				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='confirm-modal-confirm']")))
-				.click();
-		Assert.assertTrue(wait
-				.until(ExpectedConditions
-						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Xóa người dùng thành công')]")))
-				.isDisplayed());
+		By searchInput = By.cssSelector("[data-testid='admin-users-search-input']");
+		By searchBtn = By.cssSelector("[data-testid='admin-users-search-submit']");
+		By deleteBtn = By.cssSelector("[data-testid^='admin-users-btn-delete-']");
+		By confirmBtn = By.cssSelector("[data-testid='confirm-modal-confirm']");
+		By toast = By.xpath("//*[contains(text(),'Xóa người dùng thành công')]");
 
+		WebElement input = wait.until(ExpectedConditions.elementToBeClickable(searchInput));
+		input.click();
+		input.clear();
+		input.sendKeys("test");
+
+		wait.until(ExpectedConditions.elementToBeClickable(searchBtn)).click();
+
+		wait.until(driver -> driver.findElements(deleteBtn).size() > 0);
+
+		wait.until(ExpectedConditions.elementToBeClickable(deleteBtn)).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(confirmBtn));
+		wait.until(ExpectedConditions.elementToBeClickable(confirmBtn)).click();
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(toast));
+
+		Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(toast)).isDisplayed());
 	}
 
 	@Test(description = "US-10 Thêm mới người dùng không nhập mật khẩu báo lỗi")
@@ -172,7 +188,10 @@ public class AdminUsersPageTest extends AdminBaseTest {
 				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-select-role']"))))
 				.selectByVisibleText("company_admin");
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".px-4:nth-child(2)"))).click();
+		By saveBtn = By.cssSelector("[data-testid='admin-users-btn-save']");
+
+		wait.until(ExpectedConditions.elementToBeClickable(saveBtn)).click();
+
 		Assert.assertFalse(
 				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Mật khẩu phải có ít nhất 6 ký tự\")]"))
 						.isEmpty());
@@ -202,6 +221,10 @@ public class AdminUsersPageTest extends AdminBaseTest {
 				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-password']")))
 				.sendKeys("123456aA@");
 
+		By saveBtn = By.cssSelector("[data-testid='admin-users-btn-save']");
+
+		wait.until(ExpectedConditions.elementToBeClickable(saveBtn)).click();
+
 		Assert.assertTrue(wait
 				.until(ExpectedConditions
 						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Vui lòng nhập tên đăng nhập')]")))
@@ -229,6 +252,10 @@ public class AdminUsersPageTest extends AdminBaseTest {
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-password']")))
 				.sendKeys("123456aA@");
+
+		By saveBtn = By.cssSelector("[data-testid='admin-users-btn-save']");
+
+		wait.until(ExpectedConditions.elementToBeClickable(saveBtn)).click();
 
 		Assert.assertTrue(wait
 				.until(ExpectedConditions
@@ -263,6 +290,10 @@ public class AdminUsersPageTest extends AdminBaseTest {
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-users-input-password']")))
 				.sendKeys("123456aA@");
+
+		By saveBtn = By.cssSelector("[data-testid='admin-users-btn-save']");
+
+		wait.until(ExpectedConditions.elementToBeClickable(saveBtn)).click();
 
 		Assert.assertTrue(wait
 				.until(ExpectedConditions

@@ -59,9 +59,11 @@ public class AdminNotificationsPageTest extends AdminBaseTest {
 	public void case_NT_005() {
 		loginAdmin();
 		openNotificationsPage();
-		Assert.assertTrue(wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-notifications-btn-mark-all-read']")))
-				.isDisplayed());
+		By markAllReadBtn = By.cssSelector("[data-testid='admin-notifications-btn-mark-all-read']");
+
+		WebElement btn = wait.until(ExpectedConditions.visibilityOfElementLocated(markAllReadBtn));
+
+		Assert.assertTrue(btn.isDisplayed());
 
 	}
 
@@ -88,10 +90,13 @@ public class AdminNotificationsPageTest extends AdminBaseTest {
 		loginAdmin();
 		openNotificationsPage();
 		By refreshBtn = By.cssSelector("[data-testid='admin-notifications-btn-refresh']");
+		By toast = By.xpath("//*[contains(normalize-space(.),'Đã tải lại thông báo')]");
 
 		wait.until(ExpectedConditions.elementToBeClickable(refreshBtn)).click();
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Đã tải lại thông báo\")]")).isEmpty());
+
+		wait.until(ExpectedConditions.presenceOfElementLocated(toast));
+
+		Assert.assertTrue(wait.until(ExpectedConditions.visibilityOfElementLocated(toast)).isDisplayed());
 
 	}
 

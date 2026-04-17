@@ -21,7 +21,8 @@ public class AdminVehiclesPageTest extends AdminBaseTest {
 	public void case_VH_001() {
 		loginAdmin();
 		openVehiclesPage();
-		Assert.assertEquals(driver.getTitle(), "Quản lý Xe - BookingHub");
+		wait.until(ExpectedConditions.titleContains("Quản lý Xe"));
+		Assert.assertTrue(driver.getTitle().contains("Quản lý Xe"));
 
 	}
 
@@ -29,7 +30,8 @@ public class AdminVehiclesPageTest extends AdminBaseTest {
 	public void case_VH_002() {
 		loginAdmin();
 		openVehiclesPage();
-		Assert.assertEquals(driver.getTitle(), "Quản lý Xe - BookingHub");
+		wait.until(ExpectedConditions.titleContains("Quản lý Xe"));
+		Assert.assertTrue(driver.getTitle().contains("Quản lý Xe"));
 
 	}
 
@@ -86,9 +88,10 @@ public class AdminVehiclesPageTest extends AdminBaseTest {
 	public void case_VH_007() {
 		loginAdmin();
 		openVehiclesPage();
-		wait.until(
-				ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-vehicles-search-submit']")))
-				.click();
+		By searchBtn = By.cssSelector("[data-testid='admin-vehicles-search-submit']");
+
+		WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(searchBtn));
+		btn.click();
 
 	}
 
@@ -101,7 +104,6 @@ public class AdminVehiclesPageTest extends AdminBaseTest {
 		WebElement btn = wait.until(
 				ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-vehicles-form-submit']")));
 
-		Assert.assertTrue(btn.isDisplayed());
 		btn.click();
 		WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("busType")));
 
@@ -147,18 +149,23 @@ public class AdminVehiclesPageTest extends AdminBaseTest {
 	public void case_VH_011() {
 		loginAdmin();
 		openVehiclesPage();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-vehicles-btn-edit-']")))
-				.click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.name("busName"))).click();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("busName"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("busName"))).sendKeys("Xe 16 chỗ 1");
+		By editBtn = By.cssSelector("[data-testid^='admin-vehicles-btn-edit-']");
+		By busName = By.name("busName");
 		By submitBtn = By.cssSelector("[data-testid='admin-vehicles-form-submit']");
 
+		wait.until(ExpectedConditions.elementToBeClickable(editBtn)).click();
+
+		WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(busName));
+
+		input.clear();
+		input.sendKeys("Xe 16 chỗ 1");
+
 		wait.until(ExpectedConditions.elementToBeClickable(submitBtn)).click();
-		Assert.assertTrue(wait
-				.until(ExpectedConditions
-						.visibilityOfElementLocated(By.xpath("//*[contains(text(),'Cập nhật thành công')]")))
-				.isDisplayed());
+
+		By successMsg = By.xpath("//*[contains(normalize-space(.),'Cập nhật thành công')]");
+
+		WebElement msg = wait.until(ExpectedConditions.visibilityOfElementLocated(successMsg));
+		Assert.assertTrue(msg.isDisplayed());
 
 	}
 

@@ -51,8 +51,8 @@ public class MyBookingsPageTest extends CustomerBaseTest {
 		loginCustomer();
 		openMyBookingsPage();
 
-		WebElement heading = wait
-				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".flex > .text-3xl")));
+		WebElement heading = wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.cssSelector("[data-testid='customer-my-bookings-heading']")));
 		Assert.assertTrue(heading.getText().contains("Vé của tôi"));
 	}
 
@@ -61,9 +61,7 @@ public class MyBookingsPageTest extends CustomerBaseTest {
 		loginCustomer();
 		openMyBookingsPage();
 
-		Assert.assertFalse(
-				driver.findElements(By.cssSelector(".bg-white:nth-child(1) > .p-6 > .flex > .flex-1")).isEmpty(),
-				"Missing element");
+		Assert.assertTrue(driver.findElements(By.cssSelector("[data-testid='customer-booking-item']")).size() > 0);
 	}
 
 	@Test(description = "MB-06 Khi không có vé có nút Tìm chuyến xe")
@@ -71,8 +69,11 @@ public class MyBookingsPageTest extends CustomerBaseTest {
 		loginCustomer();
 		openMyBookingsPage();
 
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".px-6"))).getText()
-				.contains("Tìm chuyến xe"));
+		By searchTripsBtn = By.cssSelector("[data-testid='customer-my-bookings-btn-search-trips']");
+
+		WebElement btn = wait.until(ExpectedConditions.visibilityOfElementLocated(searchTripsBtn));
+
+		Assert.assertTrue(btn.getText().contains("Tìm chuyến xe"));
 	}
 
 	@Test(description = "MB-07 Hủy vé hiển thị trong vé nếu được phép hủy")
@@ -103,10 +104,14 @@ public class MyBookingsPageTest extends CustomerBaseTest {
 		loginCustomer();
 		openMyBookingsPage();
 
-		Assert.assertFalse(driver.findElements(By.cssSelector(".bg-white:nth-child(1) .w-full:nth-child(1)")).isEmpty(),
-				"Missing element");
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Xem chi tiết\")]")).isEmpty());
+		By bookingItem = By.cssSelector("[data-testid='customer-booking-item']");
+		By detailBtn = By.cssSelector("[data-testid='customer-booking-btn-detail']");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(bookingItem));
+
+		Assert.assertFalse(driver.findElements(bookingItem).isEmpty(), "Missing booking item");
+
+		Assert.assertFalse(driver.findElements(detailBtn).isEmpty(), "Missing detail button");
 	}
 
 	@Test(description = "MB-10 Xem chi tiết của vé")
@@ -114,12 +119,20 @@ public class MyBookingsPageTest extends CustomerBaseTest {
 		loginCustomer();
 		openMyBookingsPage();
 
-		Assert.assertFalse(driver.findElements(By.cssSelector(".bg-white:nth-child(1) .w-full:nth-child(1)")).isEmpty(),
-				"Missing element");
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Xem chi tiết\")]")).isEmpty());
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".sticky > .text-2xl")))
-				.getText().contains("Chi tiết vé"));
+		By bookingItem = By.cssSelector("[data-testid='customer-booking-item']");
+		By detailBtn = By.cssSelector("[data-testid='customer-booking-btn-detail']");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(bookingItem));
+
+		Assert.assertFalse(driver.findElements(bookingItem).isEmpty(), "Missing booking item");
+
+		wait.until(ExpectedConditions.elementToBeClickable(detailBtn)).click();
+
+		By heading = By.cssSelector("[data-testid='customer-booking-detail-heading']");
+
+		WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(heading));
+
+		Assert.assertTrue(title.getText().contains("Chi tiết vé"));
 	}
 
 	@Test(description = "MB-11 Hiển thị nút Xem QR Code")
@@ -127,11 +140,14 @@ public class MyBookingsPageTest extends CustomerBaseTest {
 		loginCustomer();
 		openMyBookingsPage();
 
-		Assert.assertFalse(driver
-				.findElements(By.cssSelector(".bg-white:nth-child(1) .flex > .flex > .flex > .w-full:nth-child(2)"))
-				.isEmpty(), "Missing element");
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Xem QR code\")]")).isEmpty());
+		By bookingItem = By.cssSelector("[data-testid='customer-booking-item']");
+		By detailBtn = By.cssSelector("[data-testid='customer-booking-btn-qr']");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(bookingItem));
+
+		Assert.assertFalse(driver.findElements(bookingItem).isEmpty(), "Missing booking item");
+
+		Assert.assertFalse(driver.findElements(detailBtn).isEmpty(), "Missing qr button");
 	}
 
 	@Test(description = "MB-12 Xem QR của vé")
@@ -139,15 +155,20 @@ public class MyBookingsPageTest extends CustomerBaseTest {
 		loginCustomer();
 		openMyBookingsPage();
 
-		Assert.assertFalse(driver
-				.findElements(By.cssSelector(".bg-white:nth-child(1) .flex > .flex > .flex > .w-full:nth-child(2)"))
-				.isEmpty(), "Missing element");
-		Assert.assertFalse(
-				driver.findElements(By.xpath("//*[contains(normalize-space(.),\"Xem QR code\")]")).isEmpty());
-		wait.until(ExpectedConditions.elementToBeClickable(
-				By.cssSelector(".bg-white:nth-child(1) .flex > .flex > .flex > .w-full:nth-child(2)"))).click();
-		Assert.assertTrue(wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".text-xl"))).getText()
-				.contains("Mã QR check-in"));
+		By bookingItem = By.cssSelector("[data-testid='customer-booking-item']");
+		By detailBtn = By.cssSelector("[data-testid='customer-booking-btn-qr']");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(bookingItem));
+
+		Assert.assertFalse(driver.findElements(bookingItem).isEmpty(), "Missing booking item");
+
+		wait.until(ExpectedConditions.elementToBeClickable(detailBtn)).click();
+
+		By heading = By.cssSelector("[data-testid='customer-booking-qr-heading']");
+
+		WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(heading));
+
+		Assert.assertTrue(title.getText().contains("Mã QR check-in"));
 	}
 
 	@Test(description = "MB-13 Nút thanh toán hiển thị nếu trạng thái vé là chờ thanh toán")

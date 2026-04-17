@@ -196,9 +196,11 @@ public class RegisterPageTest extends CustomerBaseTest {
 	public void case_RG_012() {
 		goToRegisterPage();
 
+		Date now = new Date();
+		
 	    WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
 	    username.clear();
-	    username.sendKeys("teest1111");
+	    username.sendKeys("test" + now.getTime());
 
 	    WebElement password = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
 	    password.clear();
@@ -244,7 +246,7 @@ public class RegisterPageTest extends CustomerBaseTest {
 
 	    WebElement phone = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("phone")));
 	    phone.clear();
-	    phone.sendKeys("0333333334");
+	    phone.sendKeys(randomPhone());
 
 	    WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
 	    email.clear();
