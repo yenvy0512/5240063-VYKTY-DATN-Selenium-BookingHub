@@ -1,6 +1,7 @@
 package tests.admin;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -11,16 +12,50 @@ public class AdminVASTest extends AdminBaseTest {
 
 	private void openVasPage() {
 
-		By menuLocation = By.xpath("//button[.//span[contains(.,'Dịch vụ')]]");
+	    By serviceMenu = By.xpath(
+	            "//button[.//span[contains(normalize-space(.),'Dịch vụ')]]"
+	    );
 
-		WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(menuLocation));
-		menu.click();
+	    wait.until(driver -> {
+	        try {
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(.,'Dịch vụ')]")));
+	            WebElement menu = driver.findElement(serviceMenu);
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Dịch vụ bổ sung"))).click();
+	            if (menu.isDisplayed() && menu.isEnabled()) {
+	                menu.click();
+	                return true;
+	            }
 
-		wait.until(ExpectedConditions.titleContains("Dịch vụ"));
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    By vasSubMenu = By.linkText("Dịch vụ bổ sung");
+
+	    wait.until(driver -> {
+	        try {
+
+	            WebElement element = driver.findElement(vasSubMenu);
+
+	            if (element.isDisplayed() && element.isEnabled()) {
+	                element.click();
+	                return true;
+	            }
+
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    wait.until(ExpectedConditions.or(
+	            ExpectedConditions.titleContains("Dịch vụ"),
+	            ExpectedConditions.urlContains("/vas")
+	    ));
 	}
 
 	@Test(description = "VS-01 Trang Quản lý Dịch vụ hiển thị")

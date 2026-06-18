@@ -2,6 +2,7 @@ package tests.admin;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -11,8 +12,31 @@ import org.testng.annotations.Test;
 public class AdminTripsPageTest extends AdminBaseTest {
 
 	private void openTripsPage() {
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý chuyến"))).click();
-		wait.until(ExpectedConditions.titleContains("Chuyến"));
+
+	    By tripsMenu = By.linkText("Quản lý chuyến");
+
+	    wait.until(ExpectedConditions.presenceOfElementLocated(tripsMenu));
+
+	    wait.until(driver -> {
+	        try {
+	            WebElement element = driver.findElement(tripsMenu);
+
+	            if (element.isDisplayed() && element.isEnabled()) {
+	                element.click();
+	                return true;
+	            }
+
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    wait.until(ExpectedConditions.or(
+	            ExpectedConditions.titleContains("Chuyến"),
+	            ExpectedConditions.urlContains("/trips")
+	    ));
 	}
 
 	@Test(description = "TR-01 Trang Quản lý Chuyến xe hiển thị")
@@ -260,19 +284,19 @@ public class AdminTripsPageTest extends AdminBaseTest {
 
 		WebElement departure = wait.until(ExpectedConditions.elementToBeClickable(departureBy));
 		wait.until(driver -> new Select(departure).getOptions().size() > 1);
-		new Select(departure).selectByVisibleText("Hồ Chí Minh - Bình Tân");
+		new Select(departure).selectByVisibleText("Hà Nội - Long Biên");
 
 		WebElement arrival = wait.until(ExpectedConditions.elementToBeClickable(arrivalBy));
 		wait.until(driver -> new Select(arrival).getOptions().size() > 1);
-		new Select(arrival).selectByVisibleText("Đà Nẵng - Thanh Khê");
+		new Select(arrival).selectByVisibleText("Hải Phòng - Lê Chân");
 
 		wait.until(ExpectedConditions.elementToBeClickable(bulkCreateBy)).click();
 
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("rangeFrom")));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("rangeTo")));
 
-		selectDate(By.name("rangeFrom"), 20, 4, 2026);
-		selectDate(By.name("rangeTo"), 30, 4, 2026);
+		selectDate(By.name("rangeFrom"), 15, 5, 2026);
+		selectDate(By.name("rangeTo"), 30, 5, 2026);
 
 		wait.until(ExpectedConditions.elementToBeClickable(createRangeBtn)).click();
 

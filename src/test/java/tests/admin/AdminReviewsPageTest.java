@@ -1,6 +1,8 @@
 package tests.admin;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -8,8 +10,30 @@ import org.testng.annotations.Test;
 public class AdminReviewsPageTest extends AdminBaseTest {
 
 	private void openReviewsPage() {
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Đánh giá"))).click();
-		wait.until(ExpectedConditions.titleContains("Đánh giá"));
+
+	    By reviewsMenu = By.linkText("Đánh giá");
+
+	    wait.until(driver -> {
+	        try {
+
+	            WebElement element = driver.findElement(reviewsMenu);
+
+	            if (element.isDisplayed() && element.isEnabled()) {
+	                element.click();
+	                return true;
+	            }
+
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    wait.until(ExpectedConditions.or(
+	            ExpectedConditions.titleContains("Đánh giá"),
+	            ExpectedConditions.urlContains("/reviews")
+	    ));
 	}
 
 	@Test(description = "RV-01 Trang Quản lý Đánh giá hiển thị")

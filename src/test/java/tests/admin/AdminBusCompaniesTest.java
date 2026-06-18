@@ -3,6 +3,7 @@ package tests.admin;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -11,8 +12,30 @@ import org.testng.annotations.Test;
 public class AdminBusCompaniesTest extends AdminBaseTest {
 
 	private void openBusCompaniesPage() {
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Nhà xe"))).click();
-		wait.until(ExpectedConditions.titleContains("Nhà xe"));
+
+	    By busCompaniesMenu = By.linkText("Nhà xe");
+
+	    wait.until(driver -> {
+	        try {
+
+	            WebElement element = driver.findElement(busCompaniesMenu);
+
+	            if (element.isDisplayed() && element.isEnabled()) {
+	                element.click();
+	                return true;
+	            }
+
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    wait.until(ExpectedConditions.or(
+	            ExpectedConditions.titleContains("Nhà xe"),
+	            ExpectedConditions.urlContains("/bus-companies")
+	    ));
 	}
 
 	@Test(description = "BC-01 Trang Quản lý Nhà xe hiển thị")

@@ -3,6 +3,7 @@ package tests.admin;
 import java.util.Date;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -12,10 +13,30 @@ import org.testng.annotations.Test;
 public class AdminUsersPageTest extends AdminBaseTest {
 
 	private void openUsersPage() {
-		By usersMenu = By.xpath("//a[contains(normalize-space(.),'Quản lý người dùng')]");
 
-		wait.until(ExpectedConditions.elementToBeClickable(usersMenu)).click();
-		wait.until(ExpectedConditions.titleContains("Người dùng"));
+	    By usersMenu = By.linkText("Quản lý người dùng");
+
+	    wait.until(driver -> {
+	        try {
+
+	            WebElement element = driver.findElement(usersMenu);
+
+	            if (element.isDisplayed() && element.isEnabled()) {
+	                element.click();
+	                return true;
+	            }
+
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    wait.until(ExpectedConditions.or(
+	            ExpectedConditions.titleContains("Người dùng"),
+	            ExpectedConditions.urlContains("/users")
+	    ));
 	}
 
 	@Test(description = "US-01 Trang Quản lý Người dùng hiển thị")

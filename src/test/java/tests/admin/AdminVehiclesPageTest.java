@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -13,8 +14,30 @@ import org.testng.annotations.Test;
 public class AdminVehiclesPageTest extends AdminBaseTest {
 
 	private void openVehiclesPage() {
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Phương tiện"))).click();
-		wait.until(ExpectedConditions.titleContains("Xe"));
+
+	    By vehiclesMenu = By.linkText("Phương tiện");
+
+	    wait.until(driver -> {
+	        try {
+
+	            WebElement element = driver.findElement(vehiclesMenu);
+
+	            if (element.isDisplayed() && element.isEnabled()) {
+	                element.click();
+	                return true;
+	            }
+
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    wait.until(ExpectedConditions.or(
+	            ExpectedConditions.titleContains("Xe"),
+	            ExpectedConditions.urlContains("/vehicles")
+	    ));
 	}
 
 	@Test(description = "VH-01 Trang Quản lý phương tiện hiển thị")

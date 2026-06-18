@@ -122,7 +122,7 @@ public class SearchPageTest extends CustomerBaseTest {
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("search-departureDate"))).click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--015"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--020"))).click();
 
 		WebElement btn = wait
 				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='search-submit']")));
@@ -144,7 +144,7 @@ public class SearchPageTest extends CustomerBaseTest {
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("search-departureDate"))).click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--015"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--020"))).click();
 
 		WebElement btn = wait
 				.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='search-submit']")));

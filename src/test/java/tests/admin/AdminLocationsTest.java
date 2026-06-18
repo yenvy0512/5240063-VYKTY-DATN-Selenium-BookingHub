@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -12,17 +13,53 @@ import org.testng.annotations.Test;
 public class AdminLocationsTest extends AdminBaseTest {
 
 	private void openLocationPage() {
-		By menuLocation = By.xpath("//button[.//span[contains(normalize-space(.),'Địa điểm')]]");
 
-		WebElement menu = wait.until(ExpectedConditions.elementToBeClickable(menuLocation));
-		menu.click();
+	    By menuLocation = By.xpath(
+	            "//button[.//span[contains(normalize-space(.),'Địa điểm')]]"
+	    );
 
-		By subMenu = By.xpath("//a[contains(normalize-space(.),'Quản lý địa điểm')]");
+	    wait.until(driver -> {
+	        try {
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(subMenu));
-		wait.until(ExpectedConditions.elementToBeClickable(subMenu)).click();
+	            WebElement menu = driver.findElement(menuLocation);
 
-		wait.until(ExpectedConditions.titleContains("Địa điểm"));
+	            if (menu.isDisplayed() && menu.isEnabled()) {
+	                menu.click();
+	                return true;
+	            }
+
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    By subMenu = By.xpath(
+	            "//a[contains(normalize-space(.),'Quản lý địa điểm')]"
+	    );
+
+	    wait.until(driver -> {
+	        try {
+
+	            WebElement element = driver.findElement(subMenu);
+
+	            if (element.isDisplayed() && element.isEnabled()) {
+	                element.click();
+	                return true;
+	            }
+
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    wait.until(ExpectedConditions.or(
+	            ExpectedConditions.titleContains("Địa điểm"),
+	            ExpectedConditions.urlContains("/locations")
+	    ));
 	}
 
 	@Test(description = "LC-01 Kiểm tra hiển thị trang quản lý địa điểm")

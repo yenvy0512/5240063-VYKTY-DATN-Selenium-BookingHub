@@ -3,6 +3,7 @@ package tests.admin;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -11,8 +12,30 @@ import org.testng.annotations.Test;
 public class AdminBookingsPageTest extends AdminBaseTest {
 
 	private void openBookingsPage() {
-		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Quản lý đặt vé"))).click();
-		wait.until(ExpectedConditions.titleContains("Đặt vé"));
+
+	    By bookingMenu = By.linkText("Quản lý đặt vé");
+
+	    wait.until(driver -> {
+	        try {
+
+	            WebElement element = driver.findElement(bookingMenu);
+
+	            if (element.isDisplayed() && element.isEnabled()) {
+	                element.click();
+	                return true;
+	            }
+
+	            return false;
+
+	        } catch (StaleElementReferenceException e) {
+	            return false;
+	        }
+	    });
+
+	    wait.until(ExpectedConditions.or(
+	            ExpectedConditions.titleContains("Đặt vé"),
+	            ExpectedConditions.urlContains("/booking")
+	    ));
 	}
 
 	@Test(description = "AB-01 Trang Quản lý Đặt vé hiển thị")
@@ -33,6 +56,8 @@ public class AdminBookingsPageTest extends AdminBaseTest {
 				.isDisplayed());
 
 	}
+	
+
 
 	@Test(description = "AB-03 Tiêu đề trang đặt vé đúng")
 	public void case_AB_003() {

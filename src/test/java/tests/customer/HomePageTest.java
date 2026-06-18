@@ -71,7 +71,7 @@ public class HomePageTest extends CustomerBaseTest {
 		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
 				.selectByVisibleText("Hải Phòng - Lê Chân");
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--016"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--020"))).click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='home-search-submit']")))
 				.click();
 		wait.until(ExpectedConditions.titleIs("Tìm chuyến xe - BookingHub"));
