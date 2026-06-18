@@ -1,6 +1,7 @@
 package tests.customer;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -266,7 +267,7 @@ public class BookingPageTest extends CustomerBaseTest {
 
 		seat.click();
 
-		wait.until(ExpectedConditions.textMatches(SUBMIT_BTN, text -> text.contains("Đặt 1 ghế")));
+		wait.until(ExpectedConditions.textMatches(SUBMIT_BTN, Pattern.compile(".*Đặt 1 ghế.*")));
 
 		String submitText = getSubmitButtonText();
 		Assert.assertTrue(submitText.contains("Đặt 1 ghế"));
@@ -290,7 +291,7 @@ public class BookingPageTest extends CustomerBaseTest {
 
 		int expectedTotal = firstSeatPrice + secondSeatPrice;
 
-		wait.until(ExpectedConditions.textMatches(SUBMIT_BTN, text -> text.contains("Đặt 2 ghế")));
+		wait.until(ExpectedConditions.textMatches(SUBMIT_BTN, Pattern.compile(".*Đặt 2 ghế.*")));
 
 		String submitText = getSubmitButtonText();
 		Assert.assertTrue(submitText.contains("Đặt 2 ghế"));
@@ -304,14 +305,14 @@ public class BookingPageTest extends CustomerBaseTest {
 		WebElement seat = waitForAvailableSeat("A1");
 		seat.click();
 
-		wait.until(ExpectedConditions.textMatches(SUBMIT_BTN, text -> text.contains("Đặt 1 ghế")));
+		wait.until(ExpectedConditions.textToBePresentInElementLocated(SUBMIT_BTN, "Đặt 1 ghế"));
 
 		seat.click();
 
-		wait.until(ExpectedConditions.textMatches(SUBMIT_BTN, text -> text.contains("Vui lòng chọn ghế")));
-
+		wait.until(ExpectedConditions.textToBePresentInElementLocated(SUBMIT_BTN, "Vui lòng chọn ghế"));
 		Assert.assertTrue(getSubmitButtonText().contains("Vui lòng chọn ghế"));
-		Assert.assertFalse(driver.findElements(By.xpath("//*[contains(normalize-space(.),'Chưa chọn ghế nào')]")).isEmpty());
+		Assert.assertFalse(
+				driver.findElements(By.xpath("//*[contains(normalize-space(.),'Chưa chọn ghế nào')]")).isEmpty());
 	}
 
 	@Test(description = "BK-13 Ghế đã đặt không chọn được")
