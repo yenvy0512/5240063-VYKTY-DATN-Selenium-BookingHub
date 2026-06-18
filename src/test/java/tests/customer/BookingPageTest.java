@@ -20,7 +20,7 @@ public class BookingPageTest extends CustomerBaseTest {
 				.selectByVisibleText("Hải Phòng - Lê Chân");
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--016"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--020"))).click();
 
 		By searchBtn = By.cssSelector("[data-testid='home-search-submit']");
 
