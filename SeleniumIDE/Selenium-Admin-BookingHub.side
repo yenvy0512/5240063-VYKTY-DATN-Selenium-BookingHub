@@ -43,6 +43,18 @@
       ],
       "value": ""
     }, {
+      "id": "8636808c-184d-4747-bcea-e0990eeddd3f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.text-2xl",
+      "targets": [
+        ["css=.text-2xl", "css:finder"],
+        ["xpath=//div[@id='__next']/div/div/main/div/div/div/h1", "xpath:idRelative"],
+        ["xpath=//div/div/h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Quản lý Đặt vé')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
       "id": "96f0e7a5-2ccb-43d9-8bdb-fba6ef879fcf",
       "comment": "",
       "command": "assertTitle",
@@ -138,6 +150,25 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "391e85d0-2783-4f91-9cd4-e1d80f67b8e6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.text-3xl",
+      "targets": [
+        ["css=.text-3xl", "css:finder"],
+        ["xpath=//div[@id='__next']/div/div/main/div/div/h1", "xpath:idRelative"],
+        ["xpath=//div/div/h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d936f30-7a2d-4e59-bf52-025b8c5f0c68",
+      "comment": "",
+      "command": "assertTitle",
+      "target": "Dashboard - BookingHub Admin",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "e19b2f0e-2006-40c0-bff9-27caf334f929",
       "comment": "",
       "command": "end",
@@ -188,12 +219,12 @@
       "id": "824a4b08-f377-45f5-a665-fa0e2117e8d7",
       "comment": "",
       "command": "assertElementPresent",
-      "target": "css=.flex-1:nth-child(1)",
+      "target": "css=.shrink-0",
       "targets": [
-        ["css=.flex-1:nth-child(1)", "css:finder"],
-        ["xpath=//input[@value='']", "xpath:attributes"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div[2]/div/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
+        ["css=.shrink-0", "css:finder"],
+        ["xpath=//div[@id='__next']/div/div/main/div/div/div[2]/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Tìm kiếm')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
@@ -582,7 +613,7 @@
         ["xpath=//div[@id='__next']/div/div/main/div/div/div[2]/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "BK202510220008"
+      "value": "BK202606190001"
     }, {
       "id": "abf63001-b11e-43b1-898d-0945eba0be5b",
       "comment": "",
@@ -697,7 +728,7 @@
         ["xpath=//div[@id='__next']/div/div/main/div/div/div[2]/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "BK202510220009"
+      "value": "BK202606190002"
     }, {
       "id": "d4dac59b-6f59-49a6-a78f-56a979423453",
       "comment": "",
@@ -2029,18 +2060,6 @@
       "target": "Dashboard - BookingHub Admin",
       "targets": [],
       "value": ""
-    }, {
-      "id": "6550bec5-1594-4bc8-9ed0-e2c411722b7f",
-      "comment": "",
-      "command": "assertText",
-      "target": "css=.text-3xl",
-      "targets": [
-        ["css=.text-3xl", "css:finder"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div/h1", "xpath:idRelative"],
-        ["xpath=//div/div/h1", "xpath:position"],
-        ["xpath=//h1[contains(.,'Dashboard')]", "xpath:innerText"]
-      ],
-      "value": "Dashboard"
     }, {
       "id": "ac1e166e-2ddd-4ad9-a3e7-b9bb30ccf22b",
       "comment": "",
@@ -3587,7 +3606,7 @@
         ["xpath=//div[@id='__next']/div[2]/div/div/div[2]", "xpath:idRelative"],
         ["xpath=//div[2]/div/div/div[2]", "xpath:position"]
       ],
-      "value": "Sài tài khoản hoặc mật khẩu"
+      "value": "Sai tài khoản hoặc mật khẩu"
     }, {
       "id": "ddf7ef4d-8d31-4d96-8e01-9c64a520275f",
       "comment": "",
@@ -6418,22 +6437,10 @@
       "targets": [],
       "value": "mail"
     }, {
-      "id": "7d168389-6c35-4d3f-83f6-21c3bee208ee",
-      "comment": "",
-      "command": "click",
-      "target": "css=div:nth-child(1) > .px-3",
-      "targets": [
-        ["css=div:nth-child(1) > .px-3", "css:finder"],
-        ["xpath=//input[@value='']", "xpath:attributes"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div/div/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "d45a66ec-6f87-47c0-b197-29ae0710baed",
       "comment": "",
       "command": "type",
-      "target": "css=div:nth-child(1) > .px-3",
+      "target": "css=input[data-testid='admin-users-input-username']",
       "targets": [
         ["css=div:nth-child(1) > .px-3", "css:finder"],
         ["xpath=//input[@value='test']", "xpath:attributes"],
@@ -6442,22 +6449,10 @@
       ],
       "value": "${username}"
     }, {
-      "id": "f1e71ab4-e51f-4f16-a3d7-c1018bbe8324",
-      "comment": "",
-      "command": "click",
-      "target": "css=div:nth-child(2) > .border",
-      "targets": [
-        ["css=div:nth-child(2) > .border", "css:finder"],
-        ["xpath=//input[@value='']", "xpath:attributes"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div/div[2]/input", "xpath:idRelative"],
-        ["xpath=//div[2]/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "dd1e4e0c-923d-4d1c-ad00-64bfc0a56e62",
       "comment": "",
       "command": "type",
-      "target": "css=div:nth-child(2) > .border",
+      "target": "css=input[data-testid='admin-users-input-email']",
       "targets": [
         ["css=div:nth-child(2) > .border", "css:finder"],
         ["xpath=//input[@value='test@gmail.com']", "xpath:attributes"],
@@ -6466,22 +6461,10 @@
       ],
       "value": "${mail}"
     }, {
-      "id": "1c03ea86-34c2-4bff-a0c0-ee4ee467ab4b",
-      "comment": "",
-      "command": "click",
-      "target": "css=div:nth-child(3) > .px-3",
-      "targets": [
-        ["css=div:nth-child(3) > .px-3", "css:finder"],
-        ["xpath=//input[@value='']", "xpath:attributes"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div/div[3]/input", "xpath:idRelative"],
-        ["xpath=//div[3]/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "6c4034f8-3633-4b34-a3dd-76f8911e1d2a",
       "comment": "",
       "command": "type",
-      "target": "css=div:nth-child(3) > .px-3",
+      "target": "css=input[data-testid='admin-users-input-name']",
       "targets": [
         ["css=div:nth-child(3) > .px-3", "css:finder"],
         ["xpath=(//input[@value='test'])[2]", "xpath:attributes"],
@@ -6490,40 +6473,17 @@
       ],
       "value": "test"
     }, {
-      "id": "d47b1d66-3ae6-4997-b868-a720fd1e04d0",
-      "comment": "",
-      "command": "click",
-      "target": "css=div:nth-child(4) > .border",
-      "targets": [
-        ["css=div:nth-child(4) > .border", "css:finder"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div/div[4]/select", "xpath:idRelative"],
-        ["xpath=//select", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "17ee8db8-deb9-47e1-b1d9-e063a2657081",
       "comment": "",
       "command": "select",
-      "target": "css=div:nth-child(4) > .border",
+      "target": " css=[data-testid='admin-users-select-role']",
       "targets": [],
       "value": "label=company_admin"
-    }, {
-      "id": "3c3d51b9-9556-4af7-8c6e-0958e4461198",
-      "comment": "",
-      "command": "click",
-      "target": "css=div:nth-child(6) > .w-full",
-      "targets": [
-        ["css=div:nth-child(6) > .w-full", "css:finder"],
-        ["xpath=//input[@value='']", "xpath:attributes"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div/div[6]/input", "xpath:idRelative"],
-        ["xpath=//div[6]/input", "xpath:position"]
-      ],
-      "value": ""
     }, {
       "id": "5e4df5e3-2335-4876-ae73-bb9a9fbd5119",
       "comment": "",
       "command": "type",
-      "target": "css=div:nth-child(6) > .w-full",
+      "target": "css=input[data-testid='admin-users-input-password']",
       "targets": [
         ["css=div:nth-child(6) > .w-full", "css:finder"],
         ["xpath=//input[@value='123456aA@']", "xpath:attributes"],
@@ -6535,7 +6495,7 @@
       "id": "aa17106e-dbd4-43e4-b6df-013d0135f3f1",
       "comment": "",
       "command": "click",
-      "target": "css=.px-4:nth-child(2)",
+      "target": "css=[data-testid='admin-users-btn-save']",
       "targets": [
         ["css=.px-4:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div[2]/button[2]", "xpath:idRelative"],
@@ -6547,7 +6507,7 @@
       "id": "ab03acdc-139d-49da-9592-f9824e75704c",
       "comment": "",
       "command": "assertText",
-      "target": "css=.go2072408551",
+      "target": "xpath=//*[contains(text(),'Tạo người dùng thành công')]",
       "targets": [
         ["css=.go2072408551", "css:finder"],
         ["xpath=//div[@id='__next']/div[2]/div/div", "xpath:idRelative"],
@@ -6608,22 +6568,10 @@
       ],
       "value": ""
     }, {
-      "id": "df0f8d78-2252-4b3e-93f9-b941f21422f0",
-      "comment": "",
-      "command": "click",
-      "target": "css=div:nth-child(3) > .px-3",
-      "targets": [
-        ["css=div:nth-child(3) > .px-3", "css:finder"],
-        ["xpath=//input[@value='Admin1']", "xpath:attributes"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div/div[3]/input", "xpath:idRelative"],
-        ["xpath=//div[3]/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "70adc850-8892-4631-b119-456dd7a664db",
       "comment": "",
       "command": "type",
-      "target": "css=div:nth-child(3) > .px-3",
+      "target": "css=input[data-testid='admin-users-input-name']",
       "targets": [
         ["css=div:nth-child(3) > .px-3", "css:finder"],
         ["xpath=//input[@value='Admin11']", "xpath:attributes"],
@@ -6635,7 +6583,7 @@
       "id": "b2573abe-0c7f-41ca-b235-0d5d0d1ef48d",
       "comment": "",
       "command": "click",
-      "target": "css=.px-4:nth-child(2)",
+      "target": "css=[data-testid='admin-users-btn-save']",
       "targets": [
         ["css=.px-4:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div[2]/button[2]", "xpath:idRelative"],
@@ -6647,7 +6595,7 @@
       "id": "9a0d070d-9216-42c7-9ca1-40aa0c5a7316",
       "comment": "",
       "command": "assertText",
-      "target": "css=.go3958317564",
+      "target": "xpath=//*[contains(text(),'Cập nhật người dùng thành công!')]",
       "targets": [
         ["css=.go3958317564", "css:finder"],
         ["xpath=//div[@id='__next']/div[2]/div/div/div[2]", "xpath:idRelative"],
@@ -7023,22 +6971,10 @@
       ],
       "value": "Thêm người dùng"
     }, {
-      "id": "ecbda448-b8c1-430b-88e4-9d813d9d84a3",
-      "comment": "",
-      "command": "click",
-      "target": "css=div:nth-child(1) > .px-3",
-      "targets": [
-        ["css=div:nth-child(1) > .px-3", "css:finder"],
-        ["xpath=//input[@value='']", "xpath:attributes"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div/div/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "9bae3e64-5b5e-4237-8653-6582714cb4de",
       "comment": "",
       "command": "type",
-      "target": "css=div:nth-child(1) > .px-3",
+      "target": "css=input[data-testid='admin-users-input-name']",
       "targets": [
         ["css=div:nth-child(1) > .px-3", "css:finder"],
         ["xpath=//input[@value='abc']", "xpath:attributes"],
@@ -7047,22 +6983,10 @@
       ],
       "value": "abc"
     }, {
-      "id": "22afdce5-2092-4a48-ad5d-79270f746f0c",
-      "comment": "",
-      "command": "click",
-      "target": "css=div:nth-child(6) > .w-full",
-      "targets": [
-        ["css=div:nth-child(6) > .w-full", "css:finder"],
-        ["xpath=(//input[@value=''])[3]", "xpath:attributes"],
-        ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div/div[6]/input", "xpath:idRelative"],
-        ["xpath=//div[6]/input", "xpath:position"]
-      ],
-      "value": ""
-    }, {
       "id": "f6425ab0-2f90-43b5-8246-0e507d0f72e3",
       "comment": "",
       "command": "type",
-      "target": "css=div:nth-child(6) > .w-full",
+      "target": "css=input[data-testid='admin-users-input-password']",
       "targets": [
         ["css=div:nth-child(6) > .w-full", "css:finder"],
         ["xpath=//input[@value='132456']", "xpath:attributes"],
@@ -7074,7 +6998,7 @@
       "id": "812543ee-2ac2-4877-913c-79e351c7f768",
       "comment": "",
       "command": "click",
-      "target": "css=.px-4:nth-child(2)",
+      "target": "css=[data-testid='admin-users-btn-save']",
       "targets": [
         ["css=.px-4:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='__next']/div/div/main/div/div/div[3]/div/div[2]/button[2]", "xpath:idRelative"],

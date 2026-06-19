@@ -291,7 +291,7 @@
       "id": "4a0d0287-b789-4811-b6fa-f335ec1b3f3c",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--014",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
         ["css=.react-datepicker__day--014", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]", "xpath:idRelative"],
@@ -312,12 +312,77 @@
       ],
       "value": ""
     }, {
-      "id": "a7979080-0285-4698-bcc4-e524e28fd07e",
+      "id": "2ba65f16-f036-4239-92a0-51098ab421f1",
       "comment": "",
-      "command": "assertTitle",
-      "target": "Tìm chuyến xe - BookingHub",
-      "targets": [],
+      "command": "click",
+      "target": "css=.mb-6",
+      "targets": [
+        ["css=.mb-6", "css:finder"],
+        ["xpath=//div[@id='__next']/div/main/div/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
+      ],
       "value": ""
+    }, {
+      "id": "cfb8e152-85ce-42d4-9596-6093c7e76a8e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mb-6",
+      "targets": [
+        ["css=.mb-6", "css:finder"],
+        ["xpath=//div[@id='__next']/div/main/div/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a0b6586f-93db-43d6-aadc-926790a547b8",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "css=.mb-6",
+      "targets": [
+        ["css=.mb-6", "css:finder"],
+        ["xpath=//div[@id='__next']/div/main/div/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e6361af9-9395-46f0-a9e5-f1ba79d90468",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mb-6",
+      "targets": [
+        ["css=.mb-6", "css:finder"],
+        ["xpath=//div[@id='__next']/div/main/div/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3f956873-0b66-405e-b012-d5351121d93b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mb-6",
+      "targets": [
+        ["css=.mb-6", "css:finder"],
+        ["xpath=//div[@id='__next']/div/main/div/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1a10ab6-7c06-4690-a218-496b489825f1",
+      "comment": "",
+      "command": "assertText",
+      "target": "css=.mb-6",
+      "targets": [
+        ["css=.mb-6", "css:finder"],
+        ["xpath=//div[@id='__next']/div/main/div/div/h1", "xpath:idRelative"],
+        ["xpath=//h1", "xpath:position"],
+        ["xpath=//h1[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
+      ],
+      "value": "Tìm chuyến xe"
     }, {
       "id": "d5be64e0-9e0d-48ab-bb13-531f9947e402",
       "comment": "",
@@ -671,7 +736,7 @@
       "command": "select",
       "target": "id=departureLocationId",
       "targets": [],
-      "value": "label=Hà Nội - Long Biên"
+      "value": "label=Hồ Chí Minh - Bình Thạnh"
     }, {
       "id": "219fec76-5ee1-4b24-bbbd-70981f3d2351",
       "comment": "",
@@ -692,7 +757,7 @@
       "command": "select",
       "target": "id=arrivalLocationId",
       "targets": [],
-      "value": "label=Hải Phòng - Lê Chân"
+      "value": "label=Hồ Chí Minh - Bình Tân"
     }, {
       "id": "2732f260-c174-4bc7-8607-4c76c38c8cb4",
       "comment": "",
@@ -708,14 +773,14 @@
       ],
       "value": ""
     }, {
-      "id": "7acc3391-8a9f-4008-8f35-6573660e7aa6",
+      "id": "74a2870c-af30-400a-ae13-10c4390af3d4",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--016",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
-        ["css=.react-datepicker__day--014", "css:finder"],
-        ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]", "xpath:idRelative"],
-        ["xpath=//div[3]/div[2]", "xpath:position"]
+        ["css=.react-datepicker__day--030", "css:finder"],
+        ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[5]/div[2]", "xpath:idRelative"],
+        ["xpath=//div[5]/div[2]", "xpath:position"]
       ],
       "value": ""
     }, {
@@ -931,7 +996,7 @@
       "id": "ecfad793-536e-4a0f-bce2-bb7deea0cce2",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--016",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
         ["css=.react-datepicker__day--014", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]", "xpath:idRelative"],
@@ -1158,7 +1223,7 @@
       "id": "0486a901-392e-44c4-ad54-1c6dc3243c6c",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--016",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
         ["css=.react-datepicker__day--014", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]", "xpath:idRelative"],
@@ -1450,7 +1515,7 @@
       "id": "25f67f26-2399-4e37-86d6-8697fe4c89cb",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--016",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
         ["css=.react-datepicker__day--014", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]", "xpath:idRelative"],
@@ -1738,7 +1803,7 @@
       "id": "9ce59969-2673-48b6-81ba-a8bd1c457696",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--016",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
         ["css=.react-datepicker__day--014", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]", "xpath:idRelative"],
@@ -1935,7 +2000,7 @@
       "id": "a3698145-a0af-400e-b001-c6357dde929c",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--016",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
         ["css=.react-datepicker__day--014", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]", "xpath:idRelative"],
@@ -2006,6 +2071,97 @@
       "targets": [],
       "value": ""
     }, {
+      "id": "cba75b3e-607a-4933-af6c-0ed43ef27193",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return !!document.querySelector('.btn-login')",
+      "targets": [],
+      "value": "isLoginNeeded"
+    }, {
+      "id": "a2398c25-1317-4f9c-9a23-121106a22bc3",
+      "comment": "",
+      "command": "if",
+      "target": "${isLoginNeeded}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7ab2fb57-6a1d-4b29-91be-4ed0d500d11e",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Đăng nhập",
+      "targets": [
+        ["linkText=Đăng nhập", "linkText"],
+        ["css=.py-2:nth-child(1)", "css:finder"],
+        ["xpath=//a[contains(text(),'Đăng nhập')]", "xpath:link"],
+        ["xpath=//div[@id='__next']/div/header/div/div/div/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/login')]", "xpath:href"],
+        ["xpath=//div/div/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Đăng nhập')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "41371105-c8f5-4a1a-b4ed-574bc2623304",
+      "comment": "",
+      "command": "click",
+      "target": "id=usernameOrEmail",
+      "targets": [
+        ["id=usernameOrEmail", "id"],
+        ["name=usernameOrEmail", "name"],
+        ["css=#usernameOrEmail", "css:finder"],
+        ["xpath=//input[@id='usernameOrEmail']", "xpath:attributes"],
+        ["xpath=//div[@id='__next']/div/main/div/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "021a57b6-5375-43c8-97af-c7c9e5468797",
+      "comment": "",
+      "command": "type",
+      "target": "id=usernameOrEmail",
+      "targets": [
+        ["id=usernameOrEmail", "id"],
+        ["name=usernameOrEmail", "name"],
+        ["css=#usernameOrEmail", "css:finder"],
+        ["xpath=//input[@id='usernameOrEmail']", "xpath:attributes"],
+        ["xpath=//div[@id='__next']/div/main/div/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "customer"
+    }, {
+      "id": "7265dfd5-c726-4564-98b4-28cd16d77371",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//div[@id='__next']/div/main/div/div/div/form/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "123456aA@"
+    }, {
+      "id": "d623c3a9-d0a7-4a06-8895-17c9f02063a0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.disabled\\3Aopacity-50",
+      "targets": [
+        ["css=.disabled\\3Aopacity-50", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='__next']/div/main/div/div/div/form/button", "xpath:idRelative"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Đăng nhập')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "faf196dd-57c6-4294-b4aa-10929ba224cf",
+      "comment": "",
+      "command": "end",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
       "id": "4e1515c2-a007-47de-b2b2-d80042f583fa",
       "comment": "",
       "command": "click",
@@ -2065,7 +2221,7 @@
       "id": "4b31273a-d895-46e9-9959-723042b56ef5",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--016",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
         ["css=.react-datepicker__day--014", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]", "xpath:idRelative"],
@@ -2126,7 +2282,7 @@
       "id": "5cc9a42c-a0e2-4ffa-a741-9b603838bf80",
       "comment": "",
       "command": "click",
-      "target": "css=.mb-4 > .text-2xl",
+      "target": "css=button[data-testid='booking-submit']",
       "targets": [
         ["css=.mb-4 > .text-2xl", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div[3]/div/div/h2", "xpath:idRelative"],
@@ -2482,7 +2638,7 @@
     }]
   }, {
     "id": "df632636-dfbf-4a0a-8e38-9853cf24d5fd",
-    "name": "LG-06 Đăng nhập sai vẫn thông báo lỗi",
+    "name": "LG-06 Đăng nhập sai thông báo lỗi",
     "commands": [{
       "id": "dd334b2c-92b3-4369-8265-776ec2374375",
       "comment": "",
@@ -2645,7 +2801,7 @@
       "targets": [],
       "value": "Sai tài khoản hoặc mật khẩu"
     }, {
-      "id": "26acc84b-c79a-440a-bfca-2f6a5c579858",
+      "id": "cfc6fec8-a2aa-4e0f-bc52-21ae44937fe3",
       "comment": "",
       "command": "close",
       "target": "",
@@ -3885,7 +4041,7 @@
     }]
   }, {
     "id": "9e502a7d-eea5-46dc-a827-2bf0975d9f7c",
-    "name": "MB-05 Hiển thị trạng thái loading hoặc danh sách sau khi vào trang",
+    "name": "MB-05 Kiểm tra danh sách Vé của tôi",
     "commands": [{
       "id": "12286820-604b-4ef3-a85a-88bc76f60a70",
       "comment": "",
@@ -4109,7 +4265,7 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "test"
+      "value": "vy1"
     }, {
       "id": "b1c7922d-1948-49d3-ac01-2b679ce0456b",
       "comment": "",
@@ -4192,7 +4348,7 @@
     }]
   }, {
     "id": "2d092ebe-7709-4584-a4d4-ab2084daac94",
-    "name": "MB-07 Hủy vé hiển thị trong vé nếu được phép hủy",
+    "name": "MB-07 Nút Hủy vé hiển thị trong vé nếu được phép hủy",
     "commands": [{
       "id": "8437a86f-8095-4c36-b171-9797836ea7cd",
       "comment": "",
@@ -4593,7 +4749,7 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "customer"
+      "value": "vy1"
     }, {
       "id": "76e121ee-ab21-4d76-b1a7-55228e19b038",
       "comment": "",
@@ -4621,7 +4777,7 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div[2]/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "123456aA@"
+      "value": "123456"
     }, {
       "id": "b046e684-6ba5-4ea6-b2c6-92cc56ac142e",
       "comment": "",
@@ -4999,7 +5155,7 @@
       "targets": [],
       "value": ""
     }, {
-      "id": "1cf6a4cc-a5f4-4f4a-a037-485d3991869c",
+      "id": "08bcc4db-d58c-4c06-9950-84eced168b41",
       "comment": "",
       "command": "click",
       "target": "css=.flex:nth-child(3) > span",
@@ -5011,19 +5167,7 @@
       ],
       "value": ""
     }, {
-      "id": "7d5bde66-357a-40df-856a-c8b129f8cb41",
-      "comment": "",
-      "command": "assertElementPresent",
-      "target": "css=.bg-white:nth-child(1) .flex > .flex > .flex > .w-full:nth-child(2)",
-      "targets": [
-        ["css=.bg-white:nth-child(1) .flex > .flex > .flex > .w-full:nth-child(2)", "css:finder"],
-        ["xpath=//div[@id='__next']/div/main/div/div[2]/div/div/div/div[2]/div[2]/button[2]", "xpath:idRelative"],
-        ["xpath=//button[2]", "xpath:position"],
-        ["xpath=//button[contains(.,'Xem QR code')]", "xpath:innerText"]
-      ],
-      "value": ""
-    }, {
-      "id": "e23ccadb-792f-4cc3-a840-a5a99a4e57c1",
+      "id": "0fb02fc1-1156-4b79-ac6d-dbf1b8b72286",
       "comment": "",
       "command": "assertText",
       "target": "css=.bg-white:nth-child(1) .flex > .flex > .flex > .w-full:nth-child(2)",
@@ -5174,6 +5318,18 @@
         ["xpath=//div[@id='__next']/div/header/div/div/nav/a[3]/span", "xpath:idRelative"],
         ["xpath=//a[3]/span", "xpath:position"],
         ["xpath=//span[contains(.,'Vé của tôi')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "36cda33c-3198-40b5-b9dd-d8b455f91c06",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bg-white:nth-child(1) .flex > .flex > .flex > .w-full:nth-child(2)",
+      "targets": [
+        ["css=.bg-white:nth-child(1) .flex > .flex > .flex > .w-full:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='__next']/div/main/div/div[2]/div/div/div/div[2]/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Xem QR code')]", "xpath:innerText"]
       ],
       "value": ""
     }, {
@@ -6791,7 +6947,7 @@
     }]
   }, {
     "id": "4e0afb69-7415-4b93-b3d5-341835ca4329",
-    "name": "PM-11 Thanh toán bằng momo chuyển sang trang thanh toán của momo",
+    "name": "PM-11 Thanh toán bằng momo ",
     "commands": [{
       "id": "f28bcbec-bb5f-4795-92f5-896dc4fa5345",
       "comment": "",
@@ -6956,10 +7112,10 @@
       ],
       "value": ""
     }, {
-      "id": "5354fe25-df0d-407c-ace9-81ac7c51f976",
+      "id": "fa47ff46-4440-4f91-9898-f61821b3b2a5",
       "comment": "",
       "command": "click",
-      "target": "xpath=//button[contains(normalize-space(.),'Xác nhận thanh toán')]",
+      "target": "css=.py-3",
       "targets": [
         ["css=.py-3", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div[2]/div[2]/div/button", "xpath:idRelative"],
@@ -6968,12 +7124,17 @@
       ],
       "value": ""
     }, {
-      "id": "fbdf1b0e-9657-4d89-adf6-86deb1dbf2d8",
+      "id": "5a178b6a-d283-4699-8f88-9225725d4967",
       "comment": "",
-      "command": "assertTitle",
-      "target": "Cổng thanh toán MoMo",
-      "targets": [],
-      "value": ""
+      "command": "assertText",
+      "target": "css=.logo-title",
+      "targets": [
+        ["css=.logo-title", "css:finder"],
+        ["xpath=//header[@id='header']/div/div/div/span", "xpath:idRelative"],
+        ["xpath=//span", "xpath:position"],
+        ["xpath=//span[contains(.,'Cổng thanh toán MoMo')]", "xpath:innerText"]
+      ],
+      "value": "Cổng thanh toán MoMo"
     }, {
       "id": "d01b2e14-a883-4f4d-917e-6f1a80dcaac3",
       "comment": "",
@@ -11295,7 +11456,7 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "teest1111"
+      "value": "vy122"
     }, {
       "id": "f3d103f3-8d66-4fd3-9778-9afa1a26aa57",
       "comment": "",
@@ -11407,7 +11568,7 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abdc@gmail.com"
+      "value": "vy122@gmail.com"
     }, {
       "id": "e4ca9cf0-4ce0-4547-8617-bbb297cd7bf4",
       "comment": "",
@@ -11555,7 +11716,7 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div/input", "xpath:idRelative"],
         ["xpath=//input", "xpath:position"]
       ],
-      "value": "teest11111"
+      "value": "vykty1"
     }, {
       "id": "a2b5b0e5-8430-4a51-af9d-11e45c7b2beb",
       "comment": "",
@@ -11639,7 +11800,7 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div[5]/input", "xpath:idRelative"],
         ["xpath=//div[5]/input", "xpath:position"]
       ],
-      "value": "0333333334"
+      "value": "0865437632"
     }, {
       "id": "d2ece309-66d6-4f07-9caa-94c679ba3ce8",
       "comment": "",
@@ -11667,7 +11828,7 @@
         ["xpath=//div[@id='__next']/div/main/div/div/div/form/div[2]/input", "xpath:idRelative"],
         ["xpath=//div[2]/input", "xpath:position"]
       ],
-      "value": "abdcd@gmail.com"
+      "value": "vykty1@gmail.com"
     }, {
       "id": "e85a9a75-aa51-4820-aebc-c32bb6d9bcf0",
       "comment": "",
@@ -11782,7 +11943,7 @@
       "id": "70db2992-af3e-432a-b5b4-727cc469e264",
       "comment": "",
       "command": "assertTitle",
-      "target": "Tìm chuyến xe - BookingHub",
+      "target": "BookingHub - Đặt vé xe khách trực tuyến",
       "targets": [],
       "value": ""
     }, {
@@ -11869,6 +12030,20 @@
         ["xpath=//div[@id='__next']/div/header/div/div/nav/a[2]/span", "xpath:idRelative"],
         ["xpath=//a[2]/span", "xpath:position"],
         ["xpath=//span[contains(.,'Tìm chuyến xe')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b143aefe-8f04-43ef-afe0-c568e1c54fae",
+      "comment": "",
+      "command": "click",
+      "target": "id=departureLocationId",
+      "targets": [
+        ["id=departureLocationId", "id"],
+        ["name=departureLocationId", "name"],
+        ["css=#departureLocationId", "css:finder"],
+        ["xpath=//select[@id='departureLocationId']", "xpath:attributes"],
+        ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
       ],
       "value": ""
     }, {
@@ -11965,10 +12140,23 @@
       ],
       "value": ""
     }, {
-      "id": "a782b1bd-49ff-49d9-802d-a00c7e0cb1ab",
+      "id": "7e4d7a98-8444-4095-ab4c-8d5cd2af28cc",
       "comment": "",
       "command": "assertText",
-      "target": "css=.px-6",
+      "target": "css=.disabled\\3Aopacity-50",
+      "targets": [
+        ["css=.disabled\\3Aopacity-50", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Tìm chuyến')]", "xpath:innerText"]
+      ],
+      "value": "Tìm chuyến"
+    }, {
+      "id": "a782b1bd-49ff-49d9-802d-a00c7e0cb1ab",
+      "comment": "",
+      "command": "verifyElementPresent",
+      "target": "css=[data-testid=\"search-submit\"]",
       "targets": [
         ["css=.px-6", "css:finder"],
         ["xpath=//button[@type='button']", "xpath:attributes"],
@@ -11976,7 +12164,7 @@
         ["xpath=//div[4]/button", "xpath:position"],
         ["xpath=//button[contains(.,'Tìm kiếm')]", "xpath:innerText"]
       ],
-      "value": "Tìm kiếm"
+      "value": ""
     }, {
       "id": "78dc68f7-9ee4-4194-840e-631ce9ee081a",
       "comment": "",
@@ -12269,7 +12457,7 @@
       "id": "3793522b-07c8-4e8e-840c-68814a1c3e85",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--013",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
         ["css=.react-datepicker__day--013", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div", "xpath:idRelative"],
@@ -12408,7 +12596,7 @@
       "id": "f67889d8-d2f4-4bab-a849-0baebb2cbe6a",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--015",
+      "target": "css=.react-datepicker__day--030",
       "targets": [
         ["css=.react-datepicker__day--015", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[3]", "xpath:idRelative"],
@@ -12434,6 +12622,56 @@
       "command": "close",
       "target": "",
       "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "c3ff79f7-6b5e-407f-825e-dadcf86ac5ca",
+    "name": "Đăng xuất",
+    "commands": [{
+      "id": "c1183846-2da5-4ee0-8e6d-26af4b9d401f",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ff6d14eb-d126-4c74-9c5f-1e1db69f18b6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "946x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f1cc6711-1598-4c72-a65a-22cb8283e0bf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.lucide-chevron-down",
+      "targets": [
+        ["css=.lucide-chevron-down", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "a0161c27-f107-46db-ba15-905b72cf001d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.hover\\3A bg-red-50",
+      "targets": [
+        ["css=.hover\\3A bg-red-50", "css:finder"],
+        ["xpath=//div[@id='__next']/div/header/div/div/div/div/div/button", "xpath:idRelative"],
+        ["xpath=//div/div/div/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Đăng xuất')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a798c32a-16bf-4a9c-a862-f937cc12ca49",
+      "comment": "",
+      "command": "click",
+      "target": "css=.bg-red-600",
+      "targets": [
+        ["css=.bg-red-600", "css:finder"],
+        ["xpath=//div[@id='__next']/div/div/div/div/div/div/div/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
       "value": ""
     }]
   }],

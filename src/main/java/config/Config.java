@@ -45,11 +45,11 @@ public final class Config {
     }
 
     public static String getCustomerUsername() {
-        return props.getProperty("customer.username", "customer");
+        return props.getProperty("customer.username", "vy1");
     }
 
     public static String getCustomerPassword() {
-        return props.getProperty("customer.password", "customer123");
+        return props.getProperty("customer.password", "123456");
     }
 
     private Config() {

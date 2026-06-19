@@ -39,6 +39,7 @@ public class AdminBaseTest extends BaseWebTest {
 		WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 		password.clear();
 		password.sendKeys(Config.getSuperAdminPassword());
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("go2072408551")));
 
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-login-submit']")))
 				.click();
@@ -56,7 +57,7 @@ public class AdminBaseTest extends BaseWebTest {
 		WebElement password = wait.until(ExpectedConditions.elementToBeClickable(By.name("password")));
 		password.clear();
 		password.sendKeys(Config.getAdminPassword());
-
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("go2072408551")));
 		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-login-submit']")))
 				.click();
 		wait.until(ExpectedConditions.titleContains("Admin"));

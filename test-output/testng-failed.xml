@@ -3,114 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="tests.customer.RegisterPageTest">
+      <class name="tests.customer.BookingPageTest">
         <methods>
-          <include name="case_RG_012"/>
+          <include name="case_BK_013"/>
           <include name="tearDown"/>
           <include name="setUp"/>
         </methods>
-      </class> <!-- tests.customer.RegisterPageTest -->
-      <class name="tests.admin.AdminBookingsPageTest">
-        <methods>
-          <include name="case_AB_010"/>
-          <include name="case_AB_011"/>
-          <include name="case_AB_003"/>
-          <include name="case_AB_004"/>
-          <include name="case_AB_008"/>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-        </methods>
-      </class> <!-- tests.admin.AdminBookingsPageTest -->
-      <class name="tests.admin.AdminVehiclesPageTest">
-        <methods>
-          <include name="case_VH_011"/>
-          <include name="case_VH_009"/>
-          <include name="case_VH_013"/>
-          <include name="case_VH_002"/>
-          <include name="case_VH_007"/>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-        </methods>
-      </class> <!-- tests.admin.AdminVehiclesPageTest -->
-      <class name="tests.admin.AdminBusCompaniesTest">
-        <methods>
-          <include name="case_BC_009"/>
-          <include name="case_BC_008"/>
-          <include name="case_BC_001"/>
-          <include name="case_BC_011"/>
-          <include name="case_BC_003"/>
-          <include name="case_BC_005"/>
-          <include name="case_BC_004"/>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-        </methods>
-      </class> <!-- tests.admin.AdminBusCompaniesTest -->
-      <class name="tests.admin.AdminUsersPageTest">
-        <methods>
-          <include name="case_US_006"/>
-          <include name="case_US_009"/>
-          <include name="case_US_004"/>
-          <include name="case_US_007"/>
-          <include name="case_US_013"/>
-          <include name="case_US_002"/>
-          <include name="case_US_005"/>
-          <include name="case_US_003"/>
-          <include name="setUp"/>
-          <include name="case_US_012"/>
-          <include name="case_US_010"/>
-          <include name="case_US_008"/>
-          <include name="tearDown"/>
-          <include name="case_US_011"/>
-        </methods>
-      </class> <!-- tests.admin.AdminUsersPageTest -->
-      <class name="tests.admin.AdminTripsPageTest">
-        <methods>
-          <include name="case_TR_015"/>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-        </methods>
-      </class> <!-- tests.admin.AdminTripsPageTest -->
-      <class name="tests.admin.AdminNotificationsPageTest">
-        <methods>
-          <include name="case_NT_005"/>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-        </methods>
-      </class> <!-- tests.admin.AdminNotificationsPageTest -->
-      <class name="tests.admin.AdminLocationsTest">
-        <methods>
-          <include name="case_LC_010"/>
-          <include name="case_LC_009"/>
-          <include name="case_LC_002"/>
-          <include name="case_LC_008"/>
-          <include name="case_LC_003"/>
-          <include name="tearDown"/>
-          <include name="case_LC_012"/>
-          <include name="setUp"/>
-          <include name="case_LC_004"/>
-        </methods>
-      </class> <!-- tests.admin.AdminLocationsTest -->
-      <class name="tests.customer.MyBookingsPageTest">
-        <methods>
-          <include name="case_MB_006"/>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-        </methods>
-      </class> <!-- tests.customer.MyBookingsPageTest -->
-      <class name="tests.admin.AdminLoginPageTest">
-        <methods>
-          <include name="case_AL_003"/>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-        </methods>
-      </class> <!-- tests.admin.AdminLoginPageTest -->
-      <class name="tests.customer.LoginPageTest">
-        <methods>
-          <include name="case_LG_006"/>
-          <include name="tearDown"/>
-          <include name="setUp"/>
-        </methods>
-      </class> <!-- tests.customer.LoginPageTest -->
+      </class> <!-- tests.customer.BookingPageTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

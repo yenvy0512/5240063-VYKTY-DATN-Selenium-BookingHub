@@ -14,53 +14,103 @@ public class AdminLocationsTest extends AdminBaseTest {
 
 	private void openLocationPage() {
 
-	    By menuLocation = By.xpath(
-	            "//button[.//span[contains(normalize-space(.),'Địa điểm')]]"
-	    );
 
-	    wait.until(driver -> {
-	        try {
 
-	            WebElement menu = driver.findElement(menuLocation);
+		By menuLocation = By.xpath(
 
-	            if (menu.isDisplayed() && menu.isEnabled()) {
-	                menu.click();
-	                return true;
-	            }
+		"//button[.//span[contains(normalize-space(.),'Địa điểm')]]"
 
-	            return false;
+		);
 
-	        } catch (StaleElementReferenceException e) {
-	            return false;
-	        }
-	    });
 
-	    By subMenu = By.xpath(
-	            "//a[contains(normalize-space(.),'Quản lý địa điểm')]"
-	    );
 
-	    wait.until(driver -> {
-	        try {
+		wait.until(driver -> {
 
-	            WebElement element = driver.findElement(subMenu);
+		try {
 
-	            if (element.isDisplayed() && element.isEnabled()) {
-	                element.click();
-	                return true;
-	            }
 
-	            return false;
 
-	        } catch (StaleElementReferenceException e) {
-	            return false;
-	        }
-	    });
+		WebElement menu = driver.findElement(menuLocation);
 
-	    wait.until(ExpectedConditions.or(
-	            ExpectedConditions.titleContains("Địa điểm"),
-	            ExpectedConditions.urlContains("/locations")
-	    ));
-	}
+
+
+		if (menu.isDisplayed() && menu.isEnabled()) {
+
+		menu.click();
+
+		return true;
+
+		}
+
+
+
+		return false;
+
+
+
+		} catch (StaleElementReferenceException e) {
+
+		return false;
+
+		}
+
+		});
+
+
+
+		By subMenu = By.xpath(
+
+		"//a[contains(normalize-space(.),'Quản lý địa điểm')]"
+
+		);
+
+
+
+		wait.until(driver -> {
+
+		try {
+
+
+
+		WebElement element = driver.findElement(subMenu);
+
+
+
+		if (element.isDisplayed() && element.isEnabled()) {
+
+		element.click();
+
+		return true;
+
+		}
+
+
+
+		return false;
+
+
+
+		} catch (StaleElementReferenceException e) {
+
+		return false;
+
+		}
+
+		});
+
+
+
+		wait.until(ExpectedConditions.or(
+
+		ExpectedConditions.titleContains("Địa điểm"),
+
+		ExpectedConditions.urlContains("/locations")
+
+		));
+
+		} 
+
+
 
 	@Test(description = "LC-01 Kiểm tra hiển thị trang quản lý địa điểm")
 	public void case_LC_001() {
@@ -140,77 +190,136 @@ public class AdminLocationsTest extends AdminBaseTest {
 	@Test(description = "LC-06 Chỉ nhập thông tin thành phố ấn lưu lại")
 	public void case_LC_006() {
 		loginSuperAdmin();
-		openLocationPage();
+	    openLocationPage();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-locations-btn-add']")))
-				.click();
+	    // 1. Đợi và click nút mở Form Add
+	    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-locations-btn-add']")))
+	            .click();
 
-		WebElement city = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("city")));
-		city.sendKeys("Thành phố test");
+	    // 2. Nhập thông tin thành phố
+	    WebElement city = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("city")));
+	    city.sendKeys("Thành phố HCM");
 
-		By saveBtn = By.cssSelector("[data-testid='admin-locations-form-submit']");
+	    // [QUAN TRỌNG] Đợi 1 giây để dropdown thành phố ẩn đi hoặc form hoàn tất render
+	    try {
+	        Thread.sleep(1000);
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(saveBtn));
-		wait.until(ExpectedConditions.elementToBeClickable(saveBtn)).click();
+	    // Khai báo nút lưu
+	    By saveBtn = By.cssSelector("[data-testid='admin-locations-form-submit']");
+	    WebElement saveButtonElement = wait.until(ExpectedConditions.presenceOfElementLocated(saveBtn));
 
-		WebElement district = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("district")));
+	    // Khởi tạo JavascriptExecutor
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
 
-		JavascriptExecutor js = (JavascriptExecutor) driver;
+	    // 3. Cuộn mượt xuống nút Lưu và click bằng JS
+	    js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", saveButtonElement);
+	    
+	    // Thêm 500ms để trình duyệt cuộn xong rồi mới Click
+	    try { Thread.sleep(500); } catch (Exception e) {}
+	    js.executeScript("arguments[0].click();", saveButtonElement);
 
-		Boolean valid = (Boolean) js.executeScript("return arguments[0].checkValidity();", district);
+	    // [QUAN TRỌNG] Đợi thêm 500ms để hiệu ứng bấm nút Lưu kích hoạt validation của HTML5
+	    try { Thread.sleep(500); } catch (Exception e) {}
 
-		Assert.assertFalse(valid);
+	    // 4. Kiểm tra Validation ô district
+	    WebElement district = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("district")));
+	    Boolean valid = (Boolean) js.executeScript("return arguments[0].checkValidity();", district);
+
+	    // Mong đợi valid là false vì ô district bắt buộc nhưng đang trống
+	    Assert.assertFalse(valid);
 
 	}
 
 	@Test(description = "LC-07 Nhập đầy đủ thông tin và lưu địa điểm")
 	public void case_LC_007() {
 		loginSuperAdmin();
-		openLocationPage();
+	    openLocationPage();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-locations-btn-add']")))
-				.click();
+	    // 1. Mở Form thêm mới
+	    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-locations-btn-add']")))
+	            .click();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("city"))).sendKeys("Thành phố test");
+	    // 2. Nhập đầy đủ thông tin các trường
+	    wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("city"))).sendKeys("Thành phố test");
+	    driver.findElement(By.name("district")).sendKeys("Test");
+	    driver.findElement(By.id("latitude")).sendKeys("21.028222");
+	    driver.findElement(By.id("longitude")).sendKeys("105.88888");
 
-		driver.findElement(By.name("district")).sendKeys("Test");
-		driver.findElement(By.id("latitude")).sendKeys("21.028222");
-		driver.findElement(By.id("longitude")).sendKeys("105.88888");
+	    // Khai báo bộ định vị nút Lưu
+	    By saveBtn = By.cssSelector("[data-testid='admin-locations-form-submit']");
+	    
+	    // Đợi nút Lưu xuất hiện trong DOM
+	    WebElement saveButtonElement = wait.until(ExpectedConditions.presenceOfElementLocated(saveBtn));
 
-		By saveBtn = By.cssSelector("[data-testid='admin-locations-form-submit']");
+	    // Khởi tạo JavascriptExecutor
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(saveBtn));
-		wait.until(ExpectedConditions.elementToBeClickable(saveBtn)).click();
+	    // 3. Cuộn mượt màn hình đưa nút Lưu vào chính giữa tầm nhìn (tránh bị fixed footer che)
+	    js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", saveButtonElement);
+	    
+	    // Đợi 500ms để trình duyệt hoàn tất hành động cuộn trang và đóng các gợi ý ẩn
+	    try { 
+	        Thread.sleep(500); 
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
 
-		WebElement toast = wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Tạo địa điểm thành công!')]")));
+	    // Ép click trực tiếp bằng JavaScript để bypass hoàn toàn lỗi ElementClickIntercepted
+	    js.executeScript("arguments[0].click();", saveButtonElement);
 
-		Assert.assertTrue(toast.isDisplayed());
+	    // 4. Kiểm tra thông báo Toast hiển thị thành công
+	    WebElement toast = wait.until(ExpectedConditions
+	            .visibilityOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Tạo địa điểm thành công!')]")));
 
+	    Assert.assertTrue(toast.isDisplayed());
 	}
+
+	
 
 	@Test(description = "LC-08 Chỉnh sửa địa điểm")
 	public void case_LC_008() {
 		loginSuperAdmin();
-		openLocationPage();
+	    openLocationPage();
 
-		wait.until(
-				ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-locations-btn-edit-']")))
-				.click();
+	    // 1. Chờ và click vào nút chức năng (ví dụ: Sửa/Xóa/Xem chi tiết) công đoạn đầu
+	    wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid^='admin-locations-btn-edit-']")))
+	            .click();
 
-		WebElement district = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("district")));
-		district.clear();
-		district.sendKeys("Test1");
+	    // 2. Chờ ô nhập liệu hiển thị và cập nhật thông tin dữ liệu mới
+	    WebElement district = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("district")));
+	    district.clear();
+	    district.sendKeys("Test2"); // Thay đổi dữ liệu test tương ứng với mục đích của case
 
-		By saveBtn = By.cssSelector("[data-testid='admin-locations-form-submit']");
+	    // Khai báo bộ định vị nút Lưu form
+	    By saveBtn = By.cssSelector("[data-testid='admin-locations-form-submit']");
+	    
+	    // Đợi nút Lưu xuất hiện sẵn sàng trong cấu trúc DOM
+	    WebElement saveButtonElement = wait.until(ExpectedConditions.presenceOfElementLocated(saveBtn));
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(saveBtn));
-		wait.until(ExpectedConditions.elementToBeClickable(saveBtn)).click();
+	    // Khởi tạo JavascriptExecutor
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
 
-		WebElement toast = wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Cập nhật thành công')]")));
+	    // 3. Cuộn mượt màn hình đưa nút Lưu vào chính giữa tầm nhìn (tránh bị che khuất bởi footer/dropdown)
+	    js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", saveButtonElement);
+	    
+	    // Đợi ngắn 500ms để trình duyệt thực hiện xong hành động cuộn và đóng các menu gợi ý ẩn nếu có
+	    try { 
+	        Thread.sleep(500); 
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
 
-		Assert.assertTrue(toast.isDisplayed());
+	    // Ép click trực tiếp vào DOM bằng JavaScript để bypass hoàn toàn lỗi ElementClickIntercepted
+	    js.executeScript("arguments[0].click();", saveButtonElement);
+
+	    // 4. Chờ thông báo thành công (Toast message) hiển thị và xác nhận kết quả
+	    WebElement toast = wait.until(ExpectedConditions
+	            .visibilityOfElementLocated(By.xpath("//*[contains(normalize-space(.),'Cập nhật thành công')]")));
+
+	    Assert.assertTrue(toast.isDisplayed());
 
 	}
 

@@ -115,11 +115,11 @@ public class AdminBusCompaniesTest extends AdminBaseTest {
 				.elementToBeClickable(By.cssSelector("[data-testid=\"admin-bus-companies-btn-add\"]"))).click();
 		wait.until(ExpectedConditions.elementToBeClickable(By.name("name"))).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name"))).sendKeys("Test");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("name"))).sendKeys("Phuong Trang");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email"))).sendKeys("ackckkc@test.com");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email"))).sendKeys("phuongtrang@test.com");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone"))).clear();
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone"))).sendKeys("0333333333");
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("phone"))).sendKeys("0854256406");
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("address"))).clear();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("address"))).sendKeys("Test");
 		wait.until(ExpectedConditions

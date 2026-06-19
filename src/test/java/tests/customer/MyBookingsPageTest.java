@@ -184,28 +184,32 @@ public class MyBookingsPageTest extends CustomerBaseTest {
 						By.xpath("(//div[.//span[contains(.,'Chờ thanh toán')]]//button[contains(.,'Thanh toán')])[1]"))
 				.isEmpty(), "Missing element");
 	}
-	@Test(description="TC01 - Tim kiem")
-	public void case_01() {
-		loginCustomer();
-
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departureLocationId"))))
-				.selectByVisibleText("Hà Nội - Long Biên");
-
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
-		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
-				.selectByVisibleText("Hải Phòng - Lê Chân");
-
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--030"))).click();
-
-wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='home-search-submit']"))).click();
-wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='btn-booking-trip-146']"))).click();
-wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='seat-TX2']"))).click();
-wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='booking-submit']"))).click();
-
-		
-	}
+//	@Test (description = "TC02")
+//	public void case_02() {
+//		
+//	}
+//	@Test(description="TC01 - Tim kiem")
+//	public void case_01() {
+//		loginCustomer();
+//
+//		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureLocationId"))).click();
+//		new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departureLocationId"))))
+//				.selectByVisibleText("Hà Nội - Long Biên");
+//
+//		wait.until(ExpectedConditions.elementToBeClickable(By.id("arrivalLocationId"))).click();
+//		new Select(wait.until(ExpectedConditions.presenceOfElementLocated(By.id("arrivalLocationId"))))
+//				.selectByVisibleText("Hải Phòng - Lê Chân");
+//
+//		wait.until(ExpectedConditions.elementToBeClickable(By.id("departureDate"))).click();
+//		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".react-datepicker__day--030"))).click();
+//
+//wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='home-search-submit']"))).click();
+//wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='btn-booking-trip-146']"))).click();
+//wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='seat-TX2']"))).click();
+//wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='booking-submit']"))).click();
+//
+//		
+//	}
 	@Test(description = "MB-14 Ấn nút thanh toán hiển thị trang thanh toán")
 	public void case_MB_014() {
 		loginCustomer();

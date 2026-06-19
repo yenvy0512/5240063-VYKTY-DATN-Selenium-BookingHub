@@ -158,7 +158,8 @@ public class AdminBookingsPageTest extends AdminBaseTest {
 				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-bookings-search-input']"))).clear();
 		wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By.cssSelector("[data-testid='admin-bookings-search-input']")))
-				.sendKeys("BK202604170002");
+				.sendKeys("BK202606190003");
+//		BK202606190004 BK202606190005
 		wait.until(
 				ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='admin-bookings-search-submit']")))
 				.click();
@@ -185,8 +186,8 @@ public class AdminBookingsPageTest extends AdminBaseTest {
 
 		WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(searchInput));
 		input.clear();
-		input.sendKeys("BK202510220010");
-
+		input.sendKeys("BK202606190010");
+//BK202606190011
 		wait.until(ExpectedConditions.elementToBeClickable(searchBtn)).click();
 
 		wait.until(ExpectedConditions.elementToBeClickable(cancelBtn)).click();
@@ -212,7 +213,7 @@ public class AdminBookingsPageTest extends AdminBaseTest {
 
 		WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(searchInput));
 		input.clear();
-		input.sendKeys("BK202604170005");
+		input.sendKeys("BK202606190009");
 
 		wait.until(ExpectedConditions.elementToBeClickable(searchBtn)).click();
 
