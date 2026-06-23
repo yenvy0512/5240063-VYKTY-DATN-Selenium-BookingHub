@@ -5,7 +5,7 @@
     <classes>
       <class name="tests.customer.BookingPageTest">
         <methods>
-          <include name="case_BK_013"/>
+          <include name="case_BK_009"/>
           <include name="tearDown"/>
           <include name="setUp"/>
         </methods>

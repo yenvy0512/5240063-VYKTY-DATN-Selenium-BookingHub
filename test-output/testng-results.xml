@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="11" total="12" passed="1" failed="0" skipped="0">
+<testng-results ignored="13" total="14" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-06-19T03:07:52 ICT" name="Default suite" finished-at="2026-06-19T03:07:58 ICT" duration-ms="5098">
+  <suite started-at="2026-06-20T09:55:04 ICT" name="Default suite" finished-at="2026-06-20T09:55:19 ICT" duration-ms="15565">
     <groups>
     </groups>
-    <test started-at="2026-06-19T03:07:52 ICT" name="Default test" finished-at="2026-06-19T03:07:58 ICT" duration-ms="5098">
-      <class name="tests.customer.RegisterPageTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:tests.customer.RegisterPageTest@2d1ef81a]" started-at="2026-06-19T03:07:52 ICT" name="setUp" finished-at="2026-06-19T03:07:54 ICT" duration-ms="1903" status="PASS">
+    <test started-at="2026-06-20T09:55:04 ICT" name="Default test" finished-at="2026-06-20T09:55:19 ICT" duration-ms="15565">
+      <class name="tests.admin.AdminTripsPageTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:tests.admin.AdminTripsPageTest@dd05255]" started-at="2026-06-20T09:55:04 ICT" name="setUp" finished-at="2026-06-20T09:55:06 ICT" duration-ms="2185" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="case_RG_009()[pri:0, instance:tests.customer.RegisterPageTest@2d1ef81a]" started-at="2026-06-19T03:07:54 ICT" name="case_RG_009" description="RG-09 Điền email không hợp lệ báo lỗi" finished-at="2026-06-19T03:07:57 ICT" duration-ms="2923" status="PASS">
+        <test-method signature="case_TR_017()[pri:0, instance:tests.admin.AdminTripsPageTest@dd05255]" started-at="2026-06-20T09:55:06 ICT" name="case_TR_017" description="TR-17 Tạo chuyến mới thành công" finished-at="2026-06-20T09:55:19 ICT" duration-ms="12827" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- case_RG_009 -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.customer.RegisterPageTest@2d1ef81a]" started-at="2026-06-19T03:07:57 ICT" name="tearDown" finished-at="2026-06-19T03:07:58 ICT" duration-ms="209" status="PASS">
+        </test-method> <!-- case_TR_017 -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:tests.admin.AdminTripsPageTest@dd05255]" started-at="2026-06-20T09:55:19 ICT" name="tearDown" finished-at="2026-06-20T09:55:19 ICT" duration-ms="460" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- tests.customer.RegisterPageTest -->
+      </class> <!-- tests.admin.AdminTripsPageTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

@@ -241,7 +241,7 @@ public class BookingPageTest extends CustomerBaseTest {
 		searchTrip();
 		openBooking();
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='seat-A1']"))).click();
+		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-testid='seat-1']"))).click();
 
 		By submitBtn = By.cssSelector("[data-testid='booking-submit']");
 

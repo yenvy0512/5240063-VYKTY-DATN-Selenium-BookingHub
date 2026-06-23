@@ -238,7 +238,7 @@ public class AdminTripsPageTest extends AdminBaseTest {
 		WebElement priceInput = wait.until(ExpectedConditions.elementToBeClickable(priceInputBy));
 		priceInput.click();
 		priceInput.clear();
-		priceInput.sendKeys("200000");
+		priceInput.sendKeys("500000");
 
 		WebElement timeInput = wait.until(ExpectedConditions.elementToBeClickable(timeInputBy));
 
@@ -288,15 +288,15 @@ public class AdminTripsPageTest extends AdminBaseTest {
 
 		WebElement arrival = wait.until(ExpectedConditions.elementToBeClickable(arrivalBy));
 		wait.until(driver -> new Select(arrival).getOptions().size() > 1);
-		new Select(arrival).selectByVisibleText("Hải Phòng - Lê Chân");
+		new Select(arrival).selectByVisibleText("Huế - Phú Hội");
 
 		wait.until(ExpectedConditions.elementToBeClickable(bulkCreateBy)).click();
 
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("rangeFrom")));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("rangeTo")));
 
-		selectDate(By.name("rangeFrom"), 15, 7, 2026);
-		selectDate(By.name("rangeTo"), 30, 7, 2026);
+		selectDate(By.name("rangeFrom"), 10, 8, 2026);
+		selectDate(By.name("rangeTo"), 15, 8, 2026);
 
 		wait.until(ExpectedConditions.elementToBeClickable(createRangeBtn)).click();
 

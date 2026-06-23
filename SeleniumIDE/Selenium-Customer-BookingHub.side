@@ -2202,7 +2202,7 @@
       "command": "select",
       "target": "id=arrivalLocationId",
       "targets": [],
-      "value": "label=Hải Phòng - Lê Chân"
+      "value": "label=Nha Trang - Vĩnh Hải"
     }, {
       "id": "1f5cb6ed-c8dc-4693-b277-4f4c80452708",
       "comment": "",
@@ -2221,7 +2221,7 @@
       "id": "4b31273a-d895-46e9-9959-723042b56ef5",
       "comment": "",
       "command": "click",
-      "target": "css=.react-datepicker__day--030",
+      "target": "css=.react-datepicker__day--026",
       "targets": [
         ["css=.react-datepicker__day--014", "css:finder"],
         ["xpath=//div[@id='__next']/div/main/div/div/div/div[2]/div/div[3]/div/div[2]/div[2]/div/div/div/div/div[2]/div[2]/div[3]/div[2]", "xpath:idRelative"],
@@ -12674,6 +12674,10 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "0f74c727-9bc2-444c-aa49-b98f6fcf0e2b",
+    "name": "TC_Đặt vé",
+    "commands": []
   }],
   "suites": [{
     "id": "7ed1cc57-6b90-4532-a59d-b60075a57cbf",
